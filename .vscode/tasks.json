@@ -1,0 +1,75 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Simulator: development",
+			"type": "shell",
+			"command": "${command:python.interpreterPath}",
+			"args": [
+				"-m",
+				"sim",
+				"serve",
+				"--scenario",
+				"scenarios/public_01_dev.yaml",
+				"--run-dir",
+				"runs/foundation01"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Simulator: governance",
+			"type": "shell",
+			"command": "${command:python.interpreterPath}",
+			"args": [
+				"-m",
+				"sim",
+				"serve",
+				"--scenario",
+				"scenarios/public_02_incidents.yaml",
+				"--run-dir",
+				"runs/governance02_verified",
+				"--port",
+				"8701"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Simulator: incidents",
+			"type": "shell",
+			"command": "${command:python.interpreterPath}",
+			"args": [
+				"-m",
+				"sim",
+				"serve",
+				"--scenario",
+				"scenarios/public_02_incidents.yaml",
+				"--run-dir",
+				"runs/incidents_api",
+				"--port",
+				"8702"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Simulator: step 3 evaluation",
+			"type": "shell",
+			"command": "${command:python.interpreterPath}",
+			"args": [
+				"-m",
+				"sim",
+				"serve",
+				"--scenario",
+				"scenarios/public_02_incidents.yaml",
+				"--run-dir",
+				"runs/step3_02",
+				"--port",
+				"8703"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}
