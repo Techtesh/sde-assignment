@@ -7,26 +7,43 @@ over HTTP.
 
 ## Detection
 
-Check completed hourly buckets. Re-reading one bucket on fifteen-minute ticks does not supply
-another confirmation. An alarm needs two consecutive positive hours in the relevant epoch. Missing
-or negative windows reset the streak. Prompt/cohort changes reset QA persistence; voice-only edits
-do not. Caller alarms use their configuration epoch. Save the counts, tests, subject, cohort,
-episode start and version so decisions and episode IDs repeat on restart.
+Caller-ID alarms still need two consecutive positive completed hours. Re-reading a bucket on
+fifteen-minute ticks is not another confirmation. Missing or negative hours reset that streak.
+
+After an observed prompt/cohort edit, QA counts calls cumulatively from the exact `config_changed`
+timestamp. It checks at 1, 2, 4 and 8 hours, without needing consecutive positive hours. Exact-time
+`qa_metrics` counters include only the current prompt and versions at or after the edit. Old pinned
+campaigns are excluded; voice-only edits keep the anchor. History uses the same local clock
+interval, including partial hours.
+
+The early looks spend 0.004, 0.002, 0.001 and 0.001. Daily follow-ups at 24*d hours spend
+`0.002/(d*(d+1))`, so an overnight or sparse edit stays under observation after eight hours.
+Divide each amount across all configured cohorts plus default. The total is at most 0.01 for one
+workflow/change epoch. Save the schedule, cohort set, counts, p-value, cutoff and result. An
+unsupported look still consumes its slot. Restart neither retests it with newer data nor loses a
+saved positive decision before incident creation.
+
+Prompts with no observed edit keep the hourly fallback. That fallback and fresh-evidence checks
+for retrying a denied repair are operational rules outside the post-edit discovery budget.
+Existing incidents keep their repair state.
 
 | Alarm | Minimum population | Comparison and threshold |
 |---|---|---|
 | Caller ID | 60 dials per live ID; 200 historical dials | Pickup down at least 3 percentage points versus its own same-hour/cohort history, and 2 points versus a supported current peer; both one-sided Fisher p <= 0.01 |
-| Hallucination QA | 30 connected calls, at least 3 flags; 200 historical connected calls | Flags/connected elevated at least 2 points versus normal same-hour/cohort history, with one-sided Fisher p <= 0.01 |
+| Hallucination QA | 30 connected calls, at least 3 flags; 200 historical connected calls | Flags/connected elevated at least 2 points versus clock-matched cohort history; p must pass the saved look/cohort cutoff after an edit, or 0.01 in the hourly fallback |
 
 A replacement caller ID needs both current exposure and history, without a supported decline of its
 own. QA comparisons include the detector's usual false positives: a flag alone cannot establish that
 a call hallucinated. Wilson intervals describe rate uncertainty, while decisions use exact
 conditional count tests. No statistics dependency was added.
 
-The 0.01 threshold applies to an alarm comparison. Shared history, returning people and repeated
-tests mean it is not a whole-run false-alarm guarantee. Tests cover 500 healthy caller-ID pairs and
-500 healthy QA pairs; production needs broader calibration. Small incidents can be missed. Matching
-cohorts/hours does not adjust every lead feature or establish causality.
+Alpha splitting uses the [Bonferroni inequality](https://online.stat.psu.edu/stat505/Lesson05):
+if individual p-values are valid, the probability of any false rejection is at most the sum of
+their levels. Nested looks can share observations. That does not make correlated calls or a
+shifting historical mix independent binomial samples. This budget is nominal, per epoch, not a
+production or whole-run guarantee. Tests cover healthy caller/QA populations and the whole early-look
+rule. Small incidents can stay inconclusive. Off-hours edits need enough observed calls, and daily
+follow-ups can be slow.
 
 ## Caller-ID repair
 

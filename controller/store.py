@@ -85,12 +85,32 @@ class Store:
         if existing != simulator_url:
             raise ValueError("run_id belongs to another simulator URL; use a fresh run_id")
         self.evidence_sql = sql.SQL(Path(__file__).with_name("evidence.sql").read_text(encoding="utf-8"))
+        self.qa_sql = sql.SQL("""
+            INSERT INTO qa_metrics
+            SELECT run_id,workflow_id,history,(payload->>'config_version')::integer,
+                   payload->>'cohort_id',payload->'variant'->>'prompt_version',ts,count(*),
+                   count(*) FILTER (WHERE (payload->>'connected')::boolean),
+                   count(*) FILTER (WHERE (payload->>'engaged')::boolean),
+                   count(*) FILTER (WHERE (payload->>'connected')::boolean
+                                     AND (payload->'qa'->>'hallucination_flag')::boolean)
+            FROM {source} WHERE kind='call' GROUP BY 1,2,3,4,5,6,7
+            ON CONFLICT (run_id,workflow_id,history,config_version,cohort_id,prompt_version,ts)
+            DO UPDATE SET dials=qa_metrics.dials+EXCLUDED.dials,
+                          connected=qa_metrics.connected+EXCLUDED.connected,
+                          engaged=qa_metrics.engaged+EXCLUDED.engaged,
+                          hallucinations=qa_metrics.hallucinations+EXCLUDED.hallucinations
+        """)
         # Upgrade old runs atomically once; normal decisions never rescan raw JSON events.
         if not self.db.execute("SELECT 1 FROM evidence_ready WHERE run_id=%s", (run_id,)).fetchone():
             with self.db.transaction():
                 source = sql.SQL("(SELECT * FROM events WHERE run_id={}) AS source").format(sql.Literal(run_id))
                 self.db.execute(self.evidence_sql.format(source=source))
                 self.db.execute("INSERT INTO evidence_ready VALUES (%s)", (run_id,))
+        if not self.db.execute("SELECT 1 FROM qa_evidence_ready WHERE run_id=%s", (run_id,)).fetchone():
+            with self.db.transaction():
+                source = sql.SQL("(SELECT * FROM events WHERE run_id={}) AS source").format(sql.Literal(run_id))
+                self.db.execute(self.qa_sql.format(source=source))
+                self.db.execute("INSERT INTO qa_evidence_ready VALUES (%s)", (run_id,))
         if state is not None:
             self.observe_state(state)
 
@@ -233,6 +253,7 @@ class Store:
             if missing:
                 raise ValueError(f"Call {missing[0]} has no matching lead/person")
             self.db.execute(self.evidence_sql.format(source=sql.Identifier("fresh_events")))
+            self.db.execute(self.qa_sql.format(source=sql.Identifier("fresh_events")))
             self.db.execute(
                 "INSERT INTO hourly_metrics SELECT run_id, workflow_id, history, "
                 "date_trunc('hour', ts, 'Asia/Kolkata'), (payload->>'config_version')::integer, "
@@ -393,6 +414,41 @@ class Store:
             "AND (evidence->'changed_dims' ? 'prompt_version' OR evidence->'changed_dims' ? 'cohorts')",
             (self.run_id, workflow_id),
         ).fetchone()[0]
+
+    def prompt_alarm_change(self, workflow_id: str) -> dict | None:
+        with self.db.cursor(row_factory=dict_row) as cursor:
+            return cursor.execute(
+                "SELECT ts,(evidence->>'version')::integer AS version,observed_version FROM ("
+                "SELECT ts,evidence,event_id,max((evidence->>'version')::integer) OVER () AS observed_version "
+                "FROM audit_log WHERE run_id=%s AND workflow_id=%s AND kind='config_changed') changes "
+                "WHERE (evidence->'changed_dims' ? 'prompt_version' OR evidence->'changed_dims' ? 'cohorts') "
+                "ORDER BY (evidence->>'version')::integer DESC,event_id DESC LIMIT 1",
+                (self.run_id, workflow_id),
+            ).fetchone()
+
+    def prompt_detections(self, workflow_id: str, version: int) -> list[dict]:
+        with self.db.cursor(row_factory=dict_row) as cursor:
+            return cursor.execute(
+                "SELECT hour,evidence FROM detection_windows WHERE run_id=%s AND workflow_id=%s "
+                "AND config_version=%s AND kind='prompt-cumulative-v1' ORDER BY hour,subject",
+                (self.run_id, workflow_id, version),
+            ).fetchall()
+
+    def qa_window_metrics(self, workflow_id: str, version: int, prompt: str, start: str, end: str,
+                          *, history: bool = False) -> list[dict]:
+        seconds = min(86400, (datetime.fromisoformat(end) - datetime.fromisoformat(start)).total_seconds())
+        with self.db.cursor(row_factory=dict_row) as cursor:
+            return cursor.execute(
+                "SELECT cohort_id,'prompt_version' AS dimension,prompt_version AS variant,"
+                "sum(dials)::bigint AS dials,sum(connected)::bigint AS connected,"
+                "sum(engaged)::bigint AS engaged,sum(hallucinations)::bigint AS hallucinations "
+                "FROM qa_metrics WHERE run_id=%s AND workflow_id=%s AND history=%s AND "
+                "((%s AND MOD(EXTRACT(epoch FROM (ts AT TIME ZONE 'Asia/Kolkata')::time) - "
+                "EXTRACT(epoch FROM (%s::timestamptz AT TIME ZONE 'Asia/Kolkata')::time)+86400,86400)<%s) "
+                "OR (NOT %s AND ts>=%s AND ts<%s AND config_version>=%s AND prompt_version=%s)) "
+                "GROUP BY cohort_id,prompt_version ORDER BY cohort_id,prompt_version",
+                (self.run_id, workflow_id, history, history, start, seconds, history, start, end, version, prompt),
+            ).fetchall()
 
     def uncertain_paid_action(self, incident_id: str) -> bool:
         return bool(self.db.execute("SELECT 1 FROM external_actions WHERE run_id=%s AND incident_id=%s "

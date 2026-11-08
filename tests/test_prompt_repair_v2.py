@@ -33,6 +33,7 @@ def test_llm_is_only_bought_after_previous_candidate_fails_and_filters_options(d
 
 
 def test_supervisor_attribution_and_prompt_approval_are_explicit(database):
+    from test_cumulative_qa import calls
     with setup(database) as (world, store, api, governance, engine):
         previous = copy.deepcopy(world.config)
         previous["prompt_version"] = "P1"
@@ -42,7 +43,8 @@ def test_supervisor_attribution_and_prompt_approval_are_explicit(database):
         store.ingest({"chunk":0,"kind":"events","events":1},[{"event_id":1,"type":"config_changed",
                      "ts":world.now,"workflow_id":"wf","version":2,"actor":"supervisor","changed_dims":["prompt_version"]}])
         world.workflow["governance"]["auto_apply"]["allowed_dims"].append("prompt_version")
-        seed_alarm(store,"prompt_version")
+        calls(store, count=2000, flags=2, at="2027-01-02T10:15:00+05:30", history=True, prompt="P1")
+        calls(store, count=200, flags=80, at="2027-01-04T10:15:00+05:30")
         for hour,minute in ((10,0),(11,0),(11,15),(11,30)):
             tick(world,api,engine,hour,minute)
         incident=store.open_incidents()[0]

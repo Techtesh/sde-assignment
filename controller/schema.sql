@@ -271,3 +271,22 @@ CREATE TABLE IF NOT EXISTS person_metrics (
 CREATE TABLE IF NOT EXISTS evidence_ready (
     run_id text PRIMARY KEY REFERENCES controller_runs
 );
+
+CREATE TABLE IF NOT EXISTS qa_metrics (
+    run_id text NOT NULL REFERENCES controller_runs,
+    workflow_id text NOT NULL,
+    history boolean NOT NULL,
+    config_version integer NOT NULL,
+    cohort_id text NOT NULL,
+    prompt_version text NOT NULL,
+    ts timestamptz NOT NULL,
+    dials bigint NOT NULL,
+    connected bigint NOT NULL,
+    engaged bigint NOT NULL,
+    hallucinations bigint NOT NULL,
+    PRIMARY KEY (run_id,workflow_id,history,config_version,cohort_id,prompt_version,ts)
+);
+
+CREATE TABLE IF NOT EXISTS qa_evidence_ready (
+    run_id text PRIMARY KEY REFERENCES controller_runs
+);

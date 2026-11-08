@@ -68,6 +68,10 @@ sessions disable JIT compilation. [LOAD.md](../reports/LOAD.md) records the meas
 The same transaction updates campaigns, concluded leads and person/voice counters at the exact event
 time. Learning and reach queries use these tables. Raw events are kept for audit.
 
+`qa_metrics` holds exact-time prompt/cohort counts for post-edit cumulative checks. It commits with
+the chunk and has a one-time backfill marker for older runs. Detection windows save planned-look
+results, including positive results waiting for incident creation.
+
 Older runs build the derived tables once and commit an `evidence_ready` marker with them. An interrupted
 backfill leaves no partial counters. Person/time rows can grow with call count; retention and
 smaller sufficient statistics still need production work.

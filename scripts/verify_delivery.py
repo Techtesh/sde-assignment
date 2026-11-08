@@ -43,6 +43,7 @@ def signature(db, client, run_id):
         ("experiment_people", "experiment_id,phase,person_id,voice,dials,connected,engaged", "experiment_id,phase,person_id,voice"),
         ("incidents", "incident_id,workflow_id,kind,status,proposal_id,data", "incident_id"),
         ("audit_log", "event_id,ts,workflow_id,kind,actor,evidence", "event_id"),
+        ("detection_windows", "workflow_id,config_version,kind,subject,hour,streak,episode_start,evidence", "workflow_id,config_version,kind,subject,hour"),
     ):
         count, digest = 0, hashlib.sha256()
         with db.transaction(), db.cursor(name="evidence_signature") as cursor:
@@ -51,7 +52,7 @@ def signature(db, client, run_id):
                 digest.update(json.dumps(record, sort_keys=True, default=str).encode()+b"\n")
                 count += 1
         data[table] = {"rows": count, "sha256": digest.hexdigest()}
-    for table in ("campaigns", "concluded_leads", "person_metrics"):
+    for table in ("campaigns", "concluded_leads", "person_metrics", "qa_metrics"):
         count, fingerprint = db.execute(f"SELECT count(*),sum(hashtextextended(row_to_json(t)::text,0)::numeric) "
                                         f"FROM {table} t WHERE run_id=%s", (run_id,)).fetchone()
         data[table] = {"rows": count, "fingerprint": str(fingerprint)}
@@ -63,7 +64,8 @@ def signature(db, client, run_id):
     assert data["ingested_chunks"]["rows"] == data["state"]["chunks"], "Final chunks are missing"
     data["config_history"] = {}
     data["approvals"] = {}
-    for workflow in get(client, "/workflows"):
+    data["workflows"] = get(client, "/workflows")
+    for workflow in data["workflows"]:
         wid = workflow["workflow_id"]
         history = get(client, f"/workflows/{wid}/config/history")
         applied_ids = [item["proposal_id"] for item in history if item.get("proposal_id")]
@@ -99,6 +101,10 @@ def timings(log: Path, wall_seconds: float) -> dict:
 
 def run_case(args, case, schema, dsn):
     application_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+    source_hash = hashlib.sha256()
+    for path in sorted(Path("controller").iterdir()):
+        if path.suffix in {".py", ".sql"}:
+            source_hash.update(path.as_posix().encode() + b"\0" + path.read_bytes().replace(b"\r\n", b"\n"))
     directory = Path("runs") / f"{args.label}_{case}_{uuid.uuid4().hex[:8]}"
     directory.mkdir(parents=True)
     isolated = make_conninfo(dsn, options=f"-csearch_path={schema}")
@@ -157,6 +163,9 @@ def run_case(args, case, schema, dsn):
                 assert evidence["state"]["finished"]
                 result = {"case": case, "schema": schema, "run_id": args.label, "directory": str(directory),
                           "application_commit": application_commit,
+                          "application_tree_sha256": source_hash.hexdigest(),
+                          "application_controller_tree": subprocess.check_output(["git", "rev-parse", "HEAD:controller"], text=True).strip(),
+                          "application_dirty": bool(subprocess.check_output(["git", "status", "--porcelain", "--", "controller"]).strip()),
                           "profiled": args.profile,
                           "exit": finished.returncode, "timings": timings(directory/"controller.log", elapsed),
                           "signature": evidence}

@@ -16,6 +16,8 @@ from .policy import config_diff, distribution, rebase_config
 RESERVE_CREDITS = 6
 INCIDENT_CREDIT_LIMIT = 18
 VALIDATION_N = 500
+PROMPT_LOOKS = ((1, 0.004), (2, 0.002), (4, 0.001), (8, 0.001))
+PROMPT_DAILY_ALPHA = 0.002
 
 
 def hour_start(timestamp: str) -> datetime:
@@ -41,26 +43,39 @@ class IncidentEngine:
             recent = self.store.window_metrics(wid, start.isoformat(), end.isoformat())
             baseline = self.store.window_metrics(wid, start.isoformat(), end.isoformat(), history=True)
             prompt_epoch = self.store.prompt_alarm_epoch(wid)
+            change = self.store.prompt_alarm_change(wid)
+            candidates = []
             for alarm in alarms(recent, baseline, current["config"]):
+                if change and alarm["kind"] == "prompt_version":
+                    continue
                 epoch = prompt_epoch if alarm["kind"] == "prompt_version" else current["version"]
                 window = self.store.detection_window(wid, epoch, start.isoformat(), alarm)
                 if window["streak"] < 2:
                     continue
+                candidates.append({**alarm, "epoch": epoch, "episode_start": window["episode_start"].isoformat(),
+                                   "window_start": start.isoformat(), "window_end": end.isoformat(),
+                                   "guardrail_before": [row for row in recent if row["dimension"] == alarm["kind"]],
+                                   "guardrail_history_before": [row for row in baseline if row["dimension"] == alarm["kind"]]})
+            # A just-applied config can precede ingestion of its config_changed event by one tick.
+            if change and change["observed_version"] == current["version"]:
+                candidates += self._prompt_alarms(wid, current["config"], change, now)
+            for alarm in candidates:
+                epoch = alarm["epoch"]
                 if self.store.incident_held_for_review(wid, alarm["kind"], alarm["subject"]):
                     continue
-                identity = [wid, epoch, alarm["kind"], alarm["subject"], window["episode_start"].isoformat()]
+                identity = [wid, epoch, alarm["kind"], alarm["subject"], alarm["episode_start"]]
                 iid = hashlib.sha256(json.dumps(identity).encode()).hexdigest()
                 if self.store.incident(iid):
                     continue
                 if any(row["workflow_id"] == wid and row["kind"] == alarm["kind"] for row in self.store.open_incidents()):
                     continue
                 data = {"alarm": alarm, "epoch": epoch, "config_version_at_detection": current["version"],
-                        "rule_version": "hourly-prompt-v3", "validation_n": VALIDATION_N,
+                        "rule_version": alarm.get("rule_version", "hourly-prompt-v3"), "validation_n": VALIDATION_N,
                         "credit_limit": INCIDENT_CREDIT_LIMIT,
-                        "window_start": start.isoformat(), "window_end": end.isoformat(),
+                        "window_start": alarm["window_start"], "window_end": alarm["window_end"],
                         "proposal_attempt": 0, "candidate_index": 0, "expected_prompt": current["config"]["prompt_version"],
-                        "guardrail_before": [row for row in recent if row["dimension"] == alarm["kind"]],
-                        "guardrail_history_before": [row for row in baseline if row["dimension"] == alarm["kind"]]}
+                        "guardrail_before": alarm["guardrail_before"],
+                        "guardrail_history_before": alarm["guardrail_history_before"]}
                 if alarm["kind"] == "prompt_version":
                     data["attribution"] = self.store.prompt_context(wid)
                 self.store.save_incident(iid, workflow, alarm["kind"], now, data)
@@ -69,6 +84,48 @@ class IncidentEngine:
             workflow = definitions.get(incident["workflow_id"])
             if workflow:
                 self._service(incident, workflow, now, tenants)
+
+    def _prompt_alarms(self, workflow_id: str, config: dict, change: dict, now: str) -> list[dict]:
+        start, version = change["ts"], change["version"]
+        recorded = self.store.prompt_detections(workflow_id, version)
+        plan = recorded[0]["evidence"]["plan"] if recorded else {
+            "looks": PROMPT_LOOKS, "daily_alpha": PROMPT_DAILY_ALPHA,
+            "cohorts": sorted({"default", *(item["id"] for item in config["cohorts"])}),
+            "prompt_version": config["prompt_version"],
+        }
+        if plan.get("prompt_version", config["prompt_version"]) != config["prompt_version"]:
+            return []
+        saved = {(row["evidence"]["subject"], row["hour"]): row["evidence"] for row in recorded}
+        elapsed = (datetime.fromisoformat(now) - start).total_seconds() / 3600
+        looks = [*plan["looks"], *((24 * day, plan["daily_alpha"] / (day * (day + 1)))
+                                 for day in range(1, int(elapsed // 24) + 1))]
+        results = []
+        for hours, budget in looks:
+            if hours > elapsed:
+                continue
+            end = start + timedelta(hours=hours)
+            missing = [name for name in plan["cohorts"] if (f"{name}:{config['prompt_version']}", end) not in saved]
+            if missing:
+                recent = self.store.qa_window_metrics(workflow_id, version, config["prompt_version"], start.isoformat(), end.isoformat())
+                baseline = self.store.qa_window_metrics(workflow_id, version, config["prompt_version"], start.isoformat(), end.isoformat(), history=True)
+                for name in missing:
+                    row = next((item for item in recent if item["cohort_id"] == name), {
+                        "cohort_id": name, "dimension": "prompt_version", "variant": config["prompt_version"],
+                        "dials": 0, "connected": 0, "engaged": 0, "hallucinations": 0,
+                    })
+                    alarm = alarms([row], baseline, config, qa_alpha=budget / len(plan["cohorts"]))[0]
+                    alarm = {**alarm, "kind": "prompt-cumulative-v1", "rule_version": "prompt-cumulative-v1",
+                             "epoch": version, "episode_start": start.isoformat(), "window_start": start.isoformat(),
+                             "window_end": end.isoformat(), "look_hours": hours, "alpha": budget / len(plan["cohorts"]),
+                             "plan": plan, "guardrail_before": recent, "guardrail_history_before": baseline}
+                    # Positive results stay replayable if the process dies before creating the incident.
+                    result = self.store.detection_window(workflow_id, version, end.isoformat(), alarm)
+                    saved[(alarm["subject"], end)] = result["evidence"]
+            for name in plan["cohorts"]:
+                alarm = saved[(f"{name}:{config['prompt_version']}", end)]
+                if alarm["signal"]:
+                    results.append({**alarm, "kind": "prompt_version"})
+        return results
 
     def _mark(self, incident: dict, status: str, now: str, **details) -> None:
         data = {**incident["data"], **details}

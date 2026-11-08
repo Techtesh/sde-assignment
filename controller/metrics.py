@@ -48,7 +48,7 @@ def fisher_upper(successes: int, trials: int, reference_successes: int, referenc
     ))
 
 
-def alarms(current: list[dict], historical: list[dict], config: dict) -> list[dict]:
+def alarms(current: list[dict], historical: list[dict], config: dict, *, qa_alpha: float = 0.01) -> list[dict]:
     """Compare caller IDs within cohort/hour; QA alarms compare a prompt with normal history."""
     results = []
     for row in current:
@@ -88,8 +88,8 @@ def alarms(current: list[dict], historical: list[dict], config: dict) -> list[di
             if row["connected"] >= MIN_CONNECTED and normal["connected"] >= MIN_HISTORY:
                 probability = fisher_upper(row["hallucinations"], row["connected"], normal["hallucinations"], normal["connected"])
                 excess = row["hallucinations"] / row["connected"] - normal["hallucinations"] / normal["connected"]
-                signal = row["hallucinations"] >= 3 and excess >= 0.02 and probability <= 0.01
-                extra = {"fisher_p": probability, "observed_excess": excess, "alpha": 0.01, "minimum_excess": 0.02}
+                signal = row["hallucinations"] >= 3 and excess >= 0.02 and probability <= qa_alpha
+                extra = {"fisher_p": probability, "observed_excess": excess, "alpha": qa_alpha, "minimum_excess": 0.02}
         else:
             continue
         results.append({"kind": dim, "subject": f"{name}:{variant}", "cohort": name,
