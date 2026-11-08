@@ -13,7 +13,9 @@ export DATABASE_URL='postgresql://controller:controller@127.0.0.1:55432/controll
 python -m controller status --run-id mine01
 ```
 
-This returns JSON containing shared cohort definitions, pickup/engagement by
+The default is a concise text view of backlog, tick duration, proposals/hour,
+experiments, pending requests, incidents and credits. Add `--json` for the detailed
+view containing shared cohort definitions, pickup/engagement by
 workflow/cohort over the last 24 complete simulated hours, experiment plans and
 results, pending proposals and their age, the last 20 changes, open incidents,
 credits by workflow/status, and loop health. It works while the controller holds
@@ -30,8 +32,11 @@ uncertain actions separately because their actual remote charge may be unknown.
 The JSON includes actionable alert suggestions; it does not send pages or messages.
 While unfinished, a tick older than 120 wall seconds suggests checking the process,
 HTTP service and database, then restarting with the same ID. A prompt incident
-requiring review suggests a page; a caller incident or blocked experiment suggests
-a ticket. Finished runs do not emit stale-loop alerts. Initial bootstrap and an
+requiring approval/review suggests a page; a caller incident or blocked experiment suggests
+a ticket. Approved work within 30 simulated minutes of apply-by and three starts in
+five wall minutes without simulated progress suggest pages. Incidents older than six
+simulated hours and credits below the six-credit reserve suggest tickets. Each alert
+includes the next inspection/reconciliation action. Finished runs do not emit stale-loop alerts. Initial bootstrap and an
 intentionally paused development run need operator context. Production needs a
 separate watchdog because a dead controller cannot report its own death.
 
@@ -54,6 +59,9 @@ approval ID and recorded decision events, proposal transitions, associated incid
 and new-version call outcomes over complete hours in the following 24 hours.
 Later config versions and campaign-pinned old versions are excluded. The result is
 observational: it does not attribute all subsequent changes to this treatment.
+If multiple changes share that timestamp, add `--version N` to select the exact
+configuration change. The rehearsal uses this to distinguish an approved caller
+repair from an automatic experiment cleanup applied in the same simulated minute.
 The API exposes approval IDs/status, not the human approver's name. Raw call events
 also preserve which person/lead heard which variant and config version.
 
@@ -63,14 +71,15 @@ mechanism; the application still scopes every record by run ID.
 
 ## Recovery demonstration
 
-[verify_delivery.py](../scripts/verify_delivery.py) is an external harness. It launches
+[crash_test.py](../tests/crash_test.py) runs the matrix through the shared external
+[verify_delivery.py](../scripts/verify_delivery.py) harness. It launches
 the simulator CLI and accesses its world through HTTP. It never imports simulator
 code or parses scenario truth. Each case gets a fresh world and retained database
 schema. The clean and crash cases share a run ID to keep deterministic IDs comparable.
 
 ```bash
-python scripts/verify_delivery.py --scenario scenarios/public_01_dev.yaml \
-  --label recovery01 --crash-matrix --out reports/crash_recovery.json
+python tests/crash_test.py --scenario scenarios/public_01_dev.yaml \
+  --label recovery01 --out reports/crash_recovery.json
 ```
 
 The five `CRASH_AT` values are `mid_ingest`, `after_advance`, `after_intent`,
@@ -102,7 +111,7 @@ the harness uses host networking to reach its localhost simulator/database.
 docker compose up -d --wait postgres
 docker update --cpus 1 --memory 2g --memory-swap 2g <postgres-container>
 python scripts/verify_delivery.py --scenario scenarios/public_03_load.yaml \
-  --label load03 --linux --out reports/load_public03.json
+  --label load03 --linux --profile --out reports/load_public03.json
 ```
 
 Controller limit: 3 CPUs/6 GiB. PostgreSQL limit: 1 CPU/2 GiB, including its
@@ -112,6 +121,13 @@ is outside that budget. These are cgroup limits, not dedicated bare-metal cores.
 The harness measures wall time around controller execution, including bootstrap
 and launcher startup. Simulator initialization, final comparison queries, grading,
 image build, dependency downloads and database startup are outside that timer.
+
+`--profile` captures standard-library cProfile in the run's `controller.prof` and
+records its leading functions in the report JSON. The real launcher accepts
+`CONTROLLER_PROFILE=/writable/path/controller.prof`; the Linux harness supplies a
+separate writable evidence mount while source stays read-only. Profile overhead
+is included in that run's timings. Default cProfile elapsed times include blocked
+I/O; they are not a measurement of pure CPU time or database backend CPU.
 
 Tick fields separate streamed HTTP wait/decode, JSON parse, residual ingestion
 work, decisions and the preceding advance. `write_seconds` is the ingestion

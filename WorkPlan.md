@@ -228,3 +228,19 @@ What would you do with another week?
 5. Submit. Give your reviewer access to the private repo using the email on the form, submit the form, and confirm the deadline.
 
 If you’re behind, cut in this order: dry-run sophistication, number of alerts, decay-rule refinements, then the number of experiments you run. Don’t cut the audit log, the crash test, or the policy router.
+
+## Added-step execution (2026-11-08)
+
+The Step 5–7 requirements above are retained verbatim. This records implementation and verification separately.
+
+- [x] Step 5 code: 90/10 promotion; persisted reference lift/version/time; daily and fixed 48-hour retirement checks; separate first/repeat populations.
+- [x] Step 5 code: prior-prompt-first repair, n=500 validation, mandatory approval, supervisor attribution/alerts, bounded fallback and time-to-fix records.
+- [x] Regression suite: 118 focused tests pass on Windows and Linux, including exact-version audit, approval-deadline recovery and interrupted decay-stop intent.
+- [x] Step 5 real public_01/public_02 verification: 1 harmful inconclusive cleanup in public_01; 2 beneficial repairs, 0 harmful changes and 5 credits in public_02. Detection delay remains a weakness.
+- [x] Step 6 code: reusable crash script, concise status plus detailed JSON, actionable page/ticket suggestions, cProfile support.
+- [x] Decision evidence: campaign/conclusion state and exact-time person counters updated with ingestion; one-time atomic backfill for old runs; no raw-call JSON queries in learning.
+- [x] Step 6 final crash matrix, profiled public_03 run, all three grades, and measured 10× discussion. All five recovery cases match; the load average is 6m29s/day including bootstrap, while cold start plus D0 is 13m40s.
+- [x] Step 7 local work: final submission, six policy-checked replies, fresh-clone run, and three-decision rehearsal. See [delivery evidence](./reports/STEPS_5_7.md) for version boundaries, results and retained failures.
+- [ ] Step 7 external submission: reviewer email, form URL, deadline, author name and actual hours are still required from the user.
+
+Choices: existing declared experiment shares/rules and incident validation/budgets remain unchanged on restart. New incident budgets are 18 credits (old records retain 12), preserving the six-credit reserve. A lost significance test retires insufficiently supported benefit at a fixed checkpoint; it is not described as proof of harm. QA persistence follows prompt/cohort changes, not unrelated voice edits. Unknown event types fail the chunk transaction.

@@ -1,0 +1,337 @@
+[
+  {
+    "case": "clean",
+    "schema": "steps567_dev_clean_090fc2",
+    "run_id": "steps567_dev",
+    "directory": "runs\\steps567_dev_clean_d3199d3c",
+    "application_commit": "89c55ef07a8b74a785005422601bf647cc16d896",
+    "profiled": false,
+    "exit": 0,
+    "timings": {
+      "ticks": 769,
+      "simulated_days": 8.0,
+      "wall_seconds": 173.335,
+      "wall_seconds_per_day_including_bootstrap": 21.667,
+      "bootstrap": {
+        "mode": "controller",
+        "ts": "2027-01-04T00:00:00+05:30",
+        "finished": false,
+        "ingested_events": 187400,
+        "ingest_seconds": 22.6,
+        "stream_fetch_seconds": 1.859,
+        "parse_seconds": 1.564,
+        "write_seconds": 19.177,
+        "decision_seconds": 21.018,
+        "advance_seconds": 0.0,
+        "loop_seconds": 43.618,
+        "credits_remaining": 200.0,
+        "peak_rss_mib": 48.52
+      },
+      "totals": {
+        "ingest_seconds": 57.331,
+        "stream_fetch_seconds": 6.275,
+        "parse_seconds": 2.564,
+        "write_seconds": 48.492,
+        "decision_seconds": 105.072,
+        "advance_seconds": 7.555,
+        "loop_seconds": 162.414
+      },
+      "live_events": 109640,
+      "live_ingest_events_per_second": 3156.8,
+      "max_decision_lag_bound_seconds": 0.603,
+      "live_wall_seconds_by_simulated_day": {
+        "0": 16.683,
+        "1": 13.753,
+        "2": 14.346,
+        "3": 18.011,
+        "4": 18.224,
+        "5": 16.749,
+        "6": 15.314,
+        "7": 13.271
+      },
+      "peak_controller_rss_mib": 52.52
+    },
+    "signature": {
+      "ingested_chunks": {
+        "rows": 394,
+        "sha256": "446b0441fc02f0ff6981b1b314368d1948b41f10ab6f893493a49937876a6c34"
+      },
+      "hourly_metrics": {
+        "rows": 3886,
+        "sha256": "10a0fd0f64f1cb9fd894f5d02425fc330511877bc0029bdf24d5655be102c8e6"
+      },
+      "proposals": {
+        "rows": 10,
+        "sha256": "84568b559fd9a169c078d942a4219a1d2d4108556adbc03ae016bff65c26d0cb"
+      },
+      "experiments": {
+        "rows": 5,
+        "sha256": "d2a799922310fd9a72e9f329eff3c3b029a7343b602d34b58d03c0c3333dc337"
+      },
+      "experiment_people": {
+        "rows": 31088,
+        "sha256": "4d4d81a670a6a489928ce42c4c9f79a728a5301cc7463ccdf10ad566f1ac1bf0"
+      },
+      "incidents": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "audit_log": {
+        "rows": 83,
+        "sha256": "fef6e7a9e980c151918d855e2c9099f68b3c4893fe3c1277bffb7cc02f65607a"
+      },
+      "campaigns": {
+        "rows": 66,
+        "fingerprint": "-86514125006996733937"
+      },
+      "concluded_leads": {
+        "rows": 30445,
+        "fingerprint": "959382228130197955824"
+      },
+      "person_metrics": {
+        "rows": 83200,
+        "fingerprint": "-2280147128576946071428"
+      },
+      "events": [
+        297040,
+        1,
+        297040,
+        "-237319728126149936519"
+      ],
+      "state": {
+        "scenario": "public_01_dev",
+        "sim_minute": 11520,
+        "ts": "2027-01-12T00:00:00+05:30",
+        "end_minute": 11520,
+        "finished": true,
+        "tick_minutes": 15,
+        "credits_remaining": 200.0,
+        "chunks": 394,
+        "last_event_id": 297040
+      },
+      "config_history": {
+        "nw_renewal": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-04T13:45:00+05:30",
+            "proposal_id": "f558f872f11ef931be2a3750a4a91aa6d99b428164c89d6780bb4f41d5b5fde8",
+            "approval_id": "apr_00001"
+          },
+          {
+            "version": 3,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T17:45:00+05:30",
+            "proposal_id": "434a19b856d74146390f5f028a85a2fcd8297c7fbfa415615aa1607be8006d57",
+            "approval_id": "apr_00003"
+          },
+          {
+            "version": 4,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-08T10:15:00+05:30",
+            "proposal_id": "a46e097f49d146c0b4a80b4ce855cc5631ff8b72f9ef69c80406f0614f46cbf1",
+            "approval_id": "apr_00004"
+          },
+          {
+            "version": 5,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-11T13:00:00+05:30",
+            "proposal_id": "350714175ecdc13ca8861687dce7bfb4b26106bde7663e29828f43e1daba2b10",
+            "approval_id": "apr_00006"
+          }
+        ],
+        "nw_kyc": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-04T17:45:00+05:30",
+            "proposal_id": "5ff2438cbda452b91cd8300b28bdd8ec8467d611639bd3c59df822398d7e23f9",
+            "approval_id": "apr_00002"
+          },
+          {
+            "version": 3,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-08T17:15:00+05:30",
+            "proposal_id": "60c9c14f739a6693e61f9aef392ebd5c3195f9ae47b54b232fea165f1573de1f",
+            "approval_id": "apr_00005"
+          }
+        ],
+        "ks_cancel": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": 0,
+            "proposal_id": "71dc5246c4b821fc97042784187b1d730b9d359d4f329b5fdebb2ca1c7519583",
+            "approval_id": null
+          },
+          {
+            "version": 3,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T09:15:00+05:30",
+            "proposal_id": "4616b6a0dfb5f87a02d78bbbf080ac8e61c29eae18083ab74519b510b02edbe7",
+            "approval_id": null
+          },
+          {
+            "version": 4,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T09:30:00+05:30",
+            "proposal_id": "0062d5eedae09e5e341044d6952b34435850027242c7c04d181602e9347d22ff",
+            "approval_id": null
+          },
+          {
+            "version": 5,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-10T09:45:00+05:30",
+            "proposal_id": "f986cd7f8dfea576352694100519bd3f3cbbe311e309796cda981eabaac53eee",
+            "approval_id": null
+          }
+        ]
+      },
+      "approvals": {
+        "nw_renewal": [
+          {
+            "approval_id": "apr_00001",
+            "proposal_id": "f558f872f11ef931be2a3750a4a91aa6d99b428164c89d6780bb4f41d5b5fde8",
+            "workflow_id": "nw_renewal",
+            "status": "applied",
+            "base_version": 1,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-04T10:00:00+05:30",
+            "expires_at": "2027-01-05T10:00:00+05:30",
+            "decided_at": "2027-01-04T13:24:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00003",
+            "proposal_id": "434a19b856d74146390f5f028a85a2fcd8297c7fbfa415615aa1607be8006d57",
+            "workflow_id": "nw_renewal",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-07T14:00:00+05:30",
+            "expires_at": "2027-01-08T14:00:00+05:30",
+            "decided_at": "2027-01-07T17:22:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00004",
+            "proposal_id": "a46e097f49d146c0b4a80b4ce855cc5631ff8b72f9ef69c80406f0614f46cbf1",
+            "workflow_id": "nw_renewal",
+            "status": "applied",
+            "base_version": 3,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-07T17:45:00+05:30",
+            "expires_at": "2027-01-08T17:45:00+05:30",
+            "decided_at": "2027-01-08T10:00:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00006",
+            "proposal_id": "350714175ecdc13ca8861687dce7bfb4b26106bde7663e29828f43e1daba2b10",
+            "workflow_id": "nw_renewal",
+            "status": "applied",
+            "base_version": 4,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-11T10:30:00+05:30",
+            "expires_at": "2027-01-12T10:30:00+05:30",
+            "decided_at": "2027-01-11T12:40:00+05:30",
+            "reasons": []
+          }
+        ],
+        "nw_kyc": [
+          {
+            "approval_id": "apr_00002",
+            "proposal_id": "5ff2438cbda452b91cd8300b28bdd8ec8467d611639bd3c59df822398d7e23f9",
+            "workflow_id": "nw_kyc",
+            "status": "applied",
+            "base_version": 1,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-04T10:15:00+05:30",
+            "expires_at": "2027-01-05T10:15:00+05:30",
+            "decided_at": "2027-01-04T17:28:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00005",
+            "proposal_id": "60c9c14f739a6693e61f9aef392ebd5c3195f9ae47b54b232fea165f1573de1f",
+            "workflow_id": "nw_kyc",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-08T10:15:00+05:30",
+            "expires_at": "2027-01-09T10:15:00+05:30",
+            "decided_at": "2027-01-08T16:51:00+05:30",
+            "reasons": []
+          }
+        ],
+        "ks_cancel": []
+      }
+    }
+  }
+]

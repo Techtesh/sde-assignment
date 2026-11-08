@@ -1,130 +1,137 @@
-# public_03 load measurement
+# Final profiled public_03 load run
 
-The completed result is recorded in [load_public03.json](./load_public03.json).
-The first failed attempt is retained separately in [LOAD_ATTEMPT.md](./LOAD_ATTEMPT.md);
-it is not included in successful-run throughput or day averages.
+Application measured: `f594647818faa6d8900131a40469ded7a3c6269c`; run `steps567_load`;
+retained schema `steps567_load_clean_2f139e`. [Machine-readable evidence](./steps567_load.json)
+and [grade](./public_03.md). This is a **fully profiled** run: cProfile overhead
+is included. [MILESTONE5_LOAD.md](./MILESTONE5_LOAD.md) preserves the earlier,
+different unprofiled implementation; this is not a controlled speedup comparison.
 
-## Environment and method
-
-Controller: Linux container, Python 3.12.16, one process, 3 CPU quota and 6 GiB RAM.
-PostgreSQL 17.11: Linux container, 1 CPU quota and 2 GiB RAM. Extra container swap
-is disabled. Thus application quotas total **4 CPUs / 8 GiB**, including the
-database; they are limits on Docker Desktop's shared Linux VM, not dedicated
-bare-metal cores. The VM advertises 16 CPUs / 15.58 GiB. The simulator runs outside
-the application budget as an external HTTP service on the Windows host.
-
-The harness starts a fresh public_03 world using the simulator CLI, waits for
-HTTP health, then times the real `run.sh` in the Linux container. Source is
-mounted read-only. No other tests/controllers use this PostgreSQL service during
-the measurement. Lightweight checkpoint/resource observations are not a second
-application workload. Setup/image build, simulator initialization, post-run audit
-fingerprints and grading are outside the timer; **history bootstrap is inside**.
-
-The API advertises 5,537,379 historical events in 23 chunks and five live days
-(7,200 simulated minutes). The controller gets those numbers through HTTP, never
-from scenario truth or simulator files. [verify_delivery.py](../scripts/verify_delivery.py)
-is the external measurement harness; [OPERATIONS.md](../docs/OPERATIONS.md) gives
-reproduction commands and the timing definitions.
-
-## Completed measurements
-
-The bootstrap commits 5,537,379 events in **465.567 seconds**, or **11,893.8
-events/second**. First-loop proposal preparation takes another 73.767 seconds;
-the first complete loop is **539.334 seconds** (8m59s).
-
-Fresh run: `load03`, schema `load03_clean_efb216`, application commit
-`7c20533ec44a66adc737f096dc958546cfd4f76e`. All five days finish with zero
-backlog against the final HTTP state: stored count/max event ID and API last ID
-are all 9,737,478; all 269 advertised chunks are committed.
+## Measured result
 
 | Measurement | Result |
 |---|---:|
-| Historical / live / total events | 5,537,379 / 4,200,099 / 9,737,478 |
+| Simulated days / ticks | 5 / 481 (480 advances) |
+| History / live / total events | 5,537,379 / 4,200,096 / 9,737,475 |
 | Live dials | 3,240,000 (648,000/day) |
-| Live ingestion throughput | **11,747.2 events/sec** |
-| Full wall time, including history and initial decisions | **1,729.883 sec** (28m50s) |
-| Full wall time / five simulated days | **345.977 sec/day** (5m46s) |
-| Largest live advance-plus-decision bound | **38.283 sec** |
-| Controller peak RSS | **101.36 MiB** |
-| Tables, indexes and TOAST in this schema | **7,852,056,576 bytes** (about 7.31 GiB) |
-| Experiment person/arm rows | 943,089 |
-| Credits spent | 0 |
+| Live ingestion throughput | **7,537.7 events/sec** |
+| Whole controller wall time | **1,943.207 sec** (32m23s) |
+| Wall time per simulated day, including bootstrap | **388.641 sec/day** (6m29s) |
+| Mean live advance-plus-loop time | **2,759.615 ms/tick** |
+| Maximum advance-plus-loop bound | **25.434 sec** (25,434 ms) |
+| Peak controller process RSS | **90.79 MiB** |
+| Database tables/indexes/TOAST | **9,332,457,472 bytes** (about 8.69 GiB) |
+| Exact-time person/voice rows | **3,240,000** |
+| Experiment person/arm rows | **944,347** |
+| Cohort/hour metric keys | **8,791** |
+| Credits spent | **0** |
+
+The final stored event count, max event ID and API last event ID are all
+9,737,475; all advertised chunks are committed. All five days finish. Twelve
+experiments end as ten inconclusive and two unfinished; no public winner is
+promoted and no incident is raised. The grade records 22 changes: 16 neutral,
+four beneficial and two harmful. The harmful changes restore KYC incumbents
+after inconclusive trials; passing throughput is not proof of beneficial learning.
+
+## Bootstrap, day totals and target
+
+Historical ingestion takes **608.838 seconds**; initial decisions add 7.258 seconds.
+The first complete loop is **616.096 seconds**. This initial work is included
+in the headline timer, not removed to improve the average.
 
 | Simulated day | Live advance + loop seconds, excluding bootstrap |
 |---|---:|
-| D0 | 167.310 |
-| D1 | 238.956 |
-| D2 | 314.501 |
-| D3 | 308.241 |
-| D4 | 159.278 |
+| D0 | 204.122 |
+| D1 | 277.357 |
+| D2 | 358.727 |
+| D3 | 292.931 |
+| D4 | 191.478 |
 
-The overall average and every live-day total meet ten minutes/day. **Cold startup
-plus D0 does not:** the recorded stages sum to 706.644 seconds, about **11m47s**,
-before small launcher/logging overhead. An average is not evidence of a sub-ten-minute
-cold first day. The longest live day is 5m15s. This distinction is a retained
-limitation, rather than removing bootstrap from the headline timer.
+The overall average and all live-day totals meet ten minutes/day. **Cold start
+plus D0 does not**: recorded stages total **820.218 seconds** (13m40s), before
+small startup/logging overhead. Nor is there a six-second tail guarantee: mean
+live ticks are 2.760 seconds but the maximum is 25.434 seconds. A paused synchronous
+simulator is not evidence of backlog recovery under continuously arriving traffic.
 
-| Stage totals across bootstrap + live work | Seconds |
+| Stage, across bootstrap and live work | Seconds |
 |---|---:|
-| Ingestion (inclusive) | 823.107 |
-| Stream wait/decode, within ingestion | 32.831 |
-| JSON parse, within ingestion | 81.722 |
-| Remaining ingestion work, within ingestion | 708.564 |
-| Decision work, including API/governance and statistics | 837.673 |
-| Advance requests and following state reads | 66.830 |
+| Inclusive ingestion | 1166.052 |
+| Stream wait/decode, within ingestion | 35.299 |
+| JSON parse, within ingestion | 116.240 |
+| Remaining ingestion work, within ingestion | 1014.496 |
+| Decision/API/statistics work | 709.585 |
+| Advance + following state reads | 65.063 |
 
-Do not add the three ingestion subcategories to the inclusive ingestion total.
-Live decision work is 763.906 seconds versus 357.540 seconds of live ingestion;
-the decision path is the larger steady-state cost. Rounded stage sums omit small
-recording/logging/startup costs captured by the full wall timer. The run records
-12 experiments: ten inconclusive, one lost, one blocked; no winner promotion,
-no incident records and no paid calls. This is a full controller measurement,
-not an observation-only shortcut.
+The three ingestion subcategories are included in ingestion; do not add them
+again. Live ingestion is 557.214 seconds; live decisions are 702.327 seconds.
+Rounded stage sums omit small startup/health-recording/logging costs present in
+full wall time. `write_seconds` includes validation, serialization, discovery,
+COPY, SQL and commit, not only physical disk writes.
 
-## What the measurement changed
+## cProfile findings
 
-The first attempt exposed redundant ingestion work: a large chunk sorted JSONB
-to discover conflicting duplicates and could join against all earlier events
-even when every ID was new. The final path checks narrow IDs first, compares
-payloads only for duplicates, and skips prior-row comparison only when the actual
-minimum input ID exceeds the committed maximum. Unique chunks avoid a redundant
-DISTINCT sort. Overlapping/replayed IDs still take the full equality check;
-same-chunk conflicts still roll back. The regression suite covers these paths.
+The profile accounts for **896,866,062 calls**. Raw data remains at
+`runs/steps567_load_clean_75d2d319/controller.prof` in ignored local run storage;
+leading functions are also preserved in the report JSON. To inspect it:
 
-The proposal reach query's recovered plan spent 2.279 of 7.425 seconds compiling
-49 JIT functions. Controller sessions disable JIT to avoid repeated compilation
-overhead. The observed backend crash was not reproduced and its cause remains
-unresolved; successful rerun evidence cannot establish that a server defect is
-fixed. No new dependency, partition, queue or worker was added.
+```bash
+python -m pstats runs/steps567_load_clean_75d2d319/controller.prof
+```
 
-## Interpretation and 10×
+| Function | Cumulative elapsed seconds |
+|---|---:|
+| Store.ingest | 1162.357 |
+| Driver wait (internal 1057.395 sec) | 1107.165 |
+| ExperimentEngine.tick | 584.721 |
+| Store.collect_exposure | 424.841 |
+| event_row validation/adaptation | 150.401 |
+| evaluate | 114.227 |
+| comparison | 111.467 |
+| Governance.proposal_facts | 13.749 |
 
-Wall time/day including bootstrap is the full timed controller duration divided
-by five. Live day totals exclude the one-time bootstrap and show variability.
-The maximum advance-plus-loop duration bounds the wall time from the start of
-synchronous event generation to a completed decision in this simulator; it is
-not a production p99. Simulated decisions still occur on 15-minute ticks.
+Cumulative times overlap parent/child calls. Default cProfile elapsed time includes
+blocked I/O; driver wait is not proof of database CPU utilization. The initial
+decision phase is much smaller than the earlier raw-JSON implementation, but
+version, profiling and cache differences prevent claiming a controlled speedup.
 
-Process peak RSS is measured with Linux `getrusage`; it excludes database memory
-and container page cache. PostgreSQL's hard 2 GiB cap bounds its contribution;
-its lifetime `memory.peak` includes earlier unrestricted tests and is not quoted
-as a fresh-run measurement. The database table/index/TOAST footprint excludes
-WAL, transient sort/COPY files and simulator storage. A quota is not a measured
-RSS value, and an average is not a cold-start latency claim.
+JSON parse is about 10% of ingestion and 6% of full wall time. A faster parser
+alone cannot remove the measured wait/write and person-counter costs. No new
+parser dependency, queue or worker was added merely because it was a suggested fix.
 
-At 10×, first profile ingestion serialization/SQL/WAL and the materialized
-active/concluded-lead sets used for proposal facts. Persisting concluded-lead
-state transactionally can avoid repeatedly deriving it from all historical
-calls. Retain raw evidence with time-based retention/partitions. Person-counter
-transfer and inference also scale with distinct people; aggregate sufficient
-cluster statistics closer to the database before shipping every row each look.
-Then shard tenant/workflow ownership, retaining one writer/proposal stream per
-workflow and atomic shared credit/attention reservations. These are proposed
-next steps, not implemented or measured ten-times capacity. A vector store or
-queue does not remove the observed SQL/retention costs.
+## Resource and measurement limits
 
-At unchanged measured throughput, ten times live ingestion alone would require
-about 715 seconds/day, before decision work. Thus this result does not support
-a ten-times claim under the same ten-minute budget. The database also logged
-frequent WAL checkpoints with its default `max_wal_size=1GB`; disk/WAL sizing
-needs measurement alongside CPU and query plans before adding workers.
+Controller: Linux/Python 3.12.16, 3 CPU quota, 6 GiB memory. PostgreSQL 17.11:
+1 CPU quota, 2 GiB memory. Additional container swap is disabled. The application
+budget totals **4 CPUs / 8 GiB** on Docker Desktop's shared 16-CPU/15.58-GiB VM;
+these are quotas, not dedicated bare-metal cores. The simulator is an external
+HTTP service on the Windows host, outside the application budget.
+
+Timing includes the real Bash launcher and history bootstrap. Image/dependency
+setup, simulator initialization, post-run evidence fingerprints and grading are
+outside it. No other advancing controllers or database test writes ran during
+measurement; lightweight read-only monitoring/rehearsal queries were made. Peak
+RSS excludes database memory and container cache; the database has a hard 2-GiB
+cap. Footprint excludes WAL, transient COPY/sort files and simulator storage.
+
+The profiled application is f594647. A later stop/checkpoint ordering correction
+changes durability at safety/decay stops, retains the normal hot path, and is
+covered separately by the final 118-test suite; this full profile predates it.
+The earlier unresolved backend crash and invalid reference input are retained in
+[LOAD_ATTEMPT.md](./LOAD_ATTEMPT.md) and [INPUT_ANOMALY.md](./INPUT_ANOMALY.md).
+
+## Ten times the traffic
+
+At unchanged profiled throughput, 10× live ingestion alone projects to about
+**1,114 seconds/day**, before decisions. It therefore cannot meet the same
+ten-minute budget without changes; this is a projection, not a tested capacity.
+
+The ordinary cohort/hour cube has 8,791 keys, while exact-time person evidence
+has 3,240,000 rows, equal to live call count here. The claim that all aggregates
+stay small as events increase is false for the evidence needed by clustered and
+first/repeat analysis. Leads and raw evidence also grow with traffic.
+
+First profile/reduce serialization, WAL/index work and the transfer/recalculation
+of person counters. Compute sufficient cluster statistics nearer the database;
+retain person covariance. Add bounded time-based retention/partitions. Only then
+shard tenant/workflow ownership, preserving one writer/proposal stream per workflow
+and atomic shared credit/attention reservations. Redis/vector storage does not
+remove these costs, and PostgreSQL is already the chosen store.

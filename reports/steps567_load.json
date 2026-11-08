@@ -1,0 +1,877 @@
+[
+  {
+    "case": "clean",
+    "schema": "steps567_load_clean_2f139e",
+    "run_id": "steps567_load",
+    "directory": "runs\\steps567_load_clean_75d2d319",
+    "application_commit": "f594647818faa6d8900131a40469ded7a3c6269c",
+    "profiled": true,
+    "exit": 0,
+    "timings": {
+      "ticks": 481,
+      "simulated_days": 5.0,
+      "wall_seconds": 1943.207,
+      "wall_seconds_per_day_including_bootstrap": 388.641,
+      "bootstrap": {
+        "mode": "controller",
+        "ts": "2027-01-04T00:00:00+05:30",
+        "finished": false,
+        "ingested_events": 5537379,
+        "ingest_seconds": 608.838,
+        "stream_fetch_seconds": 18.992,
+        "parse_seconds": 66.901,
+        "write_seconds": 522.945,
+        "decision_seconds": 7.258,
+        "advance_seconds": 0.0,
+        "loop_seconds": 616.096,
+        "credits_remaining": 400.0,
+        "peak_rss_mib": 51.47
+      },
+      "totals": {
+        "ingest_seconds": 1166.052,
+        "stream_fetch_seconds": 35.299,
+        "parse_seconds": 116.24,
+        "write_seconds": 1014.496,
+        "decision_seconds": 709.585,
+        "advance_seconds": 65.063,
+        "loop_seconds": 1875.648
+      },
+      "live_events": 4200096,
+      "live_ingest_events_per_second": 7537.7,
+      "max_decision_lag_bound_seconds": 25.434,
+      "live_wall_seconds_by_simulated_day": {
+        "0": 204.122,
+        "1": 277.357,
+        "2": 358.727,
+        "3": 292.931,
+        "4": 191.478
+      },
+      "peak_controller_rss_mib": 90.79
+    },
+    "signature": {
+      "ingested_chunks": {
+        "rows": 269,
+        "sha256": "24a7527745b9d0b394f4e8be514e763416f2e376b2bbd0049fb8ae9c14c16d53"
+      },
+      "hourly_metrics": {
+        "rows": 8791,
+        "sha256": "ccc60c2639f0901f91d673e00f1613f51ade3a77e13398ea0b714dbd57917b2e"
+      },
+      "proposals": {
+        "rows": 22,
+        "sha256": "f0f75a8b93c3d1c2cfc285bcf0c4f61bf831d2fa241a12438b03498d7f687770"
+      },
+      "experiments": {
+        "rows": 12,
+        "sha256": "1e0797345ead7334817cb1e5ed87487df202c9aec2a896d16fb7598d07baf52f"
+      },
+      "experiment_people": {
+        "rows": 944347,
+        "sha256": "e3fb7e8331c9e9de813930efd0c371ae9d022c4a8a04990ebec4549735ce0174"
+      },
+      "incidents": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "audit_log": {
+        "rows": 180,
+        "sha256": "e4135eca0b9d4662a1cc78a724f4ac43e9cbefefccd1504fbc10fc71d2f56279"
+      },
+      "campaigns": {
+        "rows": 144,
+        "fingerprint": "45901033414506951212"
+      },
+      "concluded_leads": {
+        "rows": 1045241,
+        "fingerprint": "-2814113916084046636489"
+      },
+      "person_metrics": {
+        "rows": 3240000,
+        "fingerprint": "7743480068468479887571"
+      },
+      "events": [
+        9737475,
+        1,
+        9737475,
+        "-16166773057445147722823"
+      ],
+      "state": {
+        "scenario": "public_03_load",
+        "sim_minute": 7200,
+        "ts": "2027-01-09T00:00:00+05:30",
+        "end_minute": 7200,
+        "finished": true,
+        "tick_minutes": 15,
+        "credits_remaining": 400.0,
+        "chunks": 269,
+        "last_event_id": 9737475
+      },
+      "config_history": {
+        "nort_renewal_0": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-04T13:45:00+05:30",
+            "proposal_id": "9b0f5460ebf3a4e718d87b4bda749a1fedab7ee8454f2a724dbe78edb21f40ad",
+            "approval_id": "apr_00003"
+          },
+          {
+            "version": 3,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T16:00:00+05:30",
+            "proposal_id": "0f1f0e5059f79cc77709f1559228c0103e95fa20b879d273e5e73f8f252073a5",
+            "approval_id": "apr_00011"
+          }
+        ],
+        "nort_kyc_1": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-05T10:15:00+05:30",
+            "proposal_id": "ba4ceb75920b7b02550853f69662d7fa8d49530ce8b31f5b619fb8ffbed3251c",
+            "approval_id": "apr_00007"
+          }
+        ],
+        "nort_cancel_2": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": 0,
+            "proposal_id": "d91170a427d1adcd481e7c9df2e2601d6424a72f535bf2ae939fbe8dccf9d5ba",
+            "approval_id": null
+          },
+          {
+            "version": 3,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T09:00:00+05:30",
+            "proposal_id": "077e08961736b58a5c282e1ee01ec1d79014c6f2192c797c9682493706a07b84",
+            "approval_id": null
+          }
+        ],
+        "kest_renewal_0": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-04T12:00:00+05:30",
+            "proposal_id": "17f952328fef94e4f0560bf1193eb3ad729cc003e417cae6b4d4155766c567e0",
+            "approval_id": "apr_00002"
+          },
+          {
+            "version": 3,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T14:00:00+05:30",
+            "proposal_id": "04a2bfbb9eb2f4a0c5d09b944232cfb868cf4f6c21dbb4ac4895cbc1e044d0bd",
+            "approval_id": "apr_00010"
+          }
+        ],
+        "kest_kyc_1": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-05T10:15:00+05:30",
+            "proposal_id": "520c4c2fb9d6fa9589406938b35fae04b6677975e47536bfdd0aedad1b8cd8ca",
+            "approval_id": "apr_00006"
+          }
+        ],
+        "kest_cancel_2": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": 0,
+            "proposal_id": "0dd23ec7d98629cb8dba49216b3d0700b1b97416f89e96163ef2cfd701fed8e6",
+            "approval_id": null
+          },
+          {
+            "version": 3,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T09:15:00+05:30",
+            "proposal_id": "9cbb673a7cd83c66ba9eae2e7ae722014dcba6210e719db19a90cb345d6e7661",
+            "approval_id": null
+          }
+        ],
+        "arav_renewal_0": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-04T11:30:00+05:30",
+            "proposal_id": "784443011a6aec3751c91dda5ff77cb40c7c1901675b5cd63b229a74bddcd292",
+            "approval_id": "apr_00001"
+          },
+          {
+            "version": 3,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T13:45:00+05:30",
+            "proposal_id": "5ab750381dc3d628087863572661d28f87036c26275aeaad9ccd0cd7cd3575d5",
+            "approval_id": "apr_00009"
+          }
+        ],
+        "arav_kyc_1": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-04T14:15:00+05:30",
+            "proposal_id": "047f47fb332dd49700706b385a340b3f235c232fd19e29e957c0bc474b673f38",
+            "approval_id": "apr_00005"
+          },
+          {
+            "version": 3,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-08T16:45:00+05:30",
+            "proposal_id": "8f0ab17ce0dd7e6279e6ec935223726c4492471a4ecf9104ff10a945abe76a09",
+            "approval_id": "apr_00013"
+          }
+        ],
+        "arav_cancel_2": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": 0,
+            "proposal_id": "5e290a54a8d491333fcb72ef2e2a1564595188c9a16e7f1c2147e4e0594937c5",
+            "approval_id": null
+          },
+          {
+            "version": 3,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T09:15:00+05:30",
+            "proposal_id": "c0c938b61c5145afa77d0734f78548779fe92163050e2ffe68a98914e8cad7d8",
+            "approval_id": null
+          }
+        ],
+        "tide_renewal_0": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-04T13:45:00+05:30",
+            "proposal_id": "cfca5bbf7b2c8e564f09d62767aa3618aea8cd74a93ff334258690979c04da0c",
+            "approval_id": "apr_00004"
+          },
+          {
+            "version": 3,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T16:45:00+05:30",
+            "proposal_id": "1e9e59529a16079a25f39ac07bcd81a9743bf54fef7ab28a2e474e05a41ba36c",
+            "approval_id": "apr_00012"
+          }
+        ],
+        "tide_kyc_1": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-04T17:00:00+05:30",
+            "proposal_id": "23bbd11acf05ab8f0abaaf26afee40dc625167340dda560bf2f03366b4cfed2a",
+            "approval_id": "apr_00008"
+          },
+          {
+            "version": 3,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-08T15:45:00+05:30",
+            "proposal_id": "59c36ed4cbcb3a15275ad3169c7663bd5d94731bf2d9f31babb63e4ed1c862de",
+            "approval_id": "apr_00014"
+          }
+        ],
+        "tide_cancel_2": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": 0,
+            "proposal_id": "8aa2ee54c9c312b2e80f14dcdee0cb5a984816cbdec320bbfcaa148aac6a9fc6",
+            "approval_id": null
+          },
+          {
+            "version": 3,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T09:15:00+05:30",
+            "proposal_id": "52a381d9dc83ea3eeef41486f10caa3c7bdbf8b99c6221567e37ad8fa43f2232",
+            "approval_id": null
+          }
+        ]
+      },
+      "approvals": {
+        "nort_renewal_0": [
+          {
+            "approval_id": "apr_00003",
+            "proposal_id": "9b0f5460ebf3a4e718d87b4bda749a1fedab7ee8454f2a724dbe78edb21f40ad",
+            "workflow_id": "nort_renewal_0",
+            "status": "applied",
+            "base_version": 1,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-04T10:00:00+05:30",
+            "expires_at": "2027-01-05T10:00:00+05:30",
+            "decided_at": "2027-01-04T13:16:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00011",
+            "proposal_id": "0f1f0e5059f79cc77709f1559228c0103e95fa20b879d273e5e73f8f252073a5",
+            "workflow_id": "nort_renewal_0",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-07T14:00:00+05:30",
+            "expires_at": "2027-01-08T14:00:00+05:30",
+            "decided_at": "2027-01-07T15:40:00+05:30",
+            "reasons": []
+          }
+        ],
+        "nort_kyc_1": [
+          {
+            "approval_id": "apr_00007",
+            "proposal_id": "ba4ceb75920b7b02550853f69662d7fa8d49530ce8b31f5b619fb8ffbed3251c",
+            "workflow_id": "nort_kyc_1",
+            "status": "applied",
+            "base_version": 1,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-04T10:15:00+05:30",
+            "expires_at": "2027-01-05T10:15:00+05:30",
+            "decided_at": "2027-01-05T10:00:00+05:30",
+            "reasons": []
+          }
+        ],
+        "nort_cancel_2": [],
+        "kest_renewal_0": [
+          {
+            "approval_id": "apr_00002",
+            "proposal_id": "17f952328fef94e4f0560bf1193eb3ad729cc003e417cae6b4d4155766c567e0",
+            "workflow_id": "kest_renewal_0",
+            "status": "applied",
+            "base_version": 1,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-04T10:00:00+05:30",
+            "expires_at": "2027-01-05T10:00:00+05:30",
+            "decided_at": "2027-01-04T11:37:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00010",
+            "proposal_id": "04a2bfbb9eb2f4a0c5d09b944232cfb868cf4f6c21dbb4ac4895cbc1e044d0bd",
+            "workflow_id": "kest_renewal_0",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-07T12:15:00+05:30",
+            "expires_at": "2027-01-08T12:15:00+05:30",
+            "decided_at": "2027-01-07T13:33:00+05:30",
+            "reasons": []
+          }
+        ],
+        "kest_kyc_1": [
+          {
+            "approval_id": "apr_00006",
+            "proposal_id": "520c4c2fb9d6fa9589406938b35fae04b6677975e47536bfdd0aedad1b8cd8ca",
+            "workflow_id": "kest_kyc_1",
+            "status": "applied",
+            "base_version": 1,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-04T10:15:00+05:30",
+            "expires_at": "2027-01-05T10:15:00+05:30",
+            "decided_at": "2027-01-05T10:00:00+05:30",
+            "reasons": []
+          }
+        ],
+        "kest_cancel_2": [],
+        "arav_renewal_0": [
+          {
+            "approval_id": "apr_00001",
+            "proposal_id": "784443011a6aec3751c91dda5ff77cb40c7c1901675b5cd63b229a74bddcd292",
+            "workflow_id": "arav_renewal_0",
+            "status": "applied",
+            "base_version": 1,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-04T10:00:00+05:30",
+            "expires_at": "2027-01-05T10:00:00+05:30",
+            "decided_at": "2027-01-04T11:14:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00009",
+            "proposal_id": "5ab750381dc3d628087863572661d28f87036c26275aeaad9ccd0cd7cd3575d5",
+            "workflow_id": "arav_renewal_0",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-07T11:45:00+05:30",
+            "expires_at": "2027-01-08T11:45:00+05:30",
+            "decided_at": "2027-01-07T13:26:00+05:30",
+            "reasons": []
+          }
+        ],
+        "arav_kyc_1": [
+          {
+            "approval_id": "apr_00005",
+            "proposal_id": "047f47fb332dd49700706b385a340b3f235c232fd19e29e957c0bc474b673f38",
+            "workflow_id": "arav_kyc_1",
+            "status": "applied",
+            "base_version": 1,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-04T10:15:00+05:30",
+            "expires_at": "2027-01-05T10:15:00+05:30",
+            "decided_at": "2027-01-04T13:51:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00013",
+            "proposal_id": "8f0ab17ce0dd7e6279e6ec935223726c4492471a4ecf9104ff10a945abe76a09",
+            "workflow_id": "arav_kyc_1",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-08T10:15:00+05:30",
+            "expires_at": "2027-01-09T10:15:00+05:30",
+            "decided_at": "2027-01-08T16:29:00+05:30",
+            "reasons": []
+          }
+        ],
+        "arav_cancel_2": [],
+        "tide_renewal_0": [
+          {
+            "approval_id": "apr_00004",
+            "proposal_id": "cfca5bbf7b2c8e564f09d62767aa3618aea8cd74a93ff334258690979c04da0c",
+            "workflow_id": "tide_renewal_0",
+            "status": "applied",
+            "base_version": 1,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-04T10:00:00+05:30",
+            "expires_at": "2027-01-05T10:00:00+05:30",
+            "decided_at": "2027-01-04T13:21:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00012",
+            "proposal_id": "1e9e59529a16079a25f39ac07bcd81a9743bf54fef7ab28a2e474e05a41ba36c",
+            "workflow_id": "tide_renewal_0",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-07T14:00:00+05:30",
+            "expires_at": "2027-01-08T14:00:00+05:30",
+            "decided_at": "2027-01-07T16:17:00+05:30",
+            "reasons": []
+          }
+        ],
+        "tide_kyc_1": [
+          {
+            "approval_id": "apr_00008",
+            "proposal_id": "23bbd11acf05ab8f0abaaf26afee40dc625167340dda560bf2f03366b4cfed2a",
+            "workflow_id": "tide_kyc_1",
+            "status": "applied",
+            "base_version": 1,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-04T10:15:00+05:30",
+            "expires_at": "2027-01-05T10:15:00+05:30",
+            "decided_at": "2027-01-04T16:40:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00014",
+            "proposal_id": "59c36ed4cbcb3a15275ad3169c7663bd5d94731bf2d9f31babb63e4ed1c862de",
+            "workflow_id": "tide_kyc_1",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-08T10:15:00+05:30",
+            "expires_at": "2027-01-09T10:15:00+05:30",
+            "decided_at": "2027-01-08T15:20:00+05:30",
+            "reasons": []
+          }
+        ],
+        "tide_cancel_2": []
+      }
+    },
+    "profile": {
+      "total_calls": 896866062,
+      "elapsed_accounted_seconds": 1942.5132772970037,
+      "functions": [
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.exec>",
+          "calls": 355,
+          "internal_seconds": 0.005108665,
+          "cumulative_seconds": 1942.6416026810002
+        },
+        {
+          "file": "<string>",
+          "line": 1,
+          "function": "<module>",
+          "calls": 1,
+          "internal_seconds": 3.3010000000000002e-06,
+          "cumulative_seconds": 1942.641555979
+        },
+        {
+          "file": "<frozen runpy>",
+          "line": 201,
+          "function": "run_module",
+          "calls": 1,
+          "internal_seconds": 7.001e-06,
+          "cumulative_seconds": 1942.6415526780002
+        },
+        {
+          "file": "<frozen runpy>",
+          "line": 65,
+          "function": "_run_code",
+          "calls": 1,
+          "internal_seconds": 9.3e-06,
+          "cumulative_seconds": 1942.608710185
+        },
+        {
+          "file": "/app/controller/__main__.py",
+          "line": 1,
+          "function": "<module>",
+          "calls": 1,
+          "internal_seconds": 0.000138007,
+          "cumulative_seconds": 1942.608649882
+        },
+        {
+          "file": "/app/controller/__main__.py",
+          "line": 94,
+          "function": "main",
+          "calls": 1,
+          "internal_seconds": 0.000172609,
+          "cumulative_seconds": 1942.1650745200002
+        },
+        {
+          "file": "/app/controller/__main__.py",
+          "line": 32,
+          "function": "run",
+          "calls": 1,
+          "internal_seconds": 0.12805975,
+          "cumulative_seconds": 1942.0605026320002
+        },
+        {
+          "file": "/app/controller/__main__.py",
+          "line": 21,
+          "function": "drain",
+          "calls": 481,
+          "internal_seconds": 0.011806181,
+          "cumulative_seconds": 1166.048099908
+        },
+        {
+          "file": "/app/controller/store.py",
+          "line": 128,
+          "function": "ingest",
+          "calls": 269,
+          "internal_seconds": 23.734934142,
+          "cumulative_seconds": 1162.356570508
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/psycopg/connection.py",
+          "line": 479,
+          "function": "wait",
+          "calls": 248395,
+          "internal_seconds": 1057.395247738,
+          "cumulative_seconds": 1107.164610359
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/psycopg/cursor.py",
+          "line": 100,
+          "function": "execute",
+          "calls": 63497,
+          "internal_seconds": 0.20427366500000002,
+          "cumulative_seconds": 1060.4541283580002
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/psycopg/connection.py",
+          "line": 281,
+          "function": "execute",
+          "calls": 33251,
+          "internal_seconds": 0.08289929,
+          "cumulative_seconds": 695.850147822
+        },
+        {
+          "file": "/app/controller/experiments.py",
+          "line": 72,
+          "function": "tick",
+          "calls": 481,
+          "internal_seconds": 0.10616423500000001,
+          "cumulative_seconds": 584.720708528
+        },
+        {
+          "file": "/app/controller/experiments.py",
+          "line": 177,
+          "function": "_advance",
+          "calls": 4553,
+          "internal_seconds": 2.9363474170000003,
+          "cumulative_seconds": 573.906546952
+        },
+        {
+          "file": "/app/controller/experiments.py",
+          "line": 234,
+          "function": "_running",
+          "calls": 3391,
+          "internal_seconds": 0.21551175900000002,
+          "cumulative_seconds": 554.143500785
+        },
+        {
+          "file": "/app/controller/store.py",
+          "line": 515,
+          "function": "collect_exposure",
+          "calls": 844,
+          "internal_seconds": 0.048493224,
+          "cumulative_seconds": 424.84050320700004
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/psycopg/_copy.py",
+          "line": 126,
+          "function": "write_row",
+          "calls": 9737475,
+          "internal_seconds": 4.508945293,
+          "cumulative_seconds": 206.768471164
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/psycopg/_copy_base.py",
+          "line": 225,
+          "function": "write_row",
+          "calls": 9737475,
+          "internal_seconds": 64.803325032,
+          "cumulative_seconds": 186.474229529
+        },
+        {
+          "file": "/app/controller/api.py",
+          "line": 29,
+          "function": "events",
+          "calls": 9737744,
+          "internal_seconds": 25.946524048,
+          "cumulative_seconds": 173.34302672700002
+        },
+        {
+          "file": "/app/controller/store.py",
+          "line": 15,
+          "function": "event_row",
+          "calls": 9737475,
+          "internal_seconds": 75.01946671200001,
+          "cumulative_seconds": 150.401428387
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/psycopg/types/json.py",
+          "line": 212,
+          "function": "dump",
+          "calls": 9754061,
+          "internal_seconds": 13.975069735000002,
+          "cumulative_seconds": 118.611106871
+        },
+        {
+          "file": "/app/controller/statistics.py",
+          "line": 56,
+          "function": "evaluate",
+          "calls": 844,
+          "internal_seconds": 2.747700075,
+          "cumulative_seconds": 114.227496098
+        },
+        {
+          "file": "/app/controller/experiments.py",
+          "line": 220,
+          "function": "_harm",
+          "calls": 834,
+          "internal_seconds": 0.01141757,
+          "cumulative_seconds": 111.966057492
+        },
+        {
+          "file": "/app/controller/statistics.py",
+          "line": 11,
+          "function": "comparison",
+          "calls": 1688,
+          "internal_seconds": 87.587795463,
+          "cumulative_seconds": 111.46718689900001
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/httpx/_client.py",
+          "line": 771,
+          "function": "request",
+          "calls": 17056,
+          "internal_seconds": 0.056259683000000005,
+          "cumulative_seconds": 107.887432062
+        }
+      ]
+    }
+  }
+]

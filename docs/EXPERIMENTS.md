@@ -20,9 +20,9 @@ start a test. Automatic language-cohort creation, welcome-message tests, and int
 | Primary minimum effect | Observed lift at least 8 percentage points, with lower confidence bound above zero |
 | Guardrail | Lower confidence bound above the workflow's negative absolute drop margin |
 | Population floor | At least 100 contributing people per arm for both metrics; planned primary sample target |
-| Promotion | 80% challenger / 20% retained incumbent control, with permission |
+| Promotion | 90% challenger / 10% retained incumbent control, with permission |
 | Safety | Scheduled hourly population checks; never an early winner decision |
-| Decay | Fresh 24-hour post-promotion windows against retained concurrent control |
+| Decay | Matched daily windows plus fixed non-overlapping 48-hour checkpoints |
 
 Before sending the split proposal, persist the cohort, context, arms, shares, KPI/guardrail, sample
 target, stopping/start rules, alpha, and rule version. The primary sample target is a working 80%-power
@@ -75,7 +75,28 @@ the frozen winner result. After promotion, start decay windows only when the pro
 observed. Each fresh 24-hour window compares the winner to its retained control, rather than averaging
 old success into recent deterioration. Low-volume monitoring can be inconclusive.
 
-Significant primary degradation (at least 2 points during decay) or guardrail harm requests rollback.
+New `clustered-fixed-v2` plans store the winner share and decay rules before exposure;
+application records the reference lift and applied version/time. Existing v1 plans retain
+their 80/20 share and original monitoring rule on restart.
+
+Daily matched winner/control windows track all, first and repeat exposure separately.
+"First" is a person's first call to that arm in this experiment, including its trial epoch;
+later calls to the arm are repeats. First plus repeat reconstruct all observed outcomes.
+Typed person/time counters retain first-event outcomes when calls share a timestamp.
+These strata are observational: earlier outcomes affect who receives another call.
+Clustered errors do not remove that selection. Treat them as operational fatigue
+evidence, not proof of a causal first-versus-repeat treatment effect.
+
+Two adequately sampled consecutive days below half the reference lift request rollback.
+At fixed, non-overlapping 48-hour checkpoints, a primary lower bound at or below zero
+retires the winner for insufficient evidence of continued benefit. This is an operational
+retirement rule, **not proof of decay**. These checks require 200 primary observations,
+100 contributing people per arm, and defined uncertainty for both KPIs. The small
+holdout can delay those floors. Sparse windows do not trigger significance-loss retirement.
+
+Material primary degradation (at least 2 points) or guardrail harm can also request rollback.
+Harm spending is divided across all/first/repeat and both KPIs. Retirement is separate
+from the winner-selection false-positive claim.
 Permission still applies. For campaign-pinned configs, cleanup/rollback affects future campaigns; old
 campaign exposure remains pinned until the business-owned campaign expires.
 

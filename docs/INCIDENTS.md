@@ -9,7 +9,8 @@ source, scenario truth, or run logs. LLM/validation response formats were verifi
 
 Evaluate only completed hourly buckets. Fifteen-minute loop ticks reuse the same persisted window;
 they do not count as independent confirmations. Require two consecutive positive hourly windows in
-the same config epoch. Missing/negative windows break a streak. Persist counts, tests, subject,
+the same relevant epoch. Prompt/cohort changes reset QA persistence; unrelated voice
+edits do not. Caller alarms retain their config epoch. Missing/negative windows break a streak. Persist counts, tests, subject,
 cohort ID, episode start, and config version. Episode IDs and decisions are deterministic.
 
 | Alarm | Minimum population | Comparison and threshold |
@@ -50,12 +51,15 @@ detected -> suggested -> validated -> ready -> proposed -> monitoring -> resolve
                               approval failure/re-evaluation    +-> next candidate / review
 ```
 
-1. Ask the simulator's LLM for suggestions with the recorded population evidence.
-2. Construct candidates from actually observed historical alternatives and the returned suggestions.
-   Prefer previously exposed alternatives by sample count, then deterministic IDs; exclude the current
-   prompt and unavailable options. This chooses a hypothesis, not a winner.
-3. Validate one candidate at a time on 300 synthetic conversations. Check response workflow, prompt,
-   sample size, validation ID, and pass rate. The workflow's policy determines the required pass rate.
+1. Record the latest observed prompt edit, actor, version/time and prior stored prompt.
+   Attribution is temporal evidence, not proof of causation.
+2. Validate the previous prompt first when it has 200 historical connected observations
+   in the affected cohort; otherwise use the best-supported historical alternative.
+   Buy LLM suggestions only after that candidate fails or is denied. Exclude unavailable,
+   already-tried and originally unsafe prompts. This selects a hypothesis, not a winner.
+3. Validate one candidate at a time on 500 synthetic conversations. Check response workflow, prompt,
+   sample size, validation ID, and pass rate. Use the policy threshold, or the documented 0.97
+   assumption if it is absent. Existing incidents retain their declared n=300.
 4. The first passing candidate is proposed with validation evidence, exact diff, affected-lead estimate,
    historical dry run, reach score, and incident rationale. Validation measures safety, not engagement.
 5. After permission/application, measure QA and engagement on real observed populations. Check
@@ -77,11 +81,18 @@ Higher-priority prompt repairs can replace queued work and batch a compatible pe
 Replacement intent, proposal retirement, and incident links are committed together before any config write.
 An uncertain submitted/applying write must reconcile first. Rejected/expired/lapsed/stale repairs receive
 at most two new proposals and require fresh current alarm evidence, a new decision ID, and a valid base.
+Rejected/expired prompt repairs move to the next candidate instead of rebuying the rejected
+one. Every prompt change requires approval, including policies that would permit automatic changes.
+The summary explicitly identifies reversal of a recorded supervisor edit. A durable supervisor
+alert is visible in status and the proposal queue; no external message delivery is claimed.
+Verification records detection-to-apply and detection-to-verified times; failed verification
+increments the reopen counter before trying another candidate.
 
 ## Credits, fairness, and ambiguous outcomes
 
-- Global reserve: **6 credits**; per-incident ceiling: **12**.
-- Suggestion cost: 3; validation cost: 3 for n=300. Do not start suggestions unless at least one validation
+- Global reserve: **6 credits**; new incidents have an **18-credit** ceiling, enough for a
+  previous-prompt validation, one suggestion and two further validations. Existing incidents keep 12.
+- Suggestion cost: 3; validation cost: 5 for n=500. Do not start suggestions unless at least one validation
   can also be funded above the reserve and within the tenant share.
 - Divide the initial spendable budget equally across API-visible tenants. Uncertain calls count as spent
   for quotas. Unused shares are not borrowed in this minimal implementation.

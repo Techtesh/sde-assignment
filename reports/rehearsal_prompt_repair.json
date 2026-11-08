@@ -1,0 +1,824 @@
+{
+  "run_id": "steps567_finalinc",
+  "workflow_id": "ks_cancel",
+  "change": {
+    "ts": "2027-01-08 09:30:00+00:00",
+    "actor": "controller_approved",
+    "evidence": {
+      "ts": "2027-01-08T15:00:00+05:30",
+      "type": "config_changed",
+      "actor": "controller_approved",
+      "version": 10,
+      "event_id": 250610,
+      "approval_id": "apr_00007",
+      "proposal_id": "bca94653234f678163fe8276606d408f1e207d0d208172adbf226e7f760683bb",
+      "workflow_id": "ks_cancel",
+      "changed_dims": [
+        "prompt_version"
+      ]
+    }
+  },
+  "proposal": {
+    "proposal_id": "bca94653234f678163fe8276606d408f1e207d0d208172adbf226e7f760683bb",
+    "decision_id": "incident:080b0fc4afd9103f2fb2dc458ecc6a67f3debcc78b592346582fb03d1ddc5929:0",
+    "body": {
+      "diff": {
+        "changes": [
+          {
+            "path": [
+              "prompt_version"
+            ],
+            "after": "P1",
+            "before": "P2"
+          }
+        ]
+      },
+      "dry_run": {
+        "as_of": "2027-01-08T13:30:00+05:30",
+        "method": "observational historical reweighting, not causal lift",
+        "estimates": [
+          {
+            "path": [
+              "prompt_version"
+            ],
+            "reason": "no supported historical replay",
+            "projected_rates": null
+          }
+        ],
+        "population": "known nonconcluded leads within campaign lifespan; upper estimate",
+        "limitations": "No prediction for unseen variants or joint interactions; future uploads excluded",
+        "historical_counts": [
+          {
+            "dials": 32481,
+            "engaged": 4136,
+            "variant": "D1",
+            "cohort_id": "default",
+            "connected": 8213,
+            "dimension": "caller_id",
+            "hallucinations": 105
+          },
+          {
+            "dials": 32537,
+            "engaged": 4152,
+            "variant": "D2",
+            "cohort_id": "default",
+            "connected": 8226,
+            "dimension": "caller_id",
+            "hallucinations": 120
+          },
+          {
+            "dials": 65018,
+            "engaged": 8288,
+            "variant": "P1",
+            "cohort_id": "default",
+            "connected": 16439,
+            "dimension": "prompt_version",
+            "hallucinations": 225
+          },
+          {
+            "dials": 65018,
+            "engaged": 8288,
+            "variant": "V1",
+            "cohort_id": "default",
+            "connected": 16439,
+            "dimension": "voice",
+            "hallucinations": 225
+          }
+        ],
+        "known_active_leads": 3804,
+        "impact_score_meaning": "affected share of known active leads"
+      },
+      "evidence": {
+        "detection": {
+          "kind": "prompt_version",
+          "alpha": 0.01,
+          "cohort": "default",
+          "signal": true,
+          "current": {
+            "dials": 400,
+            "engaged": 36,
+            "variant": "P2",
+            "cohort_id": "default",
+            "connected": 93,
+            "dimension": "prompt_version",
+            "hallucinations": 7
+          },
+          "subject": "default:P2",
+          "variant": "P2",
+          "baseline": {
+            "dials": 5600,
+            "engaged": 785,
+            "connected": 1608,
+            "hallucinations": 32
+          },
+          "fisher_p": 0.004244880794137164,
+          "minimum_excess": 0.02,
+          "observed_excess": 0.05536831969186327
+        },
+        "attribution": {
+          "change": {
+            "ts": "2027-01-07T06:00:00+00:00",
+            "actor": "supervisor",
+            "event_id": 233746,
+            "evidence": {
+              "ts": "2027-01-07T11:30:00+05:30",
+              "type": "config_changed",
+              "actor": "supervisor",
+              "version": 6,
+              "event_id": 233746,
+              "approval_id": null,
+              "proposal_id": null,
+              "workflow_id": "ks_cancel",
+              "changed_dims": [
+                "prompt_version"
+              ]
+            }
+          },
+          "previous": {
+            "prompt": "P1",
+            "version": 5
+          },
+          "interpretation": "latest observed prompt edit; temporal attribution, not proof of causation"
+        },
+        "incident_id": "080b0fc4afd9103f2fb2dc458ecc6a67f3debcc78b592346582fb03d1ddc5929",
+        "validation_run_id": "val_00001"
+      },
+      "rationale": "Incident 080b0fc4afd9103f2fb2dc458ecc6a67f3debcc78b592346582fb03d1ddc5929: two completed hourly populations; {\"kind\": \"prompt_version\", \"alpha\": 0.01, \"cohort\": \"default\", \"signal\": true, \"current\": {\"dials\": 400, \"engaged\": 36, \"variant\": \"P2\", \"cohort_id\": \"default\", \"connected\": 93, \"dimension\": \"prompt_version\", \"hallucinations\": 7}, \"subject\": \"default:P2\", \"variant\": \"P2\", \"baseline\": {\"dials\": 5600, \"engaged\": 785, \"connected\": 1608, \"hallucinations\": 32}, \"fisher_p\": 0.004244880794137164, \"minimum_excess\": 0.02, \"observed_excess\": 0.05536831969186327}",
+      "proposal_id": "bca94653234f678163fe8276606d408f1e207d0d208172adbf226e7f760683bb",
+      "workflow_id": "ks_cancel",
+      "base_version": 9,
+      "impact_score": 1.0,
+      "affected_leads": 3804,
+      "change_summary": "Reverse supervisor prompt edit after elevated hallucination flags",
+      "proposed_config": {
+        "cohorts": [],
+        "schedule": {
+          "hour_weights": {},
+          "lead_preferred_hour": {}
+        },
+        "allocations": {
+          "default": {
+            "voice": {
+              "V1": 1.0
+            },
+            "caller_id": {
+              "D1": 1.0
+            },
+            "welcome_message": {
+              "W1": 1.0
+            }
+          }
+        },
+        "prompt_version": "P1"
+      },
+      "expires_in_hours": 12
+    },
+    "route": "approval",
+    "status": "applied",
+    "approval_id": "apr_00007"
+  },
+  "approval_events": [
+    {
+      "ts": "2027-01-08 09:09:00+00:00",
+      "evidence": {
+        "ts": "2027-01-08T14:39:00+05:30",
+        "type": "approval_decided",
+        "status": "approved",
+        "reasons": [],
+        "event_id": 250609,
+        "approval_id": "apr_00007",
+        "workflow_id": "ks_cancel"
+      }
+    }
+  ],
+  "proposal_history": [
+    {
+      "ts": "2027-01-08 08:00:00+00:00",
+      "status": "planned",
+      "evidence": {
+        "body": {
+          "diff": {
+            "changes": [
+              {
+                "path": [
+                  "prompt_version"
+                ],
+                "after": "P1",
+                "before": "P2"
+              }
+            ]
+          },
+          "dry_run": {
+            "as_of": "2027-01-08T13:30:00+05:30",
+            "method": "observational historical reweighting, not causal lift",
+            "estimates": [
+              {
+                "path": [
+                  "prompt_version"
+                ],
+                "reason": "no supported historical replay",
+                "projected_rates": null
+              }
+            ],
+            "population": "known nonconcluded leads within campaign lifespan; upper estimate",
+            "limitations": "No prediction for unseen variants or joint interactions; future uploads excluded",
+            "historical_counts": [
+              {
+                "dials": 32481,
+                "engaged": 4136,
+                "variant": "D1",
+                "cohort_id": "default",
+                "connected": 8213,
+                "dimension": "caller_id",
+                "hallucinations": 105
+              },
+              {
+                "dials": 32537,
+                "engaged": 4152,
+                "variant": "D2",
+                "cohort_id": "default",
+                "connected": 8226,
+                "dimension": "caller_id",
+                "hallucinations": 120
+              },
+              {
+                "dials": 65018,
+                "engaged": 8288,
+                "variant": "P1",
+                "cohort_id": "default",
+                "connected": 16439,
+                "dimension": "prompt_version",
+                "hallucinations": 225
+              },
+              {
+                "dials": 65018,
+                "engaged": 8288,
+                "variant": "V1",
+                "cohort_id": "default",
+                "connected": 16439,
+                "dimension": "voice",
+                "hallucinations": 225
+              }
+            ],
+            "known_active_leads": 3804,
+            "impact_score_meaning": "affected share of known active leads"
+          },
+          "evidence": {
+            "detection": {
+              "kind": "prompt_version",
+              "alpha": 0.01,
+              "cohort": "default",
+              "signal": true,
+              "current": {
+                "dials": 400,
+                "engaged": 36,
+                "variant": "P2",
+                "cohort_id": "default",
+                "connected": 93,
+                "dimension": "prompt_version",
+                "hallucinations": 7
+              },
+              "subject": "default:P2",
+              "variant": "P2",
+              "baseline": {
+                "dials": 5600,
+                "engaged": 785,
+                "connected": 1608,
+                "hallucinations": 32
+              },
+              "fisher_p": 0.004244880794137164,
+              "minimum_excess": 0.02,
+              "observed_excess": 0.05536831969186327
+            },
+            "attribution": {
+              "change": {
+                "ts": "2027-01-07T06:00:00+00:00",
+                "actor": "supervisor",
+                "event_id": 233746,
+                "evidence": {
+                  "ts": "2027-01-07T11:30:00+05:30",
+                  "type": "config_changed",
+                  "actor": "supervisor",
+                  "version": 6,
+                  "event_id": 233746,
+                  "approval_id": null,
+                  "proposal_id": null,
+                  "workflow_id": "ks_cancel",
+                  "changed_dims": [
+                    "prompt_version"
+                  ]
+                }
+              },
+              "previous": {
+                "prompt": "P1",
+                "version": 5
+              },
+              "interpretation": "latest observed prompt edit; temporal attribution, not proof of causation"
+            },
+            "incident_id": "080b0fc4afd9103f2fb2dc458ecc6a67f3debcc78b592346582fb03d1ddc5929",
+            "validation_run_id": "val_00001"
+          },
+          "rationale": "Incident 080b0fc4afd9103f2fb2dc458ecc6a67f3debcc78b592346582fb03d1ddc5929: two completed hourly populations; {\"kind\": \"prompt_version\", \"alpha\": 0.01, \"cohort\": \"default\", \"signal\": true, \"current\": {\"dials\": 400, \"engaged\": 36, \"variant\": \"P2\", \"cohort_id\": \"default\", \"connected\": 93, \"dimension\": \"prompt_version\", \"hallucinations\": 7}, \"subject\": \"default:P2\", \"variant\": \"P2\", \"baseline\": {\"dials\": 5600, \"engaged\": 785, \"connected\": 1608, \"hallucinations\": 32}, \"fisher_p\": 0.004244880794137164, \"minimum_excess\": 0.02, \"observed_excess\": 0.05536831969186327}",
+          "proposal_id": "bca94653234f678163fe8276606d408f1e207d0d208172adbf226e7f760683bb",
+          "workflow_id": "ks_cancel",
+          "base_version": 9,
+          "impact_score": 1.0,
+          "affected_leads": 3804,
+          "change_summary": "Reverse supervisor prompt edit after elevated hallucination flags",
+          "proposed_config": {
+            "cohorts": [],
+            "schedule": {
+              "hour_weights": {},
+              "lead_preferred_hour": {}
+            },
+            "allocations": {
+              "default": {
+                "voice": {
+                  "V1": 1.0
+                },
+                "caller_id": {
+                  "D1": 1.0
+                },
+                "welcome_message": {
+                  "W1": 1.0
+                }
+              }
+            },
+            "prompt_version": "P1"
+          },
+          "expires_in_hours": 12
+        },
+        "route": "approval",
+        "policy": {
+          "auto_apply": {
+            "enabled": true,
+            "max_shift": 0.2,
+            "allowed_dims": [
+              "schedule",
+              "caller_id",
+              "welcome_message",
+              "voice"
+            ]
+          },
+          "approver_hours": [
+            10,
+            19
+          ],
+          "base_reject_rate": 0.05,
+          "apply_window_hours": 2,
+          "proposal_ttl_hours": 12,
+          "max_requests_per_24h": 4,
+          "approver_latency_minutes": [
+            20,
+            120
+          ],
+          "min_validation_pass_rate": 0.97
+        }
+      }
+    },
+    {
+      "ts": "2027-01-08 08:00:00+00:00",
+      "status": "submitted",
+      "evidence": {
+        "path": "/approvals",
+        "method": "POST",
+        "request": {
+          "diff": {
+            "changes": [
+              {
+                "path": [
+                  "prompt_version"
+                ],
+                "after": "P1",
+                "before": "P2"
+              }
+            ]
+          },
+          "dry_run": {
+            "as_of": "2027-01-08T13:30:00+05:30",
+            "method": "observational historical reweighting, not causal lift",
+            "estimates": [
+              {
+                "path": [
+                  "prompt_version"
+                ],
+                "reason": "no supported historical replay",
+                "projected_rates": null
+              }
+            ],
+            "population": "known nonconcluded leads within campaign lifespan; upper estimate",
+            "limitations": "No prediction for unseen variants or joint interactions; future uploads excluded",
+            "historical_counts": [
+              {
+                "dials": 32481,
+                "engaged": 4136,
+                "variant": "D1",
+                "cohort_id": "default",
+                "connected": 8213,
+                "dimension": "caller_id",
+                "hallucinations": 105
+              },
+              {
+                "dials": 32537,
+                "engaged": 4152,
+                "variant": "D2",
+                "cohort_id": "default",
+                "connected": 8226,
+                "dimension": "caller_id",
+                "hallucinations": 120
+              },
+              {
+                "dials": 65018,
+                "engaged": 8288,
+                "variant": "P1",
+                "cohort_id": "default",
+                "connected": 16439,
+                "dimension": "prompt_version",
+                "hallucinations": 225
+              },
+              {
+                "dials": 65018,
+                "engaged": 8288,
+                "variant": "V1",
+                "cohort_id": "default",
+                "connected": 16439,
+                "dimension": "voice",
+                "hallucinations": 225
+              }
+            ],
+            "known_active_leads": 3804,
+            "impact_score_meaning": "affected share of known active leads"
+          },
+          "evidence": {
+            "detection": {
+              "kind": "prompt_version",
+              "alpha": 0.01,
+              "cohort": "default",
+              "signal": true,
+              "current": {
+                "dials": 400,
+                "engaged": 36,
+                "variant": "P2",
+                "cohort_id": "default",
+                "connected": 93,
+                "dimension": "prompt_version",
+                "hallucinations": 7
+              },
+              "subject": "default:P2",
+              "variant": "P2",
+              "baseline": {
+                "dials": 5600,
+                "engaged": 785,
+                "connected": 1608,
+                "hallucinations": 32
+              },
+              "fisher_p": 0.004244880794137164,
+              "minimum_excess": 0.02,
+              "observed_excess": 0.05536831969186327
+            },
+            "attribution": {
+              "change": {
+                "ts": "2027-01-07T06:00:00+00:00",
+                "actor": "supervisor",
+                "event_id": 233746,
+                "evidence": {
+                  "ts": "2027-01-07T11:30:00+05:30",
+                  "type": "config_changed",
+                  "actor": "supervisor",
+                  "version": 6,
+                  "event_id": 233746,
+                  "approval_id": null,
+                  "proposal_id": null,
+                  "workflow_id": "ks_cancel",
+                  "changed_dims": [
+                    "prompt_version"
+                  ]
+                }
+              },
+              "previous": {
+                "prompt": "P1",
+                "version": 5
+              },
+              "interpretation": "latest observed prompt edit; temporal attribution, not proof of causation"
+            },
+            "incident_id": "080b0fc4afd9103f2fb2dc458ecc6a67f3debcc78b592346582fb03d1ddc5929",
+            "validation_run_id": "val_00001"
+          },
+          "rationale": "Incident 080b0fc4afd9103f2fb2dc458ecc6a67f3debcc78b592346582fb03d1ddc5929: two completed hourly populations; {\"kind\": \"prompt_version\", \"alpha\": 0.01, \"cohort\": \"default\", \"signal\": true, \"current\": {\"dials\": 400, \"engaged\": 36, \"variant\": \"P2\", \"cohort_id\": \"default\", \"connected\": 93, \"dimension\": \"prompt_version\", \"hallucinations\": 7}, \"subject\": \"default:P2\", \"variant\": \"P2\", \"baseline\": {\"dials\": 5600, \"engaged\": 785, \"connected\": 1608, \"hallucinations\": 32}, \"fisher_p\": 0.004244880794137164, \"minimum_excess\": 0.02, \"observed_excess\": 0.05536831969186327}",
+          "proposal_id": "bca94653234f678163fe8276606d408f1e207d0d208172adbf226e7f760683bb",
+          "workflow_id": "ks_cancel",
+          "base_version": 9,
+          "impact_score": 1.0,
+          "affected_leads": 3804,
+          "change_summary": "Reverse supervisor prompt edit after elevated hallucination flags",
+          "proposed_config": {
+            "cohorts": [],
+            "schedule": {
+              "hour_weights": {},
+              "lead_preferred_hour": {}
+            },
+            "allocations": {
+              "default": {
+                "voice": {
+                  "V1": 1.0
+                },
+                "caller_id": {
+                  "D1": 1.0
+                },
+                "welcome_message": {
+                  "W1": 1.0
+                }
+              }
+            },
+            "prompt_version": "P1"
+          },
+          "expires_in_hours": 12
+        }
+      }
+    },
+    {
+      "ts": "2027-01-08 08:00:00+00:00",
+      "status": "pending",
+      "evidence": {
+        "status": "pending",
+        "created_at": "2027-01-08T13:30:00+05:30",
+        "expires_at": "2027-01-09T01:30:00+05:30",
+        "approval_id": "apr_00007",
+        "proposal_id": "bca94653234f678163fe8276606d408f1e207d0d208172adbf226e7f760683bb",
+        "workflow_id": "ks_cancel",
+        "base_version": 9,
+        "changed_dims": [
+          "prompt_version"
+        ]
+      }
+    },
+    {
+      "ts": "2027-01-08 09:30:00+00:00",
+      "status": "approved",
+      "evidence": {
+        "status": "approved",
+        "reasons": [],
+        "apply_by": "2027-01-08T16:39:00+05:30",
+        "created_at": "2027-01-08T13:30:00+05:30",
+        "decided_at": "2027-01-08T14:39:00+05:30",
+        "expires_at": "2027-01-09T01:30:00+05:30",
+        "approval_id": "apr_00007",
+        "proposal_id": "bca94653234f678163fe8276606d408f1e207d0d208172adbf226e7f760683bb",
+        "workflow_id": "ks_cancel",
+        "base_version": 9,
+        "changed_dims": [
+          "prompt_version"
+        ]
+      }
+    },
+    {
+      "ts": "2027-01-08 09:30:00+00:00",
+      "status": "applying",
+      "evidence": {
+        "path": "/workflows/ks_cancel/apply",
+        "method": "POST",
+        "request": {
+          "approval_id": "apr_00007"
+        }
+      }
+    },
+    {
+      "ts": "2027-01-08 09:30:00+00:00",
+      "status": "applied",
+      "evidence": {
+        "result": {
+          "version": 10,
+          "workflow_id": "ks_cancel",
+          "changed_dims": [
+            "prompt_version"
+          ]
+        }
+      }
+    }
+  ],
+  "incidents": [
+    {
+      "incident_id": "080b0fc4afd9103f2fb2dc458ecc6a67f3debcc78b592346582fb03d1ddc5929",
+      "status": "resolved",
+      "data": {
+        "alarm": {
+          "kind": "prompt_version",
+          "alpha": 0.01,
+          "cohort": "default",
+          "signal": true,
+          "current": {
+            "dials": 400,
+            "engaged": 36,
+            "variant": "P2",
+            "cohort_id": "default",
+            "connected": 93,
+            "dimension": "prompt_version",
+            "hallucinations": 7
+          },
+          "subject": "default:P2",
+          "variant": "P2",
+          "baseline": {
+            "dials": 5600,
+            "engaged": 785,
+            "connected": 1608,
+            "hallucinations": 32
+          },
+          "fisher_p": 0.004244880794137164,
+          "minimum_excess": 0.02,
+          "observed_excess": 0.05536831969186327
+        },
+        "epoch": 6,
+        "before": {
+          "cohorts": [],
+          "schedule": {
+            "hour_weights": {},
+            "lead_preferred_hour": {}
+          },
+          "allocations": {
+            "default": {
+              "voice": {
+                "V1": 1.0
+              },
+              "caller_id": {
+                "D1": 1.0
+              },
+              "welcome_message": {
+                "W1": 1.0
+              }
+            }
+          },
+          "prompt_version": "P2"
+        },
+        "desired": {
+          "cohorts": [],
+          "schedule": {
+            "hour_weights": {},
+            "lead_preferred_hour": {}
+          },
+          "allocations": {
+            "default": {
+              "voice": {
+                "V1": 1.0
+              },
+              "caller_id": {
+                "D1": 1.0
+              },
+              "welcome_message": {
+                "W1": 1.0
+              }
+            }
+          },
+          "prompt_version": "P1"
+        },
+        "candidate": "P1",
+        "applied_at": "2027-01-08T15:00:00+05:30",
+        "candidates": [
+          "P1"
+        ],
+        "validation": {
+          "n": 500,
+          "ts": "2027-01-08T13:15:00+05:30",
+          "failures": 7,
+          "pass_rate": 0.986,
+          "workflow_id": "ks_cancel",
+          "prompt_version": "P1",
+          "credits_remaining": 195.0,
+          "validation_run_id": "val_00001"
+        },
+        "window_end": "2027-01-08T13:00:00+05:30",
+        "attribution": {
+          "change": {
+            "ts": "2027-01-07T06:00:00+00:00",
+            "actor": "supervisor",
+            "event_id": 233746,
+            "evidence": {
+              "ts": "2027-01-07T11:30:00+05:30",
+              "type": "config_changed",
+              "actor": "supervisor",
+              "version": 6,
+              "event_id": 233746,
+              "approval_id": null,
+              "proposal_id": null,
+              "workflow_id": "ks_cancel",
+              "changed_dims": [
+                "prompt_version"
+              ]
+            }
+          },
+          "previous": {
+            "prompt": "P1",
+            "version": 5
+          },
+          "interpretation": "latest observed prompt edit; temporal attribution, not proof of causation"
+        },
+        "credit_limit": 18,
+        "rule_version": "hourly-prompt-v3",
+        "validation_n": 500,
+        "verification": {
+          "after": {
+            "dials": 1200,
+            "engaged": 122,
+            "connected": 214,
+            "hallucinations": 4
+          },
+          "guardrail": "no detected material harm; not a non-inferiority result",
+          "recovered": true,
+          "window_end": "2027-01-08T19:00:00+05:30",
+          "window_start": "2027-01-08T16:00:00+05:30"
+        },
+        "window_start": "2027-01-08T12:00:00+05:30",
+        "candidate_index": 0,
+        "expected_prompt": "P2",
+        "guardrail_before": [
+          {
+            "dials": 400,
+            "engaged": 36,
+            "variant": "P2",
+            "cohort_id": "default",
+            "connected": 93,
+            "dimension": "prompt_version",
+            "hallucinations": 7
+          }
+        ],
+        "proposal_attempt": 0,
+        "supervisor_alert": {
+          "action": "Review the incident proposal and validation evidence; the current prompt remains live until permission",
+          "message": "Reverse supervisor prompt edit after elevated hallucination flags",
+          "severity": "page"
+        },
+        "candidate_evidence": [
+          {
+            "dials": 65018,
+            "engaged": 8288,
+            "variant": "P1",
+            "cohort_id": "default",
+            "connected": 16439,
+            "dimension": "prompt_version",
+            "hallucinations": 225
+          }
+        ],
+        "guardrail_populations": [
+          {
+            "after": {
+              "dials": 1200,
+              "engaged": 122,
+              "connected": 214,
+              "hallucinations": 4
+            },
+            "before": {
+              "dials": 400,
+              "engaged": 36,
+              "connected": 93,
+              "hallucinations": 7
+            },
+            "checks": {
+              "pickup_rate": {
+                "margin": 0.02,
+                "supported": true,
+                "material_harm": false,
+                "expected_lower": 0.13037304314677262,
+                "observed_upper": 0.21751548108772506
+              },
+              "engagement_rate": {
+                "margin": 0.05,
+                "supported": true,
+                "material_harm": false,
+                "expected_lower": 0.2208915910309687,
+                "observed_upper": 0.6753974159315772
+              }
+            },
+            "method": "live pre/post with conservative historical clock-hour ratio adjustment",
+            "cohort_id": "default",
+            "material_harm": false
+          }
+        ],
+        "guardrail_history_before": [
+          {
+            "dials": 5600,
+            "engaged": 785,
+            "variant": "P1",
+            "cohort_id": "default",
+            "connected": 1608,
+            "dimension": "prompt_version",
+            "hallucinations": 32
+          }
+        ],
+        "detection_to_apply_minutes": 120.0,
+        "config_version_at_detection": 8,
+        "detection_to_verified_minutes": 360.0
+      }
+    }
+  ],
+  "after": {
+    "method": "Observed new-version exposure in complete hours within the next 24h; observational, not causal",
+    "first_hour": "2027-01-08 09:30:00+00:00",
+    "last_hour": "2027-01-08 12:30:00+00:00",
+    "dials": 1600,
+    "connected": 286,
+    "engaged": 154,
+    "hallucinations": 5,
+    "pickup_rate": 0.17875,
+    "engagement_rate": 0.5384615384615384
+  },
+  "identity_limit": "Approval IDs/status are recorded; the simulator does not expose a named human approver"
+}

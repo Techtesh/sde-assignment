@@ -1,30 +1,32 @@
 {
-  "run_id": "delivery02",
+  "run_id": "steps567_finalinc",
   "as_of": "2027-01-14T00:00:00+05:30",
   "finished": true,
   "health": {
     "last_tick": {
       "ts": "2027-01-13 18:30:00+00:00",
-      "recorded_at": "2026-11-08 10:25:05.802706+00:00",
+      "recorded_at": "2026-11-08 12:28:12.234785+00:00",
       "metrics": {
         "ts": "2027-01-14T00:00:00+05:30",
         "mode": "controller",
         "finished": true,
-        "loop_seconds": 0.038,
-        "peak_rss_mib": 51.6,
+        "loop_seconds": 0.043,
+        "peak_rss_mib": 55.11,
         "parse_seconds": 0.0,
-        "write_seconds": 0.007,
-        "ingest_seconds": 0.007,
+        "write_seconds": 0.008,
+        "ingest_seconds": 0.008,
         "advance_seconds": 0.006,
         "ingested_events": 0,
-        "decision_seconds": 0.031,
-        "credits_remaining": 194.0,
+        "decision_seconds": 0.035,
+        "credits_remaining": 195.0,
         "stream_fetch_seconds": 0.0
       },
-      "wall_age_seconds": 476.025751
+      "wall_age_seconds": 576.449207
     },
-    "ingested_event_id": 324326,
+    "ingested_event_id": 324328,
     "event_backlog_at_last_observation": 0,
+    "chunk_backlog_at_last_observation": 0,
+    "starts_without_sim_progress_last_5_wall_minutes": 0,
     "chunk_checkpoints": [
       {
         "kind": "history",
@@ -33,8 +35,8 @@
       },
       {
         "kind": "events",
-        "last_chunk": 492,
-        "chunks": 492
+        "last_chunk": 491,
+        "chunks": 491
       }
     ],
     "new_proposals_last_sim_hour": 0,
@@ -45,37 +47,37 @@
       "workflow_id": "ks_cancel",
       "cohort_id": "default",
       "dials": 4800,
-      "connected": 829,
-      "engaged": 419,
-      "hallucinations": 19,
-      "pickup_rate": 0.17270833333333332,
-      "engagement_rate": 0.5054282267792521
+      "connected": 833,
+      "engaged": 412,
+      "hallucinations": 14,
+      "pickup_rate": 0.17354166666666668,
+      "engagement_rate": 0.49459783913565425
     },
     {
       "workflow_id": "nw_kyc",
       "cohort_id": "default",
       "dials": 2000,
-      "connected": 498,
-      "engaged": 303,
-      "hallucinations": 8,
-      "pickup_rate": 0.249,
-      "engagement_rate": 0.608433734939759
+      "connected": 481,
+      "engaged": 275,
+      "hallucinations": 5,
+      "pickup_rate": 0.2405,
+      "engagement_rate": 0.5717255717255717
     },
     {
       "workflow_id": "nw_renewal",
       "cohort_id": "default",
       "dials": 3600,
-      "connected": 943,
-      "engaged": 522,
-      "hallucinations": 11,
-      "pickup_rate": 0.2619444444444444,
-      "engagement_rate": 0.5535524920466596
+      "connected": 984,
+      "engaged": 563,
+      "hallucinations": 10,
+      "pickup_rate": 0.2733333333333333,
+      "engagement_rate": 0.5721544715447154
     }
   ],
   "cohorts": [
     {
       "workflow_id": "ks_cancel",
-      "version": 10,
+      "version": 12,
       "cohorts": []
     },
     {
@@ -92,9 +94,9 @@
   "experiments": [
     {
       "workflow_id": "ks_cancel",
-      "experiment_id": "ae2302949ed2af5abf9ddaa63540b93cc0c6265b976315d68e93eec20df7d7b6",
+      "experiment_id": "92fb9914d5e95d1fe15e2c494c1fb9aa12b6a54f51e5620c545bbf736af256c0",
       "status": "interrupted",
-      "proposal_id": "2f80af21bf376031f0b79b9c9312633c11001f55c73742bb4dd32011bbe74ace",
+      "proposal_id": "1896c078caa1bb8ec352007168b2de3b64381215da1660b3ce8a3a4d4d15d2f0",
       "cohort_id": "default",
       "plan": {
         "alpha": 0.025,
@@ -111,21 +113,25 @@
         "trial_index": 1,
         "trial_share": 0.2,
         "minimum_lift": 0.08,
-        "rule_version": "clustered-fixed-v1",
-        "winner_share": 0.8,
+        "rule_version": "clustered-fixed-v2",
+        "winner_share": 0.9,
         "duration_hours": 72,
+        "decay_min_people": 100,
+        "decay_half_lift_days": 2,
         "decay_interval_hours": 24,
         "safety_interval_hours": 1,
-        "minimum_people_per_arm": 100
+        "decay_min_observations": 200,
+        "minimum_people_per_arm": 100,
+        "decay_zero_window_hours": 48
       },
       "result": null,
       "checkpoint": "2027-01-07T03:35:00+00:00"
     },
     {
       "workflow_id": "ks_cancel",
-      "experiment_id": "dde30f21be2213fb38847b3d4b9398821985612e6512e0e741b02df59e1f1019",
+      "experiment_id": "724919b05a1d1f1e60cd923e93ebd905cd766774cf5126b859fde37e7bf331ca",
       "status": "interrupted",
-      "proposal_id": "c8f63fcae2dba0842279209ecc5d8840fc8e2d643f7c461732faa8e623722eaa",
+      "proposal_id": "90cd0244584e22f1643d1b69cc379b692345d36dfc921b9d338b81ebd09cab84",
       "cohort_id": "default",
       "plan": {
         "alpha": 0.008333333333333333,
@@ -142,21 +148,25 @@
         "trial_index": 2,
         "trial_share": 0.2,
         "minimum_lift": 0.08,
-        "rule_version": "clustered-fixed-v1",
-        "winner_share": 0.8,
+        "rule_version": "clustered-fixed-v2",
+        "winner_share": 0.9,
         "duration_hours": 72,
+        "decay_min_people": 100,
+        "decay_half_lift_days": 2,
         "decay_interval_hours": 24,
         "safety_interval_hours": 1,
-        "minimum_people_per_arm": 100
+        "decay_min_observations": 200,
+        "minimum_people_per_arm": 100,
+        "decay_zero_window_hours": 48
       },
       "result": null,
       "checkpoint": "2027-01-09T10:38:00+00:00"
     },
     {
       "workflow_id": "ks_cancel",
-      "experiment_id": "d87f20d559f6eae566bc742ec6b30f0b35460df6813ce608eb171b59cbcb4347",
-      "status": "inconclusive",
-      "proposal_id": "c71dfc689ef972e8cfe20115af10bf9b5c023771a509362a4135fa0a797c246f",
+      "experiment_id": "f904712a9148abe785bddc525dcede4acc1cf01c4027c24eb1ef618f1043ba9d",
+      "status": "interrupted",
+      "proposal_id": "bd1cda1dde1c7adeda686c5af15c0f81e7a304d70b866199285e0e2e12128175",
       "cohort_id": "default",
       "plan": {
         "alpha": 0.004166666666666667,
@@ -167,78 +177,117 @@
             "pickup_rate_max_drop": 0.02
           }
         },
-        "challenger": "V3",
+        "challenger": "V2",
         "start_rule": "first observed call in the authorized config epoch and cohort",
         "min_primary": 592,
         "trial_index": 3,
         "trial_share": 0.2,
         "minimum_lift": 0.08,
-        "rule_version": "clustered-fixed-v1",
-        "winner_share": 0.8,
+        "rule_version": "clustered-fixed-v2",
+        "winner_share": 0.9,
         "duration_hours": 72,
+        "decay_min_people": 100,
+        "decay_half_lift_days": 2,
         "decay_interval_hours": 24,
         "safety_interval_hours": 1,
-        "minimum_people_per_arm": 100
+        "decay_min_observations": 200,
+        "minimum_people_per_arm": 100,
+        "decay_zero_window_hours": 48
+      },
+      "result": null,
+      "checkpoint": "2027-01-10T10:41:00+00:00"
+    },
+    {
+      "workflow_id": "ks_cancel",
+      "experiment_id": "71fa4a1dc2bbdd228a942617bebc4d83f7383920cae9a14f94c6b6ebb29f749d",
+      "status": "inconclusive",
+      "proposal_id": "eaa61187319c5409fa259028813f6b01452553e4ca65c783acdde29d95e8afa0",
+      "cohort_id": "default",
+      "plan": {
+        "alpha": 0.0025,
+        "control": "V1",
+        "objective": {
+          "primary": "engagement_rate",
+          "guardrail": {
+            "pickup_rate_max_drop": 0.02
+          }
+        },
+        "challenger": "V3",
+        "start_rule": "first observed call in the authorized config epoch and cohort",
+        "min_primary": 650,
+        "trial_index": 4,
+        "trial_share": 0.2,
+        "minimum_lift": 0.08,
+        "rule_version": "clustered-fixed-v2",
+        "winner_share": 0.9,
+        "duration_hours": 72,
+        "decay_min_people": 100,
+        "decay_half_lift_days": 2,
+        "decay_interval_hours": 24,
+        "safety_interval_hours": 1,
+        "decay_min_observations": 200,
+        "minimum_people_per_arm": 100,
+        "decay_zero_window_hours": 48
       },
       "result": {
         "method": "person-clustered delta-method normal intervals",
         "primary": {
           "arms": {
             "V1": {
-              "rate": 0.49930907415937353,
-              "people": 2012,
-              "successes": 1084,
-              "observations": 2171
+              "rate": 0.48703703703703705,
+              "people": 1964,
+              "successes": 1052,
+              "observations": 2160
             },
             "V3": {
-              "rate": 0.5,
-              "people": 539,
-              "successes": 274,
-              "observations": 548
+              "rate": 0.5584415584415584,
+              "people": 530,
+              "successes": 301,
+              "observations": 539
             }
           },
-          "alpha": 0.004166666666666667,
-          "lower": -0.06288547704276386,
-          "upper": 0.06426732872401679,
+          "alpha": 0.0025,
+          "lower": 0.004213687746380063,
+          "upper": 0.13859535506266266,
           "metric": "engagement_rate",
-          "clusters": 6320,
-          "difference": 0.0006909258406264662,
-          "standard_error": 0.024097878369385865
+          "clusters": 6513,
+          "difference": 0.07140452140452136,
+          "standard_error": 0.02393659613784583
         },
         "decision": "inconclusive",
         "guardrail": {
           "arms": {
             "V1": {
-              "rate": 0.18673662480646827,
-              "people": 5856,
-              "successes": 2171,
-              "observations": 11626
+              "rate": 0.18456805947193028,
+              "people": 5997,
+              "successes": 2160,
+              "observations": 11703
             },
             "V3": {
-              "rate": 0.1906750173973556,
-              "people": 2369,
-              "successes": 548,
-              "observations": 2874
+              "rate": 0.1927064712191634,
+              "people": 2329,
+              "successes": 539,
+              "observations": 2797
             }
           },
-          "alpha": 0.004166666666666667,
-          "lower": -0.01758692549684508,
-          "upper": 0.025463710678619727,
+          "alpha": 0.0025,
+          "lower": -0.015034929514474299,
+          "upper": 0.03131175300894054,
           "metric": "pickup_rate",
-          "clusters": 6320,
-          "difference": 0.003938392590887324,
-          "standard_error": 0.00815891547201759
+          "clusters": 6513,
+          "difference": 0.00813841174723312,
+          "standard_error": 0.00825545510817991
         },
         "enough_evidence": false,
         "guardrail_margin": 0.02
       },
-      "checkpoint": "2027-01-11T03:40:00+00:00"
+      "checkpoint": "2027-01-11T13:43:00+00:00"
     },
     {
       "workflow_id": "nw_kyc",
-      "experiment_id": "392cf1cd93335878f84101b58bd278184a37c16e883be9cf2e114b4d785222cc",
+      "experiment_id": "647646c62ede640f310a816ba8225ff05446ff2d7086361b07b15821c7d7b3a5",
       "status": "inconclusive",
-      "proposal_id": "7b996459bedd1850207dfff97067004a8d906db22f2dce9bf3bda7c405e17f00",
+      "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
       "cohort_id": "default",
       "plan": {
         "alpha": 0.025,
@@ -255,61 +304,65 @@
         "trial_index": 1,
         "trial_share": 0.2,
         "minimum_lift": 0.08,
-        "rule_version": "clustered-fixed-v1",
-        "winner_share": 0.8,
+        "rule_version": "clustered-fixed-v2",
+        "winner_share": 0.9,
         "duration_hours": 72,
+        "decay_min_people": 100,
+        "decay_half_lift_days": 2,
         "decay_interval_hours": 24,
         "safety_interval_hours": 1,
-        "minimum_people_per_arm": 100
+        "decay_min_observations": 200,
+        "minimum_people_per_arm": 100,
+        "decay_zero_window_hours": 48
       },
       "result": {
         "method": "person-clustered delta-method normal intervals",
         "primary": {
           "arms": {
             "V1": {
-              "rate": 0.24738571855392888,
-              "people": 1769,
-              "successes": 828,
-              "observations": 3347
+              "rate": 0.256547619047619,
+              "people": 1759,
+              "successes": 862,
+              "observations": 3360
             },
             "V2": {
-              "rate": 0.2213209733487833,
-              "people": 710,
-              "successes": 191,
-              "observations": 863
+              "rate": 0.23529411764705882,
+              "people": 713,
+              "successes": 200,
+              "observations": 850
             }
           },
           "alpha": 0.025,
-          "lower": -0.057480301150902025,
-          "upper": 0.00535081074061089,
+          "lower": -0.05337932356837598,
+          "upper": 0.01087232076725557,
           "metric": "pickup_rate",
-          "clusters": 1950,
-          "difference": -0.026064745205145567,
-          "standard_error": 0.01602863940029427
+          "clusters": 1924,
+          "difference": -0.021253501400560204,
+          "standard_error": 0.01639102678478797
         },
         "decision": "inconclusive",
         "guardrail": {
           "arms": {
             "V1": {
-              "rate": 0.6195652173913043,
-              "people": 750,
-              "successes": 513,
-              "observations": 828
+              "rate": 0.622969837587007,
+              "people": 779,
+              "successes": 537,
+              "observations": 862
             },
             "V2": {
-              "rate": 0.5759162303664922,
-              "people": 184,
-              "successes": 110,
-              "observations": 191
+              "rate": 0.63,
+              "people": 195,
+              "successes": 126,
+              "observations": 200
             }
           },
           "alpha": 0.025,
-          "lower": -0.12161450793531699,
-          "upper": 0.03431653388569274,
+          "lower": -0.0689445272637239,
+          "upper": 0.08300485208970997,
           "metric": "engagement_rate",
-          "clusters": 1950,
-          "difference": -0.043648987024812125,
-          "standard_error": 0.03977905794468009
+          "clusters": 1924,
+          "difference": 0.007030162412993035,
+          "standard_error": 0.038763309058735575
         },
         "enough_evidence": true,
         "guardrail_margin": 0.02
@@ -318,9 +371,9 @@
     },
     {
       "workflow_id": "nw_renewal",
-      "experiment_id": "5b0f3642f59cb65d496647c98e6d79e22f300d92f123695e1c46127dbad53297",
+      "experiment_id": "01a5143358be498ddc828bc2a2bb0becef0d337724af7842862ee6b576d3ec2a",
       "status": "inconclusive",
-      "proposal_id": "4677c7ab606c53a12efaf49d06d7f0d314f90ced68e95ab9aac82d1a896b90cd",
+      "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
       "cohort_id": "default",
       "plan": {
         "alpha": 0.025,
@@ -337,72 +390,76 @@
         "trial_index": 1,
         "trial_share": 0.2,
         "minimum_lift": 0.08,
-        "rule_version": "clustered-fixed-v1",
-        "winner_share": 0.8,
+        "rule_version": "clustered-fixed-v2",
+        "winner_share": 0.9,
         "duration_hours": 72,
+        "decay_min_people": 100,
+        "decay_half_lift_days": 2,
         "decay_interval_hours": 24,
         "safety_interval_hours": 1,
-        "minimum_people_per_arm": 100
+        "decay_min_observations": 200,
+        "minimum_people_per_arm": 100,
+        "decay_zero_window_hours": 48
       },
       "result": {
         "method": "person-clustered delta-method normal intervals",
         "primary": {
           "arms": {
             "V1": {
-              "rate": 0.5458694659972615,
-              "people": 1935,
-              "successes": 1196,
-              "observations": 2191
+              "rate": 0.5506128007262824,
+              "people": 1948,
+              "successes": 1213,
+              "observations": 2203
             },
             "V2": {
-              "rate": 0.5596491228070175,
-              "people": 553,
-              "successes": 319,
-              "observations": 570
+              "rate": 0.549469964664311,
+              "people": 545,
+              "successes": 311,
+              "observations": 566
             }
           },
           "alpha": 0.025,
-          "lower": -0.03180996879505121,
-          "upper": 0.05936928241456324,
+          "lower": -0.04687473662940663,
+          "upper": 0.044589064505463814,
           "metric": "engagement_rate",
-          "clusters": 4750,
-          "difference": 0.013779656809756013,
-          "standard_error": 0.02326044047972942
+          "clusters": 4751,
+          "difference": -0.0011428360619714084,
+          "standard_error": 0.023333031080245675
         },
         "decision": "inconclusive",
         "guardrail": {
           "arms": {
             "V1": {
-              "rate": 0.25285631852279283,
-              "people": 4316,
-              "successes": 2191,
-              "observations": 8665
+              "rate": 0.25595445567561287,
+              "people": 4347,
+              "successes": 2203,
+              "observations": 8607
             },
             "V2": {
-              "rate": 0.2579185520361991,
-              "people": 1821,
-              "successes": 570,
-              "observations": 2210
+              "rate": 0.25809393524851804,
+              "people": 1795,
+              "successes": 566,
+              "observations": 2193
             }
           },
           "alpha": 0.025,
-          "lower": -0.014914589451018506,
-          "upper": 0.025039056477831084,
+          "lower": -0.018039059108772695,
+          "upper": 0.02231801825458303,
           "metric": "pickup_rate",
-          "clusters": 4750,
-          "difference": 0.005062233513406289,
-          "standard_error": 0.01019244390305099
+          "clusters": 4751,
+          "difference": 0.0021394795729051674,
+          "standard_error": 0.010295361976466714
         },
         "enough_evidence": true,
         "guardrail_margin": 0.02
       },
-      "checkpoint": "2027-01-07T08:10:00+00:00"
+      "checkpoint": "2027-01-07T07:46:00+00:00"
     },
     {
       "workflow_id": "nw_renewal",
-      "experiment_id": "930f2aa6ab0b5ed2c519174cddf542588f240b9462bbf1c8c14b2fcd8f1d11cf",
+      "experiment_id": "3908ce7bf3cdb6b856f00e3d67d6cd62152b2affda5d850c1852736f24e56767",
       "status": "interrupted",
-      "proposal_id": "469a122e6cd4d6e12379c50c963fd6dc91d2f28cab91ddb046cb0d4e0b6a8639",
+      "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
       "cohort_id": "default",
       "plan": {
         "alpha": 0.008333333333333333,
@@ -419,31 +476,35 @@
         "trial_index": 2,
         "trial_share": 0.2,
         "minimum_lift": 0.08,
-        "rule_version": "clustered-fixed-v1",
-        "winner_share": 0.8,
+        "rule_version": "clustered-fixed-v2",
+        "winner_share": 0.9,
         "duration_hours": 72,
+        "decay_min_people": 100,
+        "decay_half_lift_days": 2,
         "decay_interval_hours": 24,
         "safety_interval_hours": 1,
-        "minimum_people_per_arm": 100
+        "decay_min_observations": 200,
+        "minimum_people_per_arm": 100,
+        "decay_zero_window_hours": 48
       },
       "result": null,
-      "checkpoint": "2027-01-11T04:49:00+00:00"
+      "checkpoint": "2027-01-10T11:52:00+00:00"
     }
   ],
   "pending_proposals": [],
   "recent_changes": [
     {
       "workflow_id": "ks_cancel",
-      "ts": "2027-01-11 03:45:00+00:00",
+      "ts": "2027-01-11 13:45:00+00:00",
       "actor": "controller_auto",
       "evidence": {
-        "ts": "2027-01-11T09:15:00+05:30",
+        "ts": "2027-01-11T19:15:00+05:30",
         "type": "config_changed",
         "actor": "controller_auto",
-        "version": 10,
-        "event_id": 286695,
+        "version": 12,
+        "event_id": 295547,
         "approval_id": null,
-        "proposal_id": "c71dfc689ef972e8cfe20115af10bf9b5c023771a509362a4135fa0a797c246f",
+        "proposal_id": "eaa61187319c5409fa259028813f6b01452553e4ca65c783acdde29d95e8afa0",
         "workflow_id": "ks_cancel",
         "changed_dims": [
           "voice"
@@ -459,7 +520,7 @@
         "type": "config_changed",
         "actor": "supervisor",
         "version": 5,
-        "event_id": 264313,
+        "event_id": 264315,
         "approval_id": null,
         "proposal_id": null,
         "workflow_id": "nw_renewal",
@@ -469,17 +530,71 @@
       }
     },
     {
-      "workflow_id": "nw_kyc",
-      "ts": "2027-01-08 08:30:00+00:00",
+      "workflow_id": "ks_cancel",
+      "ts": "2027-01-08 13:30:00+00:00",
+      "actor": "controller_auto",
+      "evidence": {
+        "ts": "2027-01-08T19:00:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_auto",
+        "version": 11,
+        "event_id": 254211,
+        "approval_id": null,
+        "proposal_id": "04cb1b30db0adaf6504148fc246dbde04c40a66d0c2fac18cf298ac0604dd73a",
+        "workflow_id": "ks_cancel",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    },
+    {
+      "workflow_id": "ks_cancel",
+      "ts": "2027-01-08 09:30:00+00:00",
       "actor": "controller_approved",
       "evidence": {
-        "ts": "2027-01-08T14:00:00+05:30",
+        "ts": "2027-01-08T15:00:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_approved",
+        "version": 10,
+        "event_id": 250610,
+        "approval_id": "apr_00007",
+        "proposal_id": "bca94653234f678163fe8276606d408f1e207d0d208172adbf226e7f760683bb",
+        "workflow_id": "ks_cancel",
+        "changed_dims": [
+          "prompt_version"
+        ]
+      }
+    },
+    {
+      "workflow_id": "ks_cancel",
+      "ts": "2027-01-08 07:30:00+00:00",
+      "actor": "controller_auto",
+      "evidence": {
+        "ts": "2027-01-08T13:00:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_auto",
+        "version": 9,
+        "event_id": 248808,
+        "approval_id": null,
+        "proposal_id": "bd1cda1dde1c7adeda686c5af15c0f81e7a304d70b866199285e0e2e12128175",
+        "workflow_id": "ks_cancel",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    },
+    {
+      "workflow_id": "nw_kyc",
+      "ts": "2027-01-08 07:00:00+00:00",
+      "actor": "controller_approved",
+      "evidence": {
+        "ts": "2027-01-08T12:30:00+05:30",
         "type": "config_changed",
         "actor": "controller_approved",
         "version": 3,
-        "event_id": 249709,
-        "approval_id": "apr_00007",
-        "proposal_id": "7b996459bedd1850207dfff97067004a8d906db22f2dce9bf3bda7c405e17f00",
+        "event_id": 248357,
+        "approval_id": "apr_00006",
+        "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
         "workflow_id": "nw_kyc",
         "changed_dims": [
           "voice"
@@ -488,16 +603,16 @@
     },
     {
       "workflow_id": "nw_renewal",
-      "ts": "2027-01-08 04:45:00+00:00",
+      "ts": "2027-01-07 11:45:00+00:00",
       "actor": "controller_approved",
       "evidence": {
-        "ts": "2027-01-08T10:15:00+05:30",
+        "ts": "2027-01-07T17:15:00+05:30",
         "type": "config_changed",
         "actor": "controller_approved",
         "version": 4,
-        "event_id": 246332,
+        "event_id": 238927,
         "approval_id": "apr_00005",
-        "proposal_id": "469a122e6cd4d6e12379c50c963fd6dc91d2f28cab91ddb046cb0d4e0b6a8639",
+        "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
         "workflow_id": "nw_renewal",
         "changed_dims": [
           "voice"
@@ -506,16 +621,16 @@
     },
     {
       "workflow_id": "ks_cancel",
-      "ts": "2027-01-07 15:30:00+00:00",
+      "ts": "2027-01-07 10:30:00+00:00",
       "actor": "controller_auto",
       "evidence": {
-        "ts": "2027-01-07T21:00:00+05:30",
+        "ts": "2027-01-07T16:00:00+05:30",
         "type": "config_changed",
         "actor": "controller_auto",
-        "version": 9,
-        "event_id": 242102,
+        "version": 8,
+        "event_id": 237800,
         "approval_id": null,
-        "proposal_id": "2bec5ead3d748ec4e6860974e080667c27b38d38abf8cd1521d747a347598c4b",
+        "proposal_id": "b3712aaa44d04625fd4b067087e22ae8c703f721f6f6b6f8c2f3a1cd16f21bd7",
         "workflow_id": "ks_cancel",
         "changed_dims": [
           "voice"
@@ -523,35 +638,17 @@
       }
     },
     {
-      "workflow_id": "ks_cancel",
-      "ts": "2027-01-07 13:00:00+00:00",
-      "actor": "controller_approved",
-      "evidence": {
-        "ts": "2027-01-07T18:30:00+05:30",
-        "type": "config_changed",
-        "actor": "controller_approved",
-        "version": 8,
-        "event_id": 240051,
-        "approval_id": "apr_00006",
-        "proposal_id": "2eeb329011a86dfeb997a6695f28320e178abe8a9f0a350c58698666fdf7430c",
-        "workflow_id": "ks_cancel",
-        "changed_dims": [
-          "prompt_version"
-        ]
-      }
-    },
-    {
       "workflow_id": "nw_renewal",
-      "ts": "2027-01-07 10:45:00+00:00",
+      "ts": "2027-01-07 09:00:00+00:00",
       "actor": "controller_approved",
       "evidence": {
-        "ts": "2027-01-07T16:15:00+05:30",
+        "ts": "2027-01-07T14:30:00+05:30",
         "type": "config_changed",
         "actor": "controller_approved",
         "version": 3,
-        "event_id": 238024,
+        "event_id": 236449,
         "approval_id": "apr_00004",
-        "proposal_id": "4677c7ab606c53a12efaf49d06d7f0d314f90ced68e95ab9aac82d1a896b90cd",
+        "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
         "workflow_id": "nw_renewal",
         "changed_dims": [
           "voice"
@@ -569,7 +666,7 @@
         "version": 7,
         "event_id": 233972,
         "approval_id": null,
-        "proposal_id": "c8f63fcae2dba0842279209ecc5d8840fc8e2d643f7c461732faa8e623722eaa",
+        "proposal_id": "90cd0244584e22f1643d1b69cc379b692345d36dfc921b9d338b81ebd09cab84",
         "workflow_id": "ks_cancel",
         "changed_dims": [
           "voice"
@@ -605,7 +702,7 @@
         "version": 5,
         "event_id": 224092,
         "approval_id": null,
-        "proposal_id": "fdc0c7ddc2235d19398e4b1ea4dd53f603403e3965c76052072eb9397f40bfd0",
+        "proposal_id": "74b8a0840af1bdc7406e18e7feedf3e92d38603854b30a5007403a627e8a93f0",
         "workflow_id": "ks_cancel",
         "changed_dims": [
           "voice"
@@ -614,16 +711,16 @@
     },
     {
       "workflow_id": "ks_cancel",
-      "ts": "2027-01-06 08:45:00+00:00",
+      "ts": "2027-01-06 08:30:00+00:00",
       "actor": "controller_auto",
       "evidence": {
-        "ts": "2027-01-06T14:15:00+05:30",
+        "ts": "2027-01-06T14:00:00+05:30",
         "type": "config_changed",
         "actor": "controller_auto",
         "version": 4,
-        "event_id": 222516,
+        "event_id": 222291,
         "approval_id": null,
-        "proposal_id": "2f80af21bf376031f0b79b9c9312633c11001f55c73742bb4dd32011bbe74ace",
+        "proposal_id": "1896c078caa1bb8ec352007168b2de3b64381215da1660b3ce8a3a4d4d15d2f0",
         "workflow_id": "ks_cancel",
         "changed_dims": [
           "voice"
@@ -632,16 +729,16 @@
     },
     {
       "workflow_id": "ks_cancel",
-      "ts": "2027-01-06 08:45:00+00:00",
+      "ts": "2027-01-06 08:30:00+00:00",
       "actor": "controller_approved",
       "evidence": {
-        "ts": "2027-01-06T14:15:00+05:30",
+        "ts": "2027-01-06T14:00:00+05:30",
         "type": "config_changed",
         "actor": "controller_approved",
         "version": 3,
-        "event_id": 222515,
+        "event_id": 222290,
         "approval_id": "apr_00003",
-        "proposal_id": "4e80c760d455a2cc206c4db4f9b475c754a3e2028072226e90932ce7bdc71e44",
+        "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
         "workflow_id": "ks_cancel",
         "changed_dims": [
           "caller_id"
@@ -650,16 +747,16 @@
     },
     {
       "workflow_id": "nw_kyc",
-      "ts": "2027-01-04 09:15:00+00:00",
+      "ts": "2027-01-04 10:30:00+00:00",
       "actor": "controller_approved",
       "evidence": {
-        "ts": "2027-01-04T14:45:00+05:30",
+        "ts": "2027-01-04T16:00:00+05:30",
         "type": "config_changed",
         "actor": "controller_approved",
         "version": 2,
-        "event_id": 195557,
+        "event_id": 196682,
         "approval_id": "apr_00002",
-        "proposal_id": "c73db1d5c5d5ce1087cd3b2400e91b951b0073d903b0a0aae05b85fa3f5d9b1e",
+        "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
         "workflow_id": "nw_kyc",
         "changed_dims": [
           "voice"
@@ -668,16 +765,16 @@
     },
     {
       "workflow_id": "nw_renewal",
-      "ts": "2027-01-04 08:00:00+00:00",
+      "ts": "2027-01-04 07:45:00+00:00",
       "actor": "controller_approved",
       "evidence": {
-        "ts": "2027-01-04T13:30:00+05:30",
+        "ts": "2027-01-04T13:15:00+05:30",
         "type": "config_changed",
         "actor": "controller_approved",
         "version": 2,
-        "event_id": 194430,
+        "event_id": 194205,
         "approval_id": "apr_00001",
-        "proposal_id": "07777f9e1f76b1ec13eba34a69c01c26aaac985920c4ac07e8398b4f27c8684a",
+        "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
         "workflow_id": "nw_renewal",
         "changed_dims": [
           "voice"
@@ -695,7 +792,7 @@
         "version": 2,
         "event_id": 187275,
         "approval_id": null,
-        "proposal_id": "fbdc3f4a5e4d0d7a0215689403823057aae43da9a03a9a549ae90a29d940289c",
+        "proposal_id": "b8a07651f1971fc6d8fb15929a5ad3233e77b283231527b757fcc25eba0c25c6",
         "workflow_id": "ks_cancel",
         "changed_dims": [
           "voice"
@@ -705,12 +802,12 @@
   ],
   "open_incidents": [],
   "credits": {
-    "remaining_at_last_observation": 194.0,
+    "remaining_at_last_observation": 195.0,
     "by_workflow": [
       {
         "workflow_id": "ks_cancel",
         "status": "succeeded",
-        "credits": 6
+        "credits": 5
       }
     ]
   },

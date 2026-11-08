@@ -56,6 +56,14 @@ receive the full equality check. Unique chunks avoid DISTINCT sorting. Controlle
 disable JIT compilation; the measured load findings and unresolved server crash are recorded in
 [LOAD.md](../reports/LOAD.md) and [LOAD_ATTEMPT.md](../reports/LOAD_ATTEMPT.md).
 
+Campaigns, concluded leads and exact-time person/voice counters are updated in the
+same chunk transaction. Learning and proposal-reach queries read this typed evidence
+instead of raw call JSON. Raw events remain the audit source. On first opening an
+older run, these derived tables backfill once in a transaction and commit an
+`evidence_ready` marker. An interrupted backfill retries without partial counters.
+Person/time counter cardinality can approach call count; it is not a small cohort-only
+cube. Retention and sufficient-statistic reduction remain production scale work.
+
 Raw events preserve person IDs and lead features for future clustered analysis. Hourly metrics
 retain workflow, config version, cohort, and observed voice/caller-ID/prompt dimensions;
 the `all` dimension is the unduplicated workflow total. Lead and call events are stored in

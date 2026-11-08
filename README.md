@@ -176,3 +176,28 @@ thing you cut.
 - If something is ambiguous, **state your assumption in `SUBMISSION.md` and proceed**. Don't wait for an
   answer. Questions are welcome but won't block you.
 - Don't share the assignment or your solution publicly.
+
+## 11. Running this controller
+
+Install `requirements.txt`. The controller uses PostgreSQL 17; `run.sh` starts the
+development database with Docker Compose when `DATABASE_URL` is unset. An existing
+PostgreSQL database avoids that Docker requirement. The supplied database password
+is for the localhost development service only.
+
+```bash
+pip install -r requirements.txt
+python -m sim serve --scenario scenarios/public_01_dev.yaml --run-dir runs/example01
+# In another terminal, after the simulator is healthy:
+SIM_RUN_ID=example01 ./run.sh http://127.0.0.1:8700
+```
+
+Use the same run ID/database to restart a controller; use a fresh ID for a new
+simulator world. `python -m controller status --run-id example01` prints the concise
+supervisor view; add `--json` for complete evidence. `DATABASE_URL` must be set for
+these direct commands. Windows commands, audit queries, crash/profile reproduction
+and alert meanings are in [OPERATIONS.md](./docs/OPERATIONS.md).
+
+The implementation and scope are described in [SUBMISSION.md](./SUBMISSION.md),
+with current grades in [reports/](./reports/) and work status in
+[WorkPlan.md](./WorkPlan.md). Raw simulator run data and local profiles stay under
+ignored `runs/`; controller evidence is stored in PostgreSQL.

@@ -1,5 +1,11 @@
 # Milestone 5 delivery evidence
 
+This is the original milestone-5 snapshot. Later Step 5–7 behavior and verification
+are recorded in [STEPS_5_7.md](./STEPS_5_7.md); its original grades are preserved as
+[milestone5_public01.md](./milestone5_public01.md) and
+[milestone5_public02.md](./milestone5_public02.md). The current canonical grades
+may reflect later code.
+
 Measured 2026-11-08. New runs use run IDs `delivery01` and `delivery02`, rather
 than reusing an earlier world's identity. The loop/statistical policies are
 unchanged from milestone 4. Approval choices and resulting exposure can differ
@@ -51,7 +57,7 @@ fed hidden grade information back into the controller.
 | Expired / lapsed / apply conflicts | 0 / 0 / 0 | 0 / 0 / 0 |
 | Credits used | 0 | 6 |
 
-Full grader outputs: [public_01.md](./public_01.md), [public_02.md](./public_02.md).
+Full grader outputs for this snapshot: [milestone5_public01.md](./milestone5_public01.md), [milestone5_public02.md](./milestone5_public02.md).
 The aggregate conclusion-rate changes are +1.5% and +5.3% relative to their
 no-op baselines. These single-world aggregate deltas are not randomized causal
 estimates. The evidence supports two incident repairs, rather than a discovered

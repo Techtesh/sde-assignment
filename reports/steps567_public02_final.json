@@ -1,0 +1,630 @@
+[
+  {
+    "case": "clean",
+    "schema": "steps567_finalinc_clean_b96a70",
+    "run_id": "steps567_finalinc",
+    "directory": "runs\\steps567_finalinc_clean_d636a087",
+    "application_commit": "3d837791701fa74cc39193adf6040cf77dc7dc01",
+    "profiled": true,
+    "exit": 0,
+    "timings": {
+      "ticks": 961,
+      "simulated_days": 10.0,
+      "wall_seconds": 207.361,
+      "wall_seconds_per_day_including_bootstrap": 20.736,
+      "bootstrap": {
+        "mode": "controller",
+        "ts": "2027-01-04T00:00:00+05:30",
+        "finished": false,
+        "ingested_events": 187274,
+        "ingest_seconds": 25.234,
+        "stream_fetch_seconds": 0.627,
+        "parse_seconds": 2.293,
+        "write_seconds": 22.314,
+        "decision_seconds": 12.551,
+        "advance_seconds": 0.0,
+        "loop_seconds": 37.785,
+        "credits_remaining": 200.0,
+        "peak_rss_mib": 51.7
+      },
+      "totals": {
+        "ingest_seconds": 68.934,
+        "stream_fetch_seconds": 6.116,
+        "parse_seconds": 4.071,
+        "write_seconds": 58.751,
+        "decision_seconds": 124.155,
+        "advance_seconds": 10.162,
+        "loop_seconds": 193.079
+      },
+      "live_events": 137054,
+      "live_ingest_events_per_second": 3136.2,
+      "max_decision_lag_bound_seconds": 14.912,
+      "live_wall_seconds_by_simulated_day": {
+        "0": 15.518,
+        "1": 14.665,
+        "2": 30.374,
+        "3": 16.203,
+        "4": 15.655,
+        "5": 17.158,
+        "6": 18.447,
+        "7": 14.015,
+        "8": 11.65,
+        "9": 11.771
+      },
+      "peak_controller_rss_mib": 55.11
+    },
+    "signature": {
+      "ingested_chunks": {
+        "rows": 492,
+        "sha256": "6859cc271fb1127508dc016019ce9fae1e12a626ea687d4a03d4b69f9585749c"
+      },
+      "hourly_metrics": {
+        "rows": 4102,
+        "sha256": "f3036c6083a3b0d7203d5ff45587c89249c825e2fd6266cdaa436d7974fabe46"
+      },
+      "proposals": {
+        "rows": 15,
+        "sha256": "2fd7cadd9fb42ed75e097059913ada5d962d49a88cdbdf86f7955ce29563965d"
+      },
+      "experiments": {
+        "rows": 7,
+        "sha256": "0d2f85704bd17ac9b077456e38472de906699068b926a2bfb28a80e03c4b0a55"
+      },
+      "experiment_people": {
+        "rows": 33235,
+        "sha256": "aaa2a4b741729670ea112033fec35bb9d29b22625e9ec53f679bc445e8534a97"
+      },
+      "incidents": {
+        "rows": 2,
+        "sha256": "007063f0b70ff1e5bcfbd2c8038236b52d418a8c20b8d5658a24f3f4a3ea2fde"
+      },
+      "audit_log": {
+        "rows": 96,
+        "sha256": "dd40c4b63456e3a52b34b43e2c566a1ee8916d6644cc561d60bcc6a9dedef09b"
+      },
+      "campaigns": {
+        "rows": 72,
+        "fingerprint": "-22874037047344732349"
+      },
+      "concluded_leads": {
+        "rows": 32771,
+        "fingerprint": "-902677975039312928072"
+      },
+      "person_metrics": {
+        "rows": 104000,
+        "fingerprint": "-619124070464186839493"
+      },
+      "events": [
+        324328,
+        1,
+        324328,
+        "1395013177724467589254"
+      ],
+      "state": {
+        "scenario": "public_02_incidents",
+        "sim_minute": 14400,
+        "ts": "2027-01-14T00:00:00+05:30",
+        "end_minute": 14400,
+        "finished": true,
+        "tick_minutes": 15,
+        "credits_remaining": 195.0,
+        "chunks": 492,
+        "last_event_id": 324328
+      },
+      "config_history": {
+        "nw_renewal": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-04T13:15:00+05:30",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
+            "approval_id": "apr_00001"
+          },
+          {
+            "version": 3,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T14:30:00+05:30",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
+            "approval_id": "apr_00004"
+          },
+          {
+            "version": 4,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T17:15:00+05:30",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
+            "approval_id": "apr_00005"
+          },
+          {
+            "version": 5,
+            "actor": "supervisor",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-09T15:00:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
+          }
+        ],
+        "nw_kyc": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-04T16:00:00+05:30",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
+            "approval_id": "apr_00002"
+          },
+          {
+            "version": 3,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-08T12:30:00+05:30",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
+            "approval_id": "apr_00006"
+          }
+        ],
+        "ks_cancel": [
+          {
+            "version": 1,
+            "actor": "business_default",
+            "changed_dims": [],
+            "applied_at": null,
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 2,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": 0,
+            "proposal_id": "b8a07651f1971fc6d8fb15929a5ad3233e77b283231527b757fcc25eba0c25c6",
+            "approval_id": null
+          },
+          {
+            "version": 3,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "caller_id"
+            ],
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "approval_id": "apr_00003"
+          },
+          {
+            "version": 4,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "1896c078caa1bb8ec352007168b2de3b64381215da1660b3ce8a3a4d4d15d2f0",
+            "approval_id": null
+          },
+          {
+            "version": 5,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-06T16:00:00+05:30",
+            "proposal_id": "74b8a0840af1bdc7406e18e7feedf3e92d38603854b30a5007403a627e8a93f0",
+            "approval_id": null
+          },
+          {
+            "version": 6,
+            "actor": "supervisor",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-07T11:30:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 7,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T11:45:00+05:30",
+            "proposal_id": "90cd0244584e22f1643d1b69cc379b692345d36dfc921b9d338b81ebd09cab84",
+            "approval_id": null
+          },
+          {
+            "version": 8,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T16:00:00+05:30",
+            "proposal_id": "b3712aaa44d04625fd4b067087e22ae8c703f721f6f6b6f8c2f3a1cd16f21bd7",
+            "approval_id": null
+          },
+          {
+            "version": 9,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-08T13:00:00+05:30",
+            "proposal_id": "bd1cda1dde1c7adeda686c5af15c0f81e7a304d70b866199285e0e2e12128175",
+            "approval_id": null
+          },
+          {
+            "version": 10,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-08T15:00:00+05:30",
+            "proposal_id": "bca94653234f678163fe8276606d408f1e207d0d208172adbf226e7f760683bb",
+            "approval_id": "apr_00007"
+          },
+          {
+            "version": 11,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-08T19:00:00+05:30",
+            "proposal_id": "04cb1b30db0adaf6504148fc246dbde04c40a66d0c2fac18cf298ac0604dd73a",
+            "approval_id": null
+          },
+          {
+            "version": 12,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-11T19:15:00+05:30",
+            "proposal_id": "eaa61187319c5409fa259028813f6b01452553e4ca65c783acdde29d95e8afa0",
+            "approval_id": null
+          }
+        ]
+      },
+      "approvals": {
+        "nw_renewal": [
+          {
+            "approval_id": "apr_00001",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
+            "workflow_id": "nw_renewal",
+            "status": "applied",
+            "base_version": 1,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-04T10:00:00+05:30",
+            "expires_at": "2027-01-05T10:00:00+05:30",
+            "decided_at": "2027-01-04T12:52:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00004",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
+            "workflow_id": "nw_renewal",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-07T13:30:00+05:30",
+            "expires_at": "2027-01-08T13:30:00+05:30",
+            "decided_at": "2027-01-07T14:01:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00005",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
+            "workflow_id": "nw_renewal",
+            "status": "applied",
+            "base_version": 3,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-07T14:30:00+05:30",
+            "expires_at": "2027-01-08T14:30:00+05:30",
+            "decided_at": "2027-01-07T16:54:00+05:30",
+            "reasons": []
+          }
+        ],
+        "nw_kyc": [
+          {
+            "approval_id": "apr_00002",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
+            "workflow_id": "nw_kyc",
+            "status": "applied",
+            "base_version": 1,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-04T10:15:00+05:30",
+            "expires_at": "2027-01-05T10:15:00+05:30",
+            "decided_at": "2027-01-04T15:41:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00006",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
+            "workflow_id": "nw_kyc",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-08T10:15:00+05:30",
+            "expires_at": "2027-01-09T10:15:00+05:30",
+            "decided_at": "2027-01-08T12:07:00+05:30",
+            "reasons": []
+          }
+        ],
+        "ks_cancel": [
+          {
+            "approval_id": "apr_00003",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "caller_id"
+            ],
+            "created_at": "2027-01-06T12:00:00+05:30",
+            "expires_at": "2027-01-07T00:00:00+05:30",
+            "decided_at": "2027-01-06T13:31:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00007",
+            "proposal_id": "bca94653234f678163fe8276606d408f1e207d0d208172adbf226e7f760683bb",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 9,
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "created_at": "2027-01-08T13:30:00+05:30",
+            "expires_at": "2027-01-09T01:30:00+05:30",
+            "decided_at": "2027-01-08T14:39:00+05:30",
+            "reasons": []
+          }
+        ]
+      }
+    },
+    "profile": {
+      "total_calls": 53881013,
+      "elapsed_accounted_seconds": 206.53623666200178,
+      "functions": [
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.exec>",
+          "calls": 355,
+          "internal_seconds": 0.006127062,
+          "cumulative_seconds": 206.585838034
+        },
+        {
+          "file": "<string>",
+          "line": 1,
+          "function": "<module>",
+          "calls": 1,
+          "internal_seconds": 3.7e-06,
+          "cumulative_seconds": 206.58577713100001
+        },
+        {
+          "file": "<frozen runpy>",
+          "line": 201,
+          "function": "run_module",
+          "calls": 1,
+          "internal_seconds": 7.9e-06,
+          "cumulative_seconds": 206.585773431
+        },
+        {
+          "file": "<frozen runpy>",
+          "line": 65,
+          "function": "_run_code",
+          "calls": 1,
+          "internal_seconds": 1.0001000000000001e-05,
+          "cumulative_seconds": 206.55196130500002
+        },
+        {
+          "file": "/app/controller/__main__.py",
+          "line": 1,
+          "function": "<module>",
+          "calls": 1,
+          "internal_seconds": 8.240500000000001e-05,
+          "cumulative_seconds": 206.55191800300003
+        },
+        {
+          "file": "/app/controller/__main__.py",
+          "line": 94,
+          "function": "main",
+          "calls": 1,
+          "internal_seconds": 9.8002e-05,
+          "cumulative_seconds": 206.045910461
+        },
+        {
+          "file": "/app/controller/__main__.py",
+          "line": 32,
+          "function": "run",
+          "calls": 1,
+          "internal_seconds": 0.11233551500000001,
+          "cumulative_seconds": 205.88498917500002
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/psycopg/connection.py",
+          "line": 479,
+          "function": "wait",
+          "calls": 61092,
+          "internal_seconds": 129.945278812,
+          "cumulative_seconds": 138.788612425
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/psycopg/cursor.py",
+          "line": 100,
+          "function": "execute",
+          "calls": 45572,
+          "internal_seconds": 0.16048968500000002,
+          "cumulative_seconds": 122.07303619700001
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/psycopg/connection.py",
+          "line": 281,
+          "function": "execute",
+          "calls": 25963,
+          "internal_seconds": 0.06863253500000001,
+          "cumulative_seconds": 88.955280911
+        },
+        {
+          "file": "/app/controller/__main__.py",
+          "line": 21,
+          "function": "drain",
+          "calls": 961,
+          "internal_seconds": 0.020265315000000002,
+          "cumulative_seconds": 68.923672102
+        },
+        {
+          "file": "/app/controller/store.py",
+          "line": 128,
+          "function": "ingest",
+          "calls": 492,
+          "internal_seconds": 0.8740143520000001,
+          "cumulative_seconds": 61.196549306
+        },
+        {
+          "file": "/app/controller/experiments.py",
+          "line": 72,
+          "function": "tick",
+          "calls": 961,
+          "internal_seconds": 0.060111664,
+          "cumulative_seconds": 44.443216259
+        },
+        {
+          "file": "/app/controller/incidents.py",
+          "line": 30,
+          "function": "tick",
+          "calls": 961,
+          "internal_seconds": 0.133972814,
+          "cumulative_seconds": 41.781453151
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/httpx/_client.py",
+          "line": 771,
+          "function": "request",
+          "calls": 10860,
+          "internal_seconds": 0.039457143,
+          "cumulative_seconds": 34.612248786
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/httpx/_client.py",
+          "line": 879,
+          "function": "send",
+          "calls": 11352,
+          "internal_seconds": 0.048583320000000006,
+          "cumulative_seconds": 30.954726093
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/httpx/_client.py",
+          "line": 930,
+          "function": "_send_handling_auth",
+          "calls": 11352,
+          "internal_seconds": 0.040378113,
+          "cumulative_seconds": 28.075426797000002
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/httpx/_client.py",
+          "line": 964,
+          "function": "_send_handling_redirects",
+          "calls": 11352,
+          "internal_seconds": 0.032105294,
+          "cumulative_seconds": 27.958338611000002
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/httpx/_client.py",
+          "line": 1001,
+          "function": "_send_single_request",
+          "calls": 11352,
+          "internal_seconds": 0.15186031900000002,
+          "cumulative_seconds": 27.904264021000003
+        },
+        {
+          "file": "/app/controller/governance.py",
+          "line": 66,
+          "function": "plan",
+          "calls": 15,
+          "internal_seconds": 0.001052741,
+          "cumulative_seconds": 27.725484838000003
+        },
+        {
+          "file": "/app/controller/governance.py",
+          "line": 18,
+          "function": "proposal_facts",
+          "calls": 15,
+          "internal_seconds": 0.002851244,
+          "cumulative_seconds": 27.437122299000002
+        },
+        {
+          "file": "/app/controller/store.py",
+          "line": 307,
+          "function": "active_lead_groups",
+          "calls": 15,
+          "internal_seconds": 0.000181711,
+          "cumulative_seconds": 27.381885184
+        },
+        {
+          "file": "/app/controller/api.py",
+          "line": 16,
+          "function": "get",
+          "calls": 9877,
+          "internal_seconds": 0.047861349000000004,
+          "cumulative_seconds": 27.259407419000002
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/httpx/_client.py",
+          "line": 1036,
+          "function": "get",
+          "calls": 9877,
+          "internal_seconds": 0.019910284,
+          "cumulative_seconds": 26.886651125
+        },
+        {
+          "file": "/usr/local/lib/python3.12/site-packages/httpx/_transports/default.py",
+          "line": 230,
+          "function": "handle_request",
+          "calls": 11352,
+          "internal_seconds": 0.206989534,
+          "cumulative_seconds": 25.913344311000003
+        }
+      ]
+    }
+  }
+]
