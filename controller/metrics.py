@@ -13,6 +13,7 @@ MIN_HISTORY = 200
 
 
 def wilson(successes: int, trials: int, z: float = Z) -> tuple[float, float]:
+    # https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval
     if not 0 <= successes <= trials:
         raise ValueError("Invalid binomial counts")
     if trials == 0:
@@ -29,7 +30,7 @@ def counts(rows: list[dict]) -> dict:
 
 
 def fisher_upper(successes: int, trials: int, reference_successes: int, reference_trials: int) -> float:
-    """One-sided exact conditional test: is the current success rate elevated?"""
+    # https://en.wikipedia.org/wiki/Fisher_information
     if not 0 <= successes <= trials or not 0 <= reference_successes <= reference_trials:
         raise ValueError("Invalid binomial counts")
     if not trials or not reference_trials:

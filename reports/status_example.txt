@@ -1,8 +1,0 @@
-Run steps567_finalinc | 2027-01-14T00:00:00+05:30 | finished
-Backlog: 0 chunks / 0 event IDs (last observed)
-Last tick: 0.043s | new proposals/hour: 0 | credits left: 195.0
-WORKFLOW           EXPERIMENT / ARMS             PENDING (age h)       INCIDENT          CREDITS spent/uncertain
-ks_cancel          inconclusive:V1>V3            -                     -                 5/0
-nw_kyc             inconclusive:V1>V2            -                     -                 0/0
-nw_renewal         interrupted:V1>V3             -                     -                 0/0
-Recent changes: 17 shown by --json; experiments: 7

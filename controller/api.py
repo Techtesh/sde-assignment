@@ -1,6 +1,7 @@
 """HTTP boundary: reads may retry; uncertain time/config mutations must not."""
 
 import json
+import sys
 import time
 from collections.abc import Iterator
 
@@ -12,6 +13,23 @@ class SimulatorAPI:
         self.client = client
         self.stream_fetch_seconds = 0.0
         self.stream_parse_seconds = 0.0
+
+    def wait_until_ready(self, timeout: float = 60.0) -> None:
+        print(f"Waiting up to {timeout:g}s for simulator readiness...", file=sys.stderr, flush=True)
+        deadline = time.monotonic() + timeout
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise TimeoutError(f"Simulator did not become ready within {timeout:g}s; check its URL and server process")
+            try:
+                response = self.client.get("/health", timeout=min(2.0, remaining))
+                response.raise_for_status()
+                print("Simulator is ready.", file=sys.stderr, flush=True)
+                return
+            except (httpx.TransportError, httpx.HTTPStatusError) as exc:
+                if isinstance(exc, httpx.HTTPStatusError) and exc.response.status_code < 500:
+                    raise
+            time.sleep(min(1.0, max(0.0, deadline - time.monotonic())))
 
     def get(self, path: str, **params):
         for attempt in range(3):

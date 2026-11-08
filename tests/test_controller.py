@@ -220,13 +220,13 @@ def test_final_advance_events_are_drained_before_exit(database):
         assert trace.count(("POST", "/sim/advance")) == 1
 
 
-def test_sequential_flag_fails_explicitly_before_network_or_database():
+def test_unimplemented_sequential_option_is_not_exposed():
     result = subprocess.run(
         [sys.executable, "-m", "controller", "--url", "http://simulator", "--sequential-testing"],
         capture_output=True, text=True, timeout=10,
     )
     assert result.returncode == 2
-    assert "Sequential testing is not implemented" in result.stderr
+    assert "unrecognized arguments: --sequential-testing" in result.stderr
 
 
 @pytest.mark.parametrize("change", [

@@ -179,12 +179,9 @@ thing you cut.
 
 ## 11. Running this controller
 
-Install [requirements-lock.txt](./requirements-lock.txt) for the tested runtime package versions;
-[requirements-dev.txt](./requirements-dev.txt) adds test tools. The controller uses
-PostgreSQL 17; `run.sh` starts the
-development database with Docker Compose when `DATABASE_URL` is unset. An existing
-PostgreSQL database avoids that Docker requirement. The supplied database password
-is for the localhost development service only.
+Install [requirements-lock.txt](./requirements-lock.txt); tests also need [requirements-dev.txt](./requirements-dev.txt). With no `DATABASE_URL`, the launcher starts the local
+PostgreSQL 17 service through Docker Compose. Set it to use an existing database instead. The
+supplied password is for localhost development.
 
 ```bash
 pip install -r requirements-lock.txt
@@ -193,15 +190,13 @@ python -m sim serve --scenario scenarios/public_01_dev.yaml --run-dir runs/examp
 ./run.sh http://127.0.0.1:8700
 ```
 
-Startup prints a persisted automatic run ID. It reuses that ID on controller restart
-and creates a fresh one for observed world resets or scenario changes. Use `SIM_RUN_ID`
-for an explicit override; keep it on restart and change it for a new world.
-`python -m controller status --run-id <PRINTED_ID>` prints the concise
-supervisor view; add `--json` for complete evidence. `DATABASE_URL` must be set for
-these direct commands. Windows commands, audit queries, crash/profile reproduction
-and alert meanings are in [OPERATIONS.md](./docs/OPERATIONS.md).
+Startup prints a run ID and saves it for that simulator URL. Restart reuses it; detected world
+resets or scenario changes get a new one. `SIM_RUN_ID` overrides this choice. Keep an explicit ID on
+restart and change it for a new world.
 
-The implementation and scope are described in [SUBMISSION.md](./SUBMISSION.md),
-with current grades in [reports/](./reports/) and work status in
-[WorkPlan.md](./WorkPlan.md). Raw simulator run data and local profiles stay under
-ignored `runs/`; controller evidence is stored in PostgreSQL.
+`python -m controller status --run-id <PRINTED_ID>` shows the short view; `--json` adds the full record. Direct commands use local
+PostgreSQL unless `DATABASE_URL` overrides it. Startup waits up to 60 seconds for simulator health.
+[OPERATIONS.md](./docs/OPERATIONS.md) has Windows setup, audit queries, crash/profile commands and alert details.
+
+[SUBMISSION.md](./SUBMISSION.md) explains scope and results. [reports/](./reports/) contains the final grades, load measurements and crash evidence. Simulator runs and local profiles stay in ignored `runs/`; controller state is
+in PostgreSQL.

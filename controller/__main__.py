@@ -30,7 +30,6 @@ def drain(api: SimulatorAPI, store: Store) -> int:
 
 
 def run(api: SimulatorAPI, store: Store, *, max_ticks: int | None = None, observe_only: bool = False) -> None:
-    api.get("/health")
     state = api.get("/sim/state")
     store.observe_state(state)
     store.db.execute("INSERT INTO loop_starts (run_id,sim_ts) VALUES (%s,%s)", (store.run_id, state["ts"]))
@@ -96,38 +95,41 @@ def main() -> None:
     parser.add_argument("command", nargs="?", choices=("run", "status", "audit"), default="run")
     parser.add_argument("--url")
     parser.add_argument("--workflow", help="workflow to inspect with audit")
-    parser.add_argument("--at", help="audit the latest change at or before this ISO timestamp")
+    parser.add_argument("--end-time", "--at", dest="end_time",
+                        help="audit the latest change at or before this ISO timestamp (--at is an alias)")
     parser.add_argument("--json", action="store_true", help="print the detailed status as JSON")
     parser.add_argument("--version", type=int, help="select an exact config version for audit when changes share a timestamp")
     parser.add_argument("--run-id", default=os.environ.get("SIM_RUN_ID") or None,
                         help="explicit world identity; otherwise persist/reuse one per simulator URL")
-    parser.add_argument("--sequential-testing", action="store_true", default=False)
+    # Reserved for a future sequential evaluator; only fixed checkpoints are exposed.
+    # parser.add_argument("--sequential-testing", action="store_true", default=False)
     parser.add_argument("--observe-only", action="store_true", help="ingest and reconcile without config writes or paid calls")
     parser.add_argument("--max-ticks", type=int, help="stop after N advances; omit to run to completion")
     args = parser.parse_args()
-    if args.sequential_testing:
-        parser.error("Sequential testing is not implemented; use fixed evaluation checkpoints")
+    # if args.sequential_testing:
+    #     parser.error("Sequential testing is not implemented; use fixed evaluation checkpoints")
     if args.max_ticks is not None and args.max_ticks < 0:
         parser.error("--max-ticks must be non-negative")
-    dsn = os.environ.get("DATABASE_URL")
-    if not dsn:
-        parser.error("Set DATABASE_URL to a PostgreSQL connection string (see docs/CONTROLLER.md)")
+    if args.command == "run" and not args.url:
+        parser.error("run requires --url")
+    if args.command != "run" and not args.run_id:
+        parser.error("status/audit require --run-id (printed when the controller starts)")
+    if args.command == "audit" and not (args.workflow and args.end_time):
+        parser.error("audit requires --workflow and --end-time")
+    dsn = os.environ.get("DATABASE_URL") or "postgresql://controller:controller@127.0.0.1:55432/controller"
     with psycopg.connect(dsn, autocommit=True, connect_timeout=10) as connection:
         if args.command != "run":
-            if not args.run_id:
-                parser.error("status/audit require --run-id (printed when the controller starts)")
-            if args.command == "audit" and not (args.workflow and args.at):
-                parser.error("audit requires --workflow and --at")
             with connection.transaction():
                 connection.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY")
-                result = status(connection, args.run_id) if args.command == "status" else audit(connection, args.run_id, args.workflow, args.at, args.version)
+                result = status(connection, args.run_id) if args.command == "status" else audit(connection, args.run_id, args.workflow, args.end_time, args.version)
             print(status_text(result) if args.command == "status" and not args.json else json.dumps(result, default=str, indent=2))
             return
-        if not args.url:
-            parser.error("run requires --url")
         with httpx.Client(base_url=args.url.rstrip("/"), timeout=120) as client:
             api = SimulatorAPI(client)
-            api.get("/health")
+            try:
+                api.wait_until_ready()
+            except TimeoutError as exc:
+                parser.exit(1, f"{exc}\n")
             state = api.get("/sim/state")
             store = Store(connection, args.run_id, args.url.rstrip("/"), state=state)
             print(json.dumps({"run_id": store.run_id, "simulator_url": args.url.rstrip("/")}), flush=True)

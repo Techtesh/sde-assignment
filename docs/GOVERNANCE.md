@@ -1,29 +1,27 @@
 # Governance client
 
-The implementation in [governance.py](../controller/governance.py) is the single route to
-configuration writes. [policy.py](../controller/policy.py) contains shared cohort matching,
-config validation, effective distributions, policy routing, and conflict-aware rebasing.
-The incident and experiment engines supply proposals; their state machines share this governance boundary.
+[governance.py](../controller/governance.py) handles configuration writes for both incidents and experiments. [policy.py](../controller/policy.py) checks
+cohorts, options, weights, permission and conflicting edits.
 
 ## Planning a change
 
-Detectors/experiments call `Governance.plan()` with a full proposed configuration,
-a stable decision ID, the `base_version` used to prepare it, a summary, and a rationale identifying
-their population evidence. A base mismatch fails instead of blessing a stale full configuration. Fetching
-current workflow/config/state and computing proposal facts happen through HTTP and our database.
-The method persists the proposal without sending it. Callers batch compatible changes into
-that full configuration; a workflow may have only one active proposal.
+An incident or experiment calls `Governance.plan()` with the proposed full configuration, decision ID, base
+version, summary and evidence-backed rationale. The method reads current policy/configuration over
+HTTP and computes proposal facts from the database. It saves the proposal without submitting it. A
+changed base version causes an error. Callers must combine compatible changes before planning
+because each workflow can have only one active proposal.
 
-The same decision ID and configuration return the same proposal ID. Reusing a decision ID
-for a different intent fails. IDs are deterministic hashes of run ID and decision ID. The stored
-body is immutable across retries. New decisions, including re-proposals, require new IDs.
+A run ID and decision ID determine the proposal hash. Repeating the same decision/configuration
+returns the existing proposal; using that decision ID for another change fails. Retries reuse the
+saved body. A new decision or re-proposal gets a new ID.
 
-Validation rejects unsupported dimensions/options, invalid distributions/cohorts, and schedule
-entries outside business-owned hours. Auto-apply additionally requires enabled policy, all changed
-dimensions allowed, and per-cohort total-variation shifts within policy. Cohort distributions inherit
-from default; normalized weights are used for shift calculations. Otherwise a valid change goes
-through approval. Prompt changes require a validation-run ID; the simulator verifies that evidence
-belongs to the same prompt/workflow and meets its safety threshold. No LLM chooses a winner.
+Validation checks supported options, cohorts, allocation weights and business-owned calling hours.
+Automatic application also needs enabled policy, allowed dimensions and an acceptable
+total-variation shift for every cohort. Shift calculations use normalized effective weights,
+including defaults inherited by cohorts. Other valid changes need approval.
+
+Prompt changes carry a validation-run ID. The simulator checks that the result belongs to the same
+workflow/prompt and meets the safety threshold. Winner selection uses the statistical evaluator.
 
 ## Durable lifecycle
 
@@ -33,54 +31,51 @@ planned -> submitted -> pending -> approved -> applying -> applied
               +-- rejected / expired / lapsed / stale / blocked
 ```
 
-Auto-apply follows `planned -> submitted -> applied`. Every state change appends evidence to
-`proposal_audit` in the same transaction as the proposal update. Planned evidence includes the exact
-body and governing policy snapshot. Request intent is committed before sending HTTP; errors and
-uncertain outcomes remain recorded. `superseded` is available to retire an unapplied intent locally.
+Auto-apply follows `planned -> submitted -> applied`. Each proposal update and its `proposal_audit` entry commit together. The
+initial record includes the request body and policy snapshot. Before an HTTP write, the client saves
+the exact request. Later records hold the response or uncertainty. `superseded` retires an unapplied
+local intent.
 
-Every tick and restart checks remote configuration history and approval records **before** sending.
-A remote history entry matching our proposal proves application even if its response was lost or a
-supervisor subsequently edited the configuration. A matching remote approval proves submission.
-A duplicate-ID response triggers reconciliation, never assumed approval. An unresolvable duplicate
-is blocked rather than submitted repeatedly.
+Before sending a request, the client checks remote configuration history and approvals. A matching
+history entry establishes that the change applied, even if the response was lost or a supervisor
+later edited it. A matching approval establishes submission. A duplicate-ID response triggers the
+same checks. If the duplicate cannot be resolved, the proposal is blocked.
 
-Network failures and 5xx stop the current execution with uncertain intent preserved. Restart discovers
-what happened, then retries the same intent only if no remote record exists and the base is still
-current. Other errors are retained as stale/lapsed/blocked outcomes; 402 is not retried blindly.
-The loop may reconcile records after scenario completion, but does not send new writes then.
+Network errors and 5xx responses stop that execution with the uncertain request saved. On restart,
+the client checks remote records before retrying. It reuses the intent only when there is no remote
+record and its base remains current. Other failures are recorded as stale, lapsed or blocked; a 402
+does not trigger a blind retry. After scenario completion, reconciliation can update local records
+but cannot send new writes.
 
 ## Supervisor edits and re-proposals
 
-A changed base version makes a pending intent stale. It is never applied over the new configuration.
-`repropose()` requires an explicit fresh decision ID and rationale from the caller. It re-reads current
-configuration and replays only the intended diff, preserving unrelated supervisor edits. A conflicting
-change to the same setting fails and requires a new decision. Allocation distributions and schedule
-objects are atomic for conflict detection. Prompt evidence must be supplied again.
+If the live base version changes, the proposal becomes stale. `repropose()` needs a fresh decision ID
+and rationale. It reads current settings and reapplies the intended diff while keeping unrelated
+supervisor edits. Changes to the same setting conflict. Allocation distributions and schedule
+objects are checked as whole objects. Prompt validation evidence must be supplied again.
 
-Expired, rejected, and lapsed proposals are terminal; the client does not silently resubmit them. A
-new proposal recomputes affected-lead counts, historical replay, and reach score and links its parent.
-The learning layer must re-evaluate statistical justification; governance cannot invent fresh
-experiment evidence. The experiment engine interrupts changed epochs and preserves supervisor edits.
+Expired, rejected and lapsed requests stay terminal. A caller can justify a new linked proposal,
+which recomputes reach and the historical dry run. The learning code must reassess the evidence.
+Governance cannot supply new statistical justification on its own.
 
 ## Attention and proposal facts
 
-Non-urgent requests wait until approver hours in Asia/Kolkata. Urgent requests may be submitted
-outside hours only when their TTL can survive the next approver window and configured maximum
-latency; otherwise intent remains planned without consuming a request. The approver still decides
-on its own schedule. Rolling 24-hour request limits
-include both API-visible requests and locally uncertain submissions, deduplicated by proposal ID.
-Where the limit exceeds one, non-urgent work leaves one request slot for incidents. Approved changes
-are applied promptly before `apply_by`; an already missed window is recorded as lapsed.
+Routine requests wait for approver hours in Asia/Kolkata. Urgent requests can go outside those hours
+only if their TTL survives the next window and maximum configured latency. Otherwise they stay
+planned without using a request slot.
 
-`affected_leads` estimates known nonconcluded leads within campaign lifespan whose effective settings
-change. It excludes future uploads and can overestimate leads with no attempts remaining. The
-impact score is **reach**: affected / known active leads, or zero with no known active leads. It is not
-an expected improvement or a probability of success; urgency is tracked separately.
+The rolling 24-hour count combines remote requests and uncertain local submissions, deduplicated by
+proposal ID. When the limit exceeds one, routine work leaves a slot for incidents. Approved changes
+must apply before `apply_by`; a missed window becomes lapsed.
 
-Dry runs replay observed historical rates for supported variants. Engagement is computed as projected
-engaged/dials divided by projected connected/dials. Missing exposure yields an unknown estimate.
-The record explicitly states observational/confounding and interaction limits; it does not fabricate
-counterfactual lift, validation results, or experiment winners.
+`affected_leads` counts known, nonconcluded leads in active campaign lifespans whose effective settings
+change. Future uploads are excluded; leads with no attempts left can make this an overestimate.
+`impact_score` is affected leads divided by known active leads, or zero for an empty population. Urgency
+is recorded separately.
+
+A dry run reweights historical results for variants with observed exposure. Projected engagement is
+projected engaged/dials divided by projected connected/dials. Missing exposure stays unknown. The
+record includes the limits of historical comparisons and joint interactions.
 
 ## Audit from our own store
 
@@ -94,15 +89,15 @@ WHERE p.run_id = 'your-run' AND p.workflow_id = 'your-workflow'
 ORDER BY a.ts, a.id;
 ```
 
-Approved-state evidence preserves the full approval response and decision timestamps; application
-evidence records the response or matching config-history entry. The simulator exposes approval IDs
-and decision times, rather than a named human identity. We preserve what the API supplies.
-Join later call events/metrics by workflow, config version, and time to inspect post-change outcomes.
+The approved-state record includes the full API response and decision times. Application records
+contain the response or matching config-history entry. The simulator supplies approval IDs, not
+human names. Join subsequent calls by workflow, version and time to inspect what happened after the
+change.
 
 ## Verify with real API calls
 
-The opt-in test [test_governance_live.py](../tests/test_governance_live.py) requires a dedicated
-fresh simulator, or one warmed only to D0 10:00 with no prior configuration changes/approvals:
+[test_governance_live.py](../tests/test_governance_live.py) needs a dedicated fresh simulator, or one advanced only to D0 10:00 with no prior changes
+or approvals:
 
 ```text
 python -m sim serve --scenario scenarios/public_02_incidents.yaml --run-dir runs/governance-fresh --port 8701
@@ -114,8 +109,7 @@ $env:GOV_SIM_URL = 'http://127.0.0.1:8701'
 python -m pytest -q -s tests/test_governance_live.py
 ```
 
-The test chooses routes/options from HTTP-visible policies, imports evidence into an isolated real
-PostgreSQL schema, exercises auto-apply and human approval, intentionally loses an accepted approval
-response, opens a new database session, and proves one submission/application. Test mutations are
-protocol checks, not optimisation claims. They are not the full public_02 incident-response evaluation.
-The test schema is dropped afterward; its assertions and output are the verification evidence.
+The test reads policy/options and imports events over HTTP into an isolated PostgreSQL schema. It
+exercises auto-apply and approval, discards a successful approval response, then recovers through a
+new database session. It checks one submission and application per intent. These are protocol
+checks; the full incident scenario is tested separately. The schema is dropped when the test ends.

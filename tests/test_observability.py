@@ -44,6 +44,20 @@ def test_status_cli_requires_no_url_and_does_not_acquire_writer_lock(database):
         assert json.loads(result.stdout)["health"]["event_backlog_at_last_observation"] == 9
 
 
+@pytest.mark.parametrize("option", ["--end-time", "--at"])
+def test_audit_cli_accepts_end_time_and_legacy_alias(database, option):
+    with open_store(database) as store:
+        store.observe_state({"ts": TS, "scenario": "test", "last_event_id": 3})
+        store.ingest(chunk(kind="events"), sample_events())
+        result = subprocess.run(
+            [sys.executable, "-m", "controller", "audit", "--run-id", "test",
+             "--workflow", "wf", option, TS],
+            env={**os.environ, "DATABASE_URL": database}, capture_output=True, text=True, timeout=15,
+        )
+        assert result.returncode == 0, result.stderr
+        assert json.loads(result.stdout)["change"]["evidence"]["version"] == 2
+
+
 def test_stale_loop_and_prompt_review_are_actionable_and_finished_run_is_quiet(database):
     with open_store(database) as store:
         state = {"ts": TS, "scenario": "test", "last_event_id": 0, "finished": False}
