@@ -20,6 +20,14 @@ CREATE TABLE IF NOT EXISTS loop_ticks (
     PRIMARY KEY (run_id, ts)
 );
 
+CREATE TABLE IF NOT EXISTS loop_starts (
+    id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    run_id text NOT NULL REFERENCES controller_runs,
+    started_at timestamptz NOT NULL DEFAULT clock_timestamp(),
+    sim_ts timestamptz NOT NULL
+);
+CREATE INDEX IF NOT EXISTS recent_loop_starts ON loop_starts(run_id,started_at);
+
 CREATE TABLE IF NOT EXISTS config_history (
     run_id text NOT NULL REFERENCES controller_runs,
     workflow_id text NOT NULL,
@@ -220,4 +228,40 @@ CREATE TABLE IF NOT EXISTS experiment_windows (
     end_at timestamptz NOT NULL,
     PRIMARY KEY (run_id,experiment_id,phase,end_at),
     FOREIGN KEY (run_id,experiment_id) REFERENCES experiments (run_id,experiment_id)
+);
+
+CREATE TABLE IF NOT EXISTS campaigns (
+    run_id text NOT NULL REFERENCES controller_runs,
+    workflow_id text NOT NULL,
+    campaign_id text NOT NULL,
+    created_at timestamptz NOT NULL,
+    PRIMARY KEY (run_id,workflow_id,campaign_id)
+);
+
+CREATE TABLE IF NOT EXISTS concluded_leads (
+    run_id text NOT NULL REFERENCES controller_runs,
+    workflow_id text NOT NULL,
+    lead_id text NOT NULL,
+    PRIMARY KEY (run_id,workflow_id,lead_id)
+);
+
+CREATE TABLE IF NOT EXISTS person_metrics (
+    run_id text NOT NULL REFERENCES controller_runs,
+    workflow_id text NOT NULL,
+    config_version integer NOT NULL,
+    cohort_id text NOT NULL,
+    ts timestamptz NOT NULL,
+    person_id text NOT NULL,
+    voice text NOT NULL,
+    dials bigint NOT NULL,
+    connected bigint NOT NULL,
+    engaged bigint NOT NULL,
+    first_event_id bigint NOT NULL,
+    first_connected integer NOT NULL,
+    first_engaged integer NOT NULL,
+    PRIMARY KEY (run_id,workflow_id,config_version,cohort_id,ts,person_id,voice)
+);
+
+CREATE TABLE IF NOT EXISTS evidence_ready (
+    run_id text PRIMARY KEY REFERENCES controller_runs
 );

@@ -11,7 +11,7 @@ from .statistics import evaluate, planned_samples
 
 DURATION_HOURS = 72
 TRIAL_SHARE = 0.2
-WINNER_SHARE = 0.8
+WINNER_SHARE = 0.9
 
 
 def applied_timestamp(value, state: dict | None = None) -> str:
@@ -135,7 +135,9 @@ class ExperimentEngine:
             "min_primary": planned_samples(numerator / denominator, alpha), "minimum_people_per_arm": 100,
             "duration_hours": DURATION_HOURS, "trial_share": TRIAL_SHARE, "winner_share": WINNER_SHARE,
             "start_rule": "first observed call in the authorized config epoch and cohort",
-            "rule_version": "clustered-fixed-v1", "safety_interval_hours": 1, "decay_interval_hours": 24,
+            "rule_version": "clustered-fixed-v2", "safety_interval_hours": 1, "decay_interval_hours": 24,
+            "decay_half_lift_days": 2, "decay_zero_window_hours": 48,
+            "decay_min_observations": 200, "decay_min_people": 100,
         }
         eid = hashlib.sha256(json.dumps([self.store.run_id, wid, context, cohort, control, candidates[0], index]).encode()).hexdigest()
         split = voice_config(config, cohort, control, candidates[0], TRIAL_SHARE)
@@ -186,6 +188,9 @@ class ExperimentEngine:
             data = {**data, "owned_version": applied["version"], "owned_config": applied["config"], "owned_at": applied["at"]}
             data["trial_version" if status == "planned" else "promotion_version"] = applied["version"]
             status = "running" if status == "planned" else "monitoring"
+            if status == "monitoring":
+                data = {**data, "promoted_at": applied["at"], "promotion_config_version": applied["version"],
+                        "promotion_lift": data["evaluation"]["primary"]["difference"]}
             self.store.update_experiment(experiment["experiment_id"], status, now, data)
             experiment = {**experiment, "status": status, "data": data}
         current = self.api.get(f"/workflows/{experiment['workflow_id']}/config")
@@ -212,8 +217,8 @@ class ExperimentEngine:
         else:
             self._monitor(experiment, now)
 
-    def _harm(self, rows: list[dict], plan: dict, look: int, *, decay: bool = False) -> dict | None:
-        alpha = 0.01 / (plan["trial_index"] * (plan["trial_index"] + 1) * look * (look + 1) * 2)
+    def _harm(self, rows: list[dict], plan: dict, look: int, *, decay: bool = False, segments: int = 1) -> dict | None:
+        alpha = 0.01 / (plan["trial_index"] * (plan["trial_index"] + 1) * look * (look + 1) * 2 * segments)
         evidence = evaluate(rows, plan, alpha=alpha, minimum=50, people=50)
         main, guard = evidence["primary"], evidence["guardrail"]
         for contrast, margin in ((main, 0.02 if decay else plan["minimum_lift"]), (guard, evidence["guardrail_margin"])):
@@ -255,12 +260,13 @@ class ExperimentEngine:
         if any(row["workflow_id"] == wid for row in self.store.active_proposals()):
             return
         current = self.api.get(f"/workflows/{wid}/config")
-        proposed = voice_config(current["config"], data["cohort"], data["plan"]["control"], data["plan"]["challenger"], WINNER_SHARE)
+        share = data["plan"]["winner_share"]
+        proposed = voice_config(current["config"], data["cohort"], data["plan"]["control"], data["plan"]["challenger"], share)
         with self.store.db.transaction():
             pid = self.governance.plan(
                 wid, proposed, decision_id=f"experiment:{eid}:promote", base_version=current["version"],
                 rationale=f"Fixed-checkpoint winner with guardrail non-inferiority: {json.dumps(data['evaluation'])}",
-                summary="Promote supported voice to 80%, retaining 20% control", evidence={"experiment_id": eid, "evaluation": data["evaluation"]},
+                summary=f"Promote supported voice to {share:.0%}, retaining {1-share:.0%} control", evidence={"experiment_id": eid, "evaluation": data["evaluation"]},
             )
             self.store.update_experiment(eid, "promoting", now, data, pid)
 
@@ -284,6 +290,43 @@ class ExperimentEngine:
             self._restore({**experiment, "data": {**data, "safety_evidence": evidence}}, now, "Voice degraded while awaiting promotion", "lost")
 
     def _monitor(self, experiment: dict, now: str) -> None:
+        if experiment["data"]["plan"]["rule_version"] == "clustered-fixed-v1":
+            self._legacy_monitor(experiment, now)
+            return
+        data = experiment["data"]
+        plan = data["plan"]
+        start = datetime.fromisoformat(data["monitor_started_at"])
+        closed = int((datetime.fromisoformat(now) - start).total_seconds() // 86400)
+        for look in range(data.get("decay_look", 0) + 1, closed + 1):
+            begin, end = start + timedelta(days=look-1), start + timedelta(days=look)
+            evidence, streaks, reasons = {}, {}, []
+            for segment in ("all", "first", "repeat"):
+                rows = self.store.collect_exposure(experiment, f"decay:{look}", data["owned_version"],
+                                                   begin.isoformat(), end.isoformat(), exposure=segment)
+                alpha = 0.01 / (plan["trial_index"]*(plan["trial_index"]+1)*look*(look+1)*2*3)
+                check = evaluate(rows, plan, alpha=alpha, minimum=plan["decay_min_observations"], people=plan["decay_min_people"])
+                half = check["enough_evidence"] and check["primary"]["difference"] < data["promotion_lift"] / 2
+                streaks[segment] = data.get("decay_streaks", {}).get(segment, 0) + 1 if half else 0
+                harm = self._harm(rows, plan, look, decay=True, segments=3)
+                evidence[segment] = {"daily": check, "below_half": bool(half), "harm": harm}
+                if harm or streaks[segment] >= plan["decay_half_lift_days"]:
+                    reasons.append(f"{segment}: material harm" if harm else f"{segment}: lift below half for two consecutive days")
+                if look % 2 == 0:
+                    pooled = self.store.collect_exposure(experiment, f"decay48:{look}", data["owned_version"],
+                                                        (end-timedelta(hours=48)).isoformat(), end.isoformat(), exposure=segment)
+                    check48 = evaluate(pooled, plan, alpha=alpha, minimum=plan["decay_min_observations"], people=plan["decay_min_people"])
+                    evidence[segment]["two_day"] = check48
+                    if check48["enough_evidence"] and check48["primary"]["lower"] <= 0:
+                        reasons.append(f"{segment}: insufficient evidence of continued benefit at the fixed 48h checkpoint")
+            data = {**data, "decay_look": look, "decay_streaks": streaks,
+                    "last_decay_window": {"start": begin.isoformat(), "end": end.isoformat(), "segments": evidence}}
+            self.store.update_experiment(experiment["experiment_id"], "monitoring", now, data)
+            experiment = {**experiment, "data": data}
+            if reasons:
+                self._restore({**experiment, "data": {**data, "decay_evidence": evidence}}, now, "; ".join(reasons), "rolled_back")
+                return
+
+    def _legacy_monitor(self, experiment: dict, now: str) -> None:
         data = experiment["data"]
         start = datetime.fromisoformat(data["monitor_started_at"])
         look = int((datetime.fromisoformat(now) - start).total_seconds() // (24 * 3600))

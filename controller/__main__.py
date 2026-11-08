@@ -15,7 +15,7 @@ from .experiments import ExperimentEngine
 from .incidents import IncidentEngine
 from .store import Store
 from .faults import crash_at
-from .observability import audit, status
+from .observability import audit, status, status_text
 
 
 def drain(api: SimulatorAPI, store: Store) -> int:
@@ -33,6 +33,7 @@ def run(api: SimulatorAPI, store: Store, *, max_ticks: int | None = None, observ
     api.get("/health")
     state = api.get("/sim/state")
     store.observe_state(state)
+    store.db.execute("INSERT INTO loop_starts (run_id,sim_ts) VALUES (%s,%s)", (store.run_id, state["ts"]))
     for workflow in sorted(api.get("/workflows"), key=lambda item: item["workflow_id"]):
         wid = workflow["workflow_id"]
         store.save_workflow(
@@ -96,6 +97,7 @@ def main() -> None:
     parser.add_argument("--url")
     parser.add_argument("--workflow", help="workflow to inspect with audit")
     parser.add_argument("--at", help="audit the latest change at or before this ISO timestamp")
+    parser.add_argument("--json", action="store_true", help="print the detailed status as JSON")
     parser.add_argument("--run-id", default=os.environ.get("SIM_RUN_ID", "default"))
     parser.add_argument("--sequential-testing", action="store_true", default=False)
     parser.add_argument("--observe-only", action="store_true", help="ingest and reconcile without config writes or paid calls")
@@ -115,7 +117,7 @@ def main() -> None:
             with connection.transaction():
                 connection.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY")
                 result = status(connection, args.run_id) if args.command == "status" else audit(connection, args.run_id, args.workflow, args.at)
-            print(json.dumps(result, default=str, indent=2))
+            print(status_text(result) if args.command == "status" and not args.json else json.dumps(result, default=str, indent=2))
             return
         if not args.url:
             parser.error("run requires --url")

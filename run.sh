@@ -7,4 +7,7 @@ if [[ -z "${DATABASE_URL:-}" ]]; then
   docker compose up -d --wait postgres
   export DATABASE_URL="postgresql://controller:controller@127.0.0.1:55432/controller"
 fi
+if [[ -n "${CONTROLLER_PROFILE:-}" ]]; then
+  exec "${PYTHON:-python}" -m cProfile -o "$CONTROLLER_PROFILE" -m controller --url "$SIM_URL"
+fi
 exec "${PYTHON:-python}" -m controller --url "$SIM_URL"

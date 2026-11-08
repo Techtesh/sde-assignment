@@ -38,7 +38,7 @@ def test_views_work_while_writer_holds_lock_and_do_not_modify_evidence(database)
 def test_status_cli_requires_no_url_and_does_not_acquire_writer_lock(database):
     with open_store(database) as store:
         store.observe_state({"ts": TS, "scenario": "test", "last_event_id": 9})
-        result = subprocess.run([sys.executable, "-m", "controller", "status", "--run-id", "test"],
+        result = subprocess.run([sys.executable, "-m", "controller", "status", "--json", "--run-id", "test"],
                                 env={**os.environ, "DATABASE_URL": database}, capture_output=True, text=True, timeout=15)
         assert result.returncode == 0, result.stderr
         assert json.loads(result.stdout)["health"]["event_backlog_at_last_observation"] == 9
@@ -77,3 +77,16 @@ def test_audit_counts_only_actual_new_epoch_complete_hours(database, changed_at,
         assert answer["after"]["dials"] == expected
         assert answer["after"]["connected"] == expected
         assert answer["after"]["hallucinations"] == expected
+
+
+def test_credit_reserve_crash_loop_and_chunk_lag_are_visible(database):
+    from controller.observability import status_text
+    with open_store(database) as store:
+        store.observe_state({"ts":TS,"scenario":"test","last_event_id":9,"chunks":3,"finished":False,"credits_remaining":4})
+        for _ in range(3):
+            store.db.execute("INSERT INTO loop_starts(run_id,sim_ts) VALUES (%s,%s)",(store.run_id,TS))
+        view=status(store.db,"test")
+        assert view["health"]["chunk_backlog_at_last_observation"]==3
+        assert any("starts" in alert["reason"] and alert["severity"]=="page" for alert in view["alerts"])
+        assert any("reserve" in alert["reason"] and alert["severity"]=="ticket" for alert in view["alerts"])
+        assert "Backlog: 3 chunks" in status_text(view)

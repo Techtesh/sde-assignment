@@ -8,6 +8,7 @@ import argparse
 import hashlib
 import json
 import os
+import pstats
 import re
 import subprocess
 import sys
@@ -43,8 +44,17 @@ def signature(db, client, run_id):
         ("incidents", "incident_id,workflow_id,kind,status,proposal_id,data", "incident_id"),
         ("audit_log", "event_id,ts,workflow_id,kind,actor,evidence", "event_id"),
     ):
-        records = db.execute(f"SELECT {columns} FROM {table} WHERE run_id=%s ORDER BY {order}", (run_id,)).fetchall()
-        data[table] = {"rows": len(records), "sha256": hashlib.sha256(json.dumps(records, sort_keys=True, default=str).encode()).hexdigest()}
+        count, digest = 0, hashlib.sha256()
+        with db.transaction(), db.cursor(name="evidence_signature") as cursor:
+            cursor.execute(f"SELECT {columns} FROM {table} WHERE run_id=%s ORDER BY {order}", (run_id,))
+            for record in cursor:
+                digest.update(json.dumps(record, sort_keys=True, default=str).encode()+b"\n")
+                count += 1
+        data[table] = {"rows": count, "sha256": digest.hexdigest()}
+    for table in ("campaigns", "concluded_leads", "person_metrics"):
+        count, fingerprint = db.execute(f"SELECT count(*),sum(hashtextextended(row_to_json(t)::text,0)::numeric) "
+                                        f"FROM {table} t WHERE run_id=%s", (run_id,)).fetchone()
+        data[table] = {"rows": count, "fingerprint": str(fingerprint)}
     data["events"] = list(db.execute(
         "SELECT count(*),min(event_id),max(event_id),sum(hashtextextended(payload::text,0)::numeric) "
         "FROM events WHERE run_id=%s", (run_id,)).fetchone())
@@ -96,6 +106,8 @@ def run_case(args, case, schema, dsn):
     env.pop("CRASH_AT", None)
     url = f"http://127.0.0.1:{args.port}"
     command = [sys.executable, "-m", "controller", "--url", url, "--run-id", args.label]
+    if args.profile:
+        command[1:1] = ["-m", "cProfile", "-o", str(directory/"controller.prof")]
     if args.linux:
         settings = conninfo_to_dict(isolated)
         network = ["--network", "host"] if sys.platform == "linux" else []
@@ -107,6 +119,8 @@ def run_case(args, case, schema, dsn):
                    "-e", "DATABASE_URL=" + make_conninfo(**settings), "-e", "SIM_RUN_ID=" + args.label,
                    "-v", f"{Path.cwd()}:/app:ro", "formi-controller:milestone5",
                    "bash", "./run.sh", sim_url]
+        if args.profile:
+            command[3:3] = ["-v", f"{directory.resolve()}:/evidence", "-e", "CONTROLLER_PROFILE=/evidence/controller.prof"]
     with (directory/"simulator.log").open("w", encoding="utf-8") as simulator_log:
         server = subprocess.Popen([sys.executable, "-m", "sim", "serve", "--scenario", args.scenario,
                                    "--run-dir", str(directory/"world"), "--port", str(args.port)],
@@ -143,8 +157,16 @@ def run_case(args, case, schema, dsn):
                 assert evidence["state"]["finished"]
                 result = {"case": case, "schema": schema, "run_id": args.label, "directory": str(directory),
                           "application_commit": application_commit,
+                          "profiled": args.profile,
                           "exit": finished.returncode, "timings": timings(directory/"controller.log", elapsed),
                           "signature": evidence}
+                if args.profile:
+                    profile = pstats.Stats(str(directory/"controller.prof"))
+                    hottest = sorted(profile.stats.items(),key=lambda item:item[1][3],reverse=True)[:25]
+                    result["profile"] = {"total_calls":profile.total_calls,"elapsed_accounted_seconds":profile.total_tt,
+                                         "functions":[{"file":key[0],"line":key[1],"function":key[2],
+                                                       "calls":value[1],"internal_seconds":value[2],"cumulative_seconds":value[3]}
+                                                      for key,value in hottest]}
                 if case == "clean" and args.baseline:
                     subprocess.run([sys.executable, "-X", "utf8", "-m", "sim", "grade", "--run", str(directory/"world"),
                                     "--baseline", args.baseline, "--out", args.grade], check=True)
@@ -161,6 +183,7 @@ def main():
     parser.add_argument("--port", type=int, default=8720)
     parser.add_argument("--linux", action="store_true", help="use the Docker image with 3 CPUs/6 GiB")
     parser.add_argument("--crash-matrix", action="store_true")
+    parser.add_argument("--profile", action="store_true", help="capture cProfile; its overhead is included in measured wall time")
     parser.add_argument("--baseline")
     parser.add_argument("--grade")
     parser.add_argument("--out", required=True)

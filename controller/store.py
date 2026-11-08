@@ -5,6 +5,7 @@ from datetime import datetime
 from pathlib import Path
 
 import psycopg
+from psycopg import sql
 from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb
 
@@ -26,6 +27,8 @@ def event_row(run_id: str, chunk: int, history: bool, event: dict) -> tuple:
                 raise ValueError(f"Lead requires {field}")
         if not isinstance(event.get("features"), dict):
             raise ValueError("Lead requires features")
+    if event["type"] == "campaign_created" and (not isinstance(event.get("campaign_id"), str) or not event["campaign_id"]):
+        raise ValueError("Campaign requires campaign_id")
     if event["type"] == "call":
         if type(event.get("connected")) is not bool or type(event.get("engaged")) is not bool:
             raise ValueError("Call outcomes must be booleans")
@@ -73,6 +76,13 @@ class Store:
         ).fetchone()[0]
         if existing != simulator_url:
             raise ValueError("run_id belongs to another simulator URL; use a fresh run_id")
+        self.evidence_sql = sql.SQL(Path(__file__).with_name("evidence.sql").read_text(encoding="utf-8"))
+        # Upgrade old runs atomically once; normal decisions never rescan raw JSON events.
+        if not self.db.execute("SELECT 1 FROM evidence_ready WHERE run_id=%s", (run_id,)).fetchone():
+            with self.db.transaction():
+                source = sql.SQL("(SELECT * FROM events WHERE run_id={}) AS source").format(sql.Literal(run_id))
+                self.db.execute(self.evidence_sql.format(source=source))
+                self.db.execute("INSERT INTO evidence_ready VALUES (%s)", (run_id,))
 
     def last_chunk(self, kind: str) -> int:
         return self.db.execute(
@@ -178,6 +188,7 @@ class Store:
             ).fetchone()
             if missing:
                 raise ValueError(f"Call {missing[0]} has no matching lead/person")
+            self.db.execute(self.evidence_sql.format(source=sql.Identifier("fresh_events")))
             self.db.execute(
                 "INSERT INTO hourly_metrics SELECT run_id, workflow_id, history, "
                 "date_trunc('hour', ts, 'Asia/Kolkata'), (payload->>'config_version')::integer, "
@@ -292,31 +303,48 @@ class Store:
         return {row[0] for row in rows}
 
     def active_lead_groups(self, workflow: dict, now: str) -> list[tuple]:
-        # Evaluate event subsets once, avoiding per-lead rescans on a freshly loaded database.
         return self.db.execute(
-            "WITH active AS MATERIALIZED (SELECT payload->>'campaign_id' AS campaign_id FROM events "
-            "WHERE run_id=%s AND workflow_id=%s AND kind='campaign_created' AND ts<=%s "
+            "SELECT l.features,count(*) FROM leads l JOIN campaigns a USING(run_id,workflow_id,campaign_id) "
+            "LEFT JOIN concluded_leads c USING(run_id,workflow_id,lead_id) "
+            "WHERE l.run_id=%s AND l.workflow_id=%s AND a.created_at<=%s "
             "AND ((%s::timestamptz AT TIME ZONE 'Asia/Kolkata')::date - "
-            "(ts AT TIME ZONE 'Asia/Kolkata')::date) BETWEEN 0 AND %s), "
-            "concluded AS MATERIALIZED (SELECT DISTINCT payload->>'lead_id' AS lead_id FROM events "
-            "WHERE run_id=%s AND workflow_id=%s AND kind='call' AND (payload->>'engaged')::boolean) "
-            "SELECT l.features,count(*) FROM leads l JOIN active a USING (campaign_id) "
-            "LEFT JOIN concluded c USING (lead_id) WHERE l.run_id=%s AND l.workflow_id=%s "
+            "(a.created_at AT TIME ZONE 'Asia/Kolkata')::date) BETWEEN 0 AND %s "
             "AND c.lead_id IS NULL GROUP BY l.features",
-            (self.run_id, workflow["workflow_id"], now, now, len(workflow["cadence"]) - 1,
-             self.run_id, workflow["workflow_id"], self.run_id, workflow["workflow_id"]),
+            (self.run_id, workflow["workflow_id"], now, now, len(workflow["cadence"]) - 1),
         ).fetchall()
 
     def historical_rates(self, workflow_id: str) -> list[dict]:
         with self.db.cursor(row_factory=dict_row) as cursor:
             rows = cursor.execute(
                 "SELECT cohort_id,dimension,variant,sum(dials)::bigint AS dials,"
-                "sum(connected)::bigint AS connected,sum(engaged)::bigint AS engaged "
+                "sum(connected)::bigint AS connected,sum(engaged)::bigint AS engaged,"
+                "sum(hallucinations)::bigint AS hallucinations "
                 "FROM hourly_metrics WHERE run_id=%s AND workflow_id=%s AND history AND dimension<>'all' "
                 "GROUP BY cohort_id,dimension,variant ORDER BY cohort_id,dimension,variant",
                 (self.run_id, workflow_id),
             ).fetchall()
         return rows
+
+    def prompt_context(self, workflow_id: str) -> dict:
+        with self.db.cursor(row_factory=dict_row) as cursor:
+            change = cursor.execute(
+                "SELECT event_id,ts,actor,evidence FROM audit_log WHERE run_id=%s AND workflow_id=%s "
+                "AND kind='config_changed' AND evidence->'changed_dims' ? 'prompt_version' ORDER BY event_id DESC LIMIT 1",
+                (self.run_id, workflow_id),
+            ).fetchone()
+            previous = None
+            if change:
+                previous = cursor.execute(
+                    "SELECT version,snapshot->'config'->>'prompt_version' AS prompt FROM config_history "
+                    "WHERE run_id=%s AND workflow_id=%s AND version<%s AND snapshot->'config' ? 'prompt_version' "
+                    "ORDER BY version DESC LIMIT 1", (self.run_id, workflow_id, change["evidence"]["version"]),
+                ).fetchone()
+        return {"change": {**change, "ts": change["ts"].isoformat()} if change else None,
+                "previous": previous, "interpretation": "latest observed prompt edit; temporal attribution, not proof of causation"}
+
+    def uncertain_paid_action(self, incident_id: str) -> bool:
+        return bool(self.db.execute("SELECT 1 FROM external_actions WHERE run_id=%s AND incident_id=%s "
+                                    "AND status='uncertain' LIMIT 1", (self.run_id, incident_id)).fetchone())
 
     def window_metrics(self, workflow_id: str, start: str, end: str, *, history: bool = False) -> list[dict]:
         hours = min(24, (datetime.fromisoformat(end) - datetime.fromisoformat(start)).total_seconds() / 3600)
@@ -371,8 +399,8 @@ class Store:
     def incident_held_for_review(self, workflow_id: str, kind: str, subject: str) -> bool:
         return self.db.execute(
             "SELECT 1 FROM incidents WHERE run_id=%s AND workflow_id=%s AND kind=%s "
-            "AND status='needs_review' AND data->'alarm'->>'subject'=%s LIMIT 1",
-            (self.run_id, workflow_id, kind, subject),
+                "AND status='needs_review' AND (data->'alarm'->>'subject'=%s OR data->'review_subjects' ? %s) LIMIT 1",
+                (self.run_id, workflow_id, kind, subject, subject),
         ).fetchone() is not None
 
     def save_incident(self, incident_id: str, workflow: dict, kind: str, now: str, data: dict) -> None:
@@ -467,18 +495,22 @@ class Store:
     def first_exposure(self, experiment: dict, version: int, after: str) -> str | None:
         data = experiment["data"]
         row = self.db.execute(
-            "SELECT min(ts) FROM events WHERE run_id=%s AND workflow_id=%s AND NOT history "
-            "AND kind='call' AND ts >= %s AND (payload->>'config_version')::integer=%s "
-            "AND payload->>'cohort_id'=%s AND payload->'variant'->>'voice'=ANY(%s)",
+            "SELECT min(ts) FROM person_metrics WHERE run_id=%s AND workflow_id=%s "
+            "AND ts >= %s AND config_version=%s AND cohort_id=%s AND voice=ANY(%s)",
             (self.run_id, experiment["workflow_id"], after, version, data["cohort"],
              [data["plan"]["control"], data["plan"]["challenger"]]),
         ).fetchone()[0]
         return row.isoformat() if row else None
 
-    def collect_exposure(self, experiment: dict, phase: str, version: int, start: str, end: str) -> list[dict]:
+    def collect_exposure(self, experiment: dict, phase: str, version: int, start: str, end: str,
+                         *, exposure: str = "all") -> list[dict]:
         """Add only newly closed time ranges; counters and their cursor commit together."""
         eid = experiment["experiment_id"]
         data = experiment["data"]
+        if exposure not in {"all", "first", "repeat"}:
+            raise ValueError("Exposure must be all, first, or repeat")
+        if exposure != "all":
+            phase += ":" + exposure
         with self.db.transaction():
             previous = self.db.execute(
                 "SELECT max(end_at) FROM experiment_windows WHERE run_id=%s AND experiment_id=%s AND phase=%s",
@@ -488,19 +520,35 @@ class Store:
             if begin > datetime.fromisoformat(end):
                 raise ValueError("Cannot evaluate before the already collected horizon")
             if begin < datetime.fromisoformat(end):
+                params = [self.run_id, experiment["workflow_id"], version, data["cohort"], begin, end,
+                          [data["plan"]["control"], data["plan"]["challenger"]]]
+                source = ("SELECT * FROM person_metrics WHERE run_id=%s AND workflow_id=%s AND config_version=%s "
+                          "AND cohort_id=%s AND ts>=%s AND ts<%s AND voice=ANY(%s)")
+                measures = "dials,connected,engaged"
+                if exposure != "all":
+                    source = ("SELECT * FROM (SELECT *,row_number() OVER (PARTITION BY person_id,voice "
+                              "ORDER BY ts,first_event_id) AS position FROM person_metrics "
+                              "WHERE run_id=%s AND workflow_id=%s AND config_version=ANY(%s) "
+                              "AND cohort_id=%s AND ts>=%s AND ts<%s AND voice=ANY(%s)) ranked "
+                              "WHERE config_version=%s AND ts>=%s")
+                    versions = sorted({version, data.get("trial_version", version)})
+                    params = [self.run_id, experiment["workflow_id"], versions, data["cohort"],
+                              data["started_at"], end, params[-1], version, begin]
+                    first = ("CASE WHEN position=1 THEN 1 ELSE 0 END",
+                             "CASE WHEN position=1 THEN first_connected ELSE 0 END",
+                             "CASE WHEN position=1 THEN first_engaged ELSE 0 END")
+                    columns = ("dials", "connected", "engaged")
+                    values = first if exposure == "first" else [f"{column}-({value})" for column, value in zip(columns, first)]
+                    measures = ",".join(f"{value} AS {column}" for column, value in zip(columns, values))
                 self.db.execute(
-                    "INSERT INTO experiment_people SELECT run_id,%s,%s,payload->>'person_id',"
-                    "payload->'variant'->>'voice',count(*),count(*) FILTER (WHERE (payload->>'connected')::boolean),"
-                    "count(*) FILTER (WHERE (payload->>'engaged')::boolean) FROM events "
-                    "WHERE run_id=%s AND workflow_id=%s AND NOT history AND kind='call' "
-                    "AND ts >= %s AND ts < %s AND (payload->>'config_version')::integer=%s "
-                    "AND payload->>'cohort_id'=%s AND payload->'variant'->>'voice'=ANY(%s) "
-                    "GROUP BY run_id,payload->>'person_id',payload->'variant'->>'voice' "
+                    "WITH selected AS (" + source + "), measured AS (SELECT run_id,person_id,voice," + measures +
+                    " FROM selected) INSERT INTO experiment_people "
+                    "SELECT run_id,%s,%s,person_id,voice,sum(dials),sum(connected),sum(engaged) "
+                    "FROM measured GROUP BY run_id,person_id,voice HAVING sum(dials)>0 "
                     "ON CONFLICT (run_id,experiment_id,phase,person_id,voice) DO UPDATE SET "
                     "dials=experiment_people.dials+EXCLUDED.dials,connected=experiment_people.connected+EXCLUDED.connected,"
                     "engaged=experiment_people.engaged+EXCLUDED.engaged",
-                    (eid, phase, self.run_id, experiment["workflow_id"], begin, end, version, data["cohort"],
-                     [data["plan"]["control"], data["plan"]["challenger"]]),
+                    (*params, eid, phase),
                 )
                 self.db.execute("INSERT INTO experiment_windows VALUES (%s,%s,%s,%s)", (self.run_id, eid, phase, end))
         with self.db.cursor(row_factory=dict_row) as cursor:

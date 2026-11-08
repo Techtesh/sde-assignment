@@ -199,7 +199,7 @@ def test_completed_windows_not_overlapping_ticks_and_gap_breaks_streak(database)
         tick(world, api, engine, 10, 45)
         assert store.open_incidents() == [] and world.paid == []
         tick(world, api, engine, 11)
-        assert len(store.open_incidents()) == 1 and len(world.paid) == 1
+        assert len(store.open_incidents()) == 1 and world.paid == []
         alarm = {"kind": "caller_id", "subject": "default:D1", "signal": True}
         first = store.detection_window("other", 1, "2027-01-04T09:00:00+05:30", alarm)
         second = store.detection_window("other", 1, "2027-01-04T11:00:00+05:30", alarm)
@@ -229,7 +229,8 @@ def test_validated_prompt_repair_goes_through_approval_and_is_verified(database)
         completed = store.incident(incident["incident_id"])
         assert completed["status"] == "resolved"
         assert completed["data"]["verification"]["after"]["hallucinations"] == 0
-        assert len(world.paid) == 2 and world.credits == 194
+        assert len(world.paid) == 1 and world.credits == 195
+        assert world.paid[0][1]["n"] == 500
 
 
 def test_caller_rotation_is_governed_and_post_apply_pickup_is_verified(database):
@@ -255,12 +256,12 @@ def test_lost_paid_response_never_repeats_charge(database):
         tick(world, api, engine, 10)
         world.lose_paid = True
         tick(world, api, engine, 11)
+        tick(world, api, engine, 11, 15)
         record = store.db.execute("SELECT incident_id,status FROM incidents").fetchone()
         assert record[1] == "needs_review"
         restarted = IncidentEngine(api, store, governance)
-        tick(world, api, restarted, 11, 15)
         tick(world, api, restarted, 11, 30)
-        assert len(world.paid) == 1 and world.credits == 197
+        assert len(world.paid) == 1 and world.credits == 195
         assert store.db.execute("SELECT status FROM external_actions").fetchone()[0] == "uncertain"
         world.version += 1
         tick(world, api, restarted, 11, 45)
@@ -274,12 +275,13 @@ def test_successful_paid_response_is_recovered_without_rebuying(database):
         seed_alarm(store, "prompt_version")
         tick(world, api, engine, 10)
         tick(world, api, engine, 11)
+        tick(world, api, engine, 11, 15)
         incident = store.open_incidents()[0]
-        old = {key: value for key, value in incident["data"].items() if key not in {"suggestions", "candidates"}}
-        store.update_incident(incident["incident_id"], "detected", world.now, old)
-        tick(world, api, IncidentEngine(api, store, governance), 11, 15)
+        old = {key: value for key, value in incident["data"].items() if key not in {"validation", "candidate"}}
+        store.update_incident(incident["incident_id"], "suggested", world.now, old)
+        tick(world, api, IncidentEngine(api, store, governance), 11, 30)
         assert len(world.paid) == 1
-        assert store.open_incidents()[0]["status"] == "suggested"
+        assert store.open_incidents()[0]["status"] == "validated"
 
 
 def test_tenant_quota_and_credit_reserve_prevent_exhaustion(database):

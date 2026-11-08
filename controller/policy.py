@@ -105,6 +105,8 @@ def decide_route(workflow: dict, old: dict, new: dict) -> str:
     if not changed:
         raise ValueError("Proposal does not change the configuration")
     policy = workflow["governance"]["auto_apply"]
+    if old["prompt_version"] != new["prompt_version"]:
+        return "approval"
     if not policy["enabled"] or not changed <= set(policy["allowed_dims"]):
         return "approval"
     names = {"default"} | {c["id"] for c in old["cohorts"] + new["cohorts"]}

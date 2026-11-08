@@ -67,7 +67,7 @@ def seed_calls(store, version, when, *, prefix="trial", harmful=False, promoted=
     rng = random.Random(117)
     next_id = store.db.execute("SELECT COALESCE(max(event_id),0)+1 FROM events").fetchone()[0]
     events = []
-    for voice, number in (("V1", 250 if promoted else 1000), ("V2", 1000 if promoted else 250)):
+    for voice, number in (("V1", 125 if promoted else 1000), ("V2", 1125 if promoted else 250)):
         for person in range(2 if small else number):
             pid = f"{prefix}-{voice}-{person}"
             events.append({"event_id": next_id, "type": "lead", "ts": when.isoformat(),
@@ -109,12 +109,12 @@ def test_no_winner_before_fixed_checkpoint_then_governed_promotion(database):
         assert experiment["status"] == "promoting"
         assert world.config["allocations"]["default"]["voice"]["V2"] == 0.2
         governance.tick(world.now)
-        assert world.approvals[-1]["body"]["proposed_config"]["allocations"]["default"]["voice"]["V2"] == 0.8
+        assert world.approvals[-1]["body"]["proposed_config"]["allocations"]["default"]["voice"]["V2"] == 0.9
         world.approvals[-1]["status"] = "approved"
         governance.tick(world.now)
         tick(world, api, engine)
         assert record(store, eid)["status"] == "monitoring"
-        assert world.config["allocations"]["default"]["voice"]["V1"] == pytest.approx(0.2)
+        assert world.config["allocations"]["default"]["voice"]["V1"] == pytest.approx(0.1)
 
 
 def test_unapproved_split_provides_no_experiment_evidence(database):
@@ -255,7 +255,7 @@ def test_promoted_winner_decay_rolls_back_through_approval(database):
         assert record(store, eid)["status"] == "restoring"
         assert record(store, eid)["data"]["decay_evidence"]
         governance.tick(world.now)
-        assert world.config["allocations"]["default"]["voice"]["V2"] == 0.8
+        assert world.config["allocations"]["default"]["voice"]["V2"] == 0.9
         world.approvals[-1]["status"] = "approved"
         governance.tick(world.now)
         tick(world, api, engine)

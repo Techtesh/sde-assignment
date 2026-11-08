@@ -14,8 +14,8 @@ from .policy import config_diff, distribution, rebase_config
 
 
 RESERVE_CREDITS = 6
-INCIDENT_CREDIT_LIMIT = 12
-VALIDATION_N = 300
+INCIDENT_CREDIT_LIMIT = 18
+VALIDATION_N = 500
 
 
 def hour_start(timestamp: str) -> datetime:
@@ -52,11 +52,14 @@ class IncidentEngine:
                     continue
                 if any(row["workflow_id"] == wid and row["kind"] == alarm["kind"] for row in self.store.open_incidents()):
                     continue
-                data = {"alarm": alarm, "epoch": current["version"], "rule_version": "hourly-v1",
+                data = {"alarm": alarm, "epoch": current["version"], "rule_version": "hourly-v2", "validation_n": VALIDATION_N,
+                        "credit_limit": INCIDENT_CREDIT_LIMIT,
                         "window_start": start.isoformat(), "window_end": end.isoformat(),
                         "proposal_attempt": 0, "candidate_index": 0, "expected_prompt": current["config"]["prompt_version"],
                         "guardrail_before": [row for row in recent if row["dimension"] == alarm["kind"]],
                         "guardrail_history_before": [row for row in baseline if row["dimension"] == alarm["kind"]]}
+                if alarm["kind"] == "prompt_version":
+                    data["attribution"] = self.store.prompt_context(wid)
                 self.store.save_incident(iid, workflow, alarm["kind"], now, data)
         definitions = {workflow["workflow_id"]: workflow for workflow, _ in snapshots}
         for incident in self.store.open_incidents():
@@ -66,6 +69,11 @@ class IncidentEngine:
 
     def _mark(self, incident: dict, status: str, now: str, **details) -> None:
         data = {**incident["data"], **details}
+        if status == "needs_review" and incident["kind"] == "prompt_version":
+            alarm = data.get("alarm", {})
+            cohort = alarm.get("cohort", "default")
+            data["review_subjects"] = sorted({f"{cohort}:{prompt}" for prompt in
+                                               (data.get("expected_prompt"), data.get("candidate"), alarm.get("variant")) if prompt})
         self.store.update_incident(incident["incident_id"], status, now, data)
         if status == "needs_review":
             print(json.dumps({"alert": "incident_needs_review", "workflow_id": incident["workflow_id"],
@@ -89,9 +97,9 @@ class IncidentEngine:
         tenant_used = sum(row["cost"] for row in spent if row["tenant_id"] == incident["tenant_id"])
         incident_used = sum(row["cost"] for row in spent if row["incident_id"] == incident["incident_id"])
         quota = max(0, (usage["initial"] - RESERVE_CREDITS) / tenants)
-        required = cost + ((VALIDATION_N + 99) // 100 if kind == "suggest" else 0)
+        required = cost + ((incident["data"].get("validation_n", 300) + 99) // 100 if kind == "suggest" else 0)
         if (state["credits_remaining"] - required < RESERVE_CREDITS or tenant_used + required > quota
-                or incident_used + required > INCIDENT_CREDIT_LIMIT):
+                or incident_used + required > incident["data"].get("credit_limit", 12)):
             self._mark(incident, "needs_review", now, reason="Credit reserve, tenant quota, or incident limit reached")
             return None
         self.store.reserve_action(aid, incident, kind, cost, now, request)
@@ -121,6 +129,9 @@ class IncidentEngine:
         if incident["kind"] == "caller_id":
             self._submit(incident, workflow, now)
             return
+        if self.store.uncertain_paid_action(incident["incident_id"]):
+            self._mark(incident, "needs_review", now, reason="Uncertain paid intent survived restart; reconcile before another charge")
+            return
         current = self.api.get(f"/workflows/{wid}/config")
         if current["config"]["prompt_version"] != data["expected_prompt"]:
             self._mark(incident, "superseded", now, reason="Supervisor changed the incident prompt; re-detect on fresh evidence")
@@ -128,6 +139,20 @@ class IncidentEngine:
         if status == "detected":
             if not set(workflow["options"]["prompt_version"]) - {data["expected_prompt"]}:
                 self._mark(incident, "needs_review", now, reason="No alternative prompt is available under policy")
+                return
+            observed = self.store.historical_rates(wid)
+            known = [row for row in observed if row["dimension"] == "prompt_version" and row["connected"] >= 200
+                     and row["cohort_id"] == data["alarm"]["cohort"] and row["variant"] != data["expected_prompt"]
+                     and row["variant"] in workflow["options"]["prompt_version"]]
+            previous = data.get("attribution", {}).get("previous")
+            preferred = previous["prompt"] if previous else None
+            known.sort(key=lambda row: (row["variant"] != preferred, -row["connected"], row["variant"]))
+            candidates = [known[0]["variant"]] if known else []
+            self._mark(incident, "suggested", now, candidates=candidates, candidate_evidence=known)
+            return
+        if status == "suggested" and data["candidate_index"] >= len(data["candidates"]):
+            if "suggestions" in data:
+                self._mark(incident, "needs_review", now, reason="No remaining supported prompt candidates")
                 return
             result = self._paid(incident, workflow, now, tenants, "suggest", {
                 "workflow_id": wid,
@@ -139,14 +164,10 @@ class IncidentEngine:
             if not isinstance(suggestions, list) or any(not isinstance(row, dict) for row in suggestions):
                 self._mark(incident, "needs_review", now, reason="Malformed LLM suggestions")
                 return
-            observed = self.store.historical_rates(wid)
-            known = [row for row in observed if row["dimension"] == "prompt_version" and row["connected"] >= 200]
-            known_ids = [row["variant"] for row in sorted(known, key=lambda row: (-row["connected"], row["variant"]))]
             suggested_ids = sorted({row.get("prompt_version") for row in suggestions
                                     if isinstance(row.get("prompt_version"), str)})
-            candidates = list(dict.fromkeys(known_ids + suggested_ids))
-            candidates = [value for value in candidates if value in workflow["options"]["prompt_version"]
-                          and value != data["expected_prompt"]]
+            excluded = {*data["candidates"], data["expected_prompt"], data["alarm"]["variant"]}
+            candidates = data["candidates"] + [value for value in suggested_ids if value in workflow["options"]["prompt_version"] and value not in excluded]
             self._mark(incident, "suggested", now, candidates=candidates, suggestions=result)
             return
         if status == "suggested":
@@ -156,17 +177,18 @@ class IncidentEngine:
                 self._mark(incident, "needs_review", now, reason="No remaining supported prompt candidates")
                 return
             prompt = candidates[index]
+            sample = data.get("validation_n", 300)
             result = self._paid(incident, workflow, now, tenants, "validate", {
-                "workflow_id": wid, "prompt_version": prompt, "n": VALIDATION_N,
-            }, (VALIDATION_N + 99) // 100)
+                "workflow_id": wid, "prompt_version": prompt, "n": sample,
+            }, (sample + 99) // 100)
             if result is None:
                 return
             if (result.get("workflow_id") != wid or result.get("prompt_version") != prompt
-                    or result.get("n") != VALIDATION_N or not isinstance(result.get("validation_run_id"), str)
+                    or result.get("n") != sample or not isinstance(result.get("validation_run_id"), str)
                     or type(result.get("pass_rate")) not in (int, float) or not 0 <= result["pass_rate"] <= 1):
                 self._mark(incident, "needs_review", now, reason="Validation response does not match its request")
                 return
-            if result["pass_rate"] < workflow["governance"]["min_validation_pass_rate"]:
+            if result["pass_rate"] < workflow["governance"].get("min_validation_pass_rate", 0.97):
                 self._mark(incident, "suggested", now, candidate_index=index + 1, last_validation=result)
             else:
                 self._mark(incident, "validated", now, candidate=prompt, validation=result)
@@ -216,8 +238,14 @@ class IncidentEngine:
                 replaced = previous["proposal_id"]
             data = {**data, "before": current["config"], "desired": desired}
             evidence = {"incident_id": iid, "detection": data["alarm"]}
+            summary = "Rotate degraded caller ID"
             if incident["kind"] == "prompt_version":
                 evidence["validation_run_id"] = data["validation"]["validation_run_id"]
+                evidence["attribution"] = data.get("attribution")
+                actor = (data.get("attribution", {}).get("change") or {}).get("actor")
+                summary = "Reverse supervisor prompt edit after elevated hallucination flags" if actor == "supervisor" else "Repair elevated hallucination flags"
+                data["supervisor_alert"] = {"severity": "page", "message": summary,
+                                            "action": "Review the incident proposal and validation evidence; the current prompt remains live until permission"}
             # Atomically replace queued intents; no external config write occurs in this transaction.
             with self.store.db.transaction():
                 if replaced:
@@ -226,7 +254,7 @@ class IncidentEngine:
                 pid = self.governance.plan(
                     wid, desired, decision_id=decision_id, base_version=current["version"], urgent=True, parent_id=replaced,
                     rationale=f"Incident {iid}: two completed hourly populations; {json.dumps(data['alarm'])}",
-                    summary="Repair elevated hallucination flags" if incident["kind"] == "prompt_version" else "Rotate degraded caller ID",
+                    summary=summary,
                     evidence=evidence,
                 )
                 if replaced:
@@ -234,6 +262,9 @@ class IncidentEngine:
                         if other["proposal_id"] == replaced:
                             self.store.update_incident(other["incident_id"], "proposed", now, other["data"], pid)
                 self.store.update_incident(iid, "proposed", now, data, pid)
+            if incident["kind"] == "prompt_version":
+                print(json.dumps({"alert": "supervisor_prompt_approval", "workflow_id": wid, "proposal_id": pid,
+                                  **data["supervisor_alert"]}), flush=True)
         except ValueError as exc:
             self._mark(incident, "needs_review", now, reason=str(exc))
 
@@ -251,6 +282,10 @@ class IncidentEngine:
                 fresh = next((row for row in alarms(recent, historical, current["config"])
                               if row["subject"] == data["alarm"]["subject"] and row["signal"]), None)
                 if fresh:
+                    if incident["kind"] == "prompt_version" and proposal["status"] in {"rejected", "expired"}:
+                        self._next_prompt({**incident, "data": {**data, "alarm": fresh}}, now, {},
+                                          f"Previous proposal {proposal['status']}; try a different candidate", applied=False)
+                        return
                     self._mark(incident, "validated" if incident["kind"] == "prompt_version" else "detected", now,
                                alarm=fresh, proposal_attempt=data["proposal_attempt"] + 1)
                     return
@@ -320,7 +355,10 @@ class IncidentEngine:
                         "guardrail": "no detected material harm; not a non-inferiority result" if supported else "insufficient matched guardrail evidence",
                         "recovered": recovered}
         if recovered:
-            self._mark(incident, "resolved", now, verification=verification)
+            applied = datetime.fromisoformat(data["applied_at"])
+            self._mark(incident, "resolved", now, verification=verification,
+                       detection_to_apply_minutes=(applied-incident["created_at"]).total_seconds()/60,
+                       detection_to_verified_minutes=(datetime.fromisoformat(now)-incident["created_at"]).total_seconds()/60)
         elif after["connected"] >= 300:
             if incident["kind"] == "prompt_version":
                 self._next_prompt(incident, now, after, "Safety did not improve after application")
@@ -329,14 +367,16 @@ class IncidentEngine:
         else:
             self._mark(incident, "monitoring", now, verification=verification)
 
-    def _next_prompt(self, incident: dict, now: str, after: dict, reason: str) -> None:
+    def _next_prompt(self, incident: dict, now: str, after: dict, reason: str, *, applied: bool = True) -> None:
         current = self.api.get(f"/workflows/{incident['workflow_id']}/config")
-        if current["config"]["prompt_version"] != incident["data"]["candidate"]:
+        expected = incident["data"]["candidate"] if applied else incident["data"]["expected_prompt"]
+        if current["config"]["prompt_version"] != expected:
             self._mark(incident, "superseded", now, reason="Supervisor changed the repair prompt")
             return
-        data = {key: value for key, value in incident["data"].items() if key not in {"before", "desired", "applied_at"}}
+        data = {key: value for key, value in incident["data"].items() if key not in {"before", "desired", "applied_at", "candidate", "validation"}}
         data.update(candidate_index=data["candidate_index"] + 1, proposal_attempt=data["proposal_attempt"] + 1,
-                    expected_prompt=current["config"]["prompt_version"], last_failure={"reason": reason, "after": after})
+                    expected_prompt=current["config"]["prompt_version"], last_failure={"reason": reason, "after": after},
+                    reopened_count=data.get("reopened_count", 0) + int(applied))
         # Do not restore a prompt already known to hallucinate to recover engagement.
         self.store.update_incident(incident["incident_id"], "suggested", now, data)
 
