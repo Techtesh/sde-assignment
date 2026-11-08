@@ -179,20 +179,24 @@ thing you cut.
 
 ## 11. Running this controller
 
-Install `requirements.txt`. The controller uses PostgreSQL 17; `run.sh` starts the
+Install [requirements-lock.txt](./requirements-lock.txt) for the tested runtime package versions;
+[requirements-dev.txt](./requirements-dev.txt) adds test tools. The controller uses
+PostgreSQL 17; `run.sh` starts the
 development database with Docker Compose when `DATABASE_URL` is unset. An existing
 PostgreSQL database avoids that Docker requirement. The supplied database password
 is for the localhost development service only.
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements-lock.txt
 python -m sim serve --scenario scenarios/public_01_dev.yaml --run-dir runs/example01
 # In another terminal, after the simulator is healthy:
-SIM_RUN_ID=example01 ./run.sh http://127.0.0.1:8700
+./run.sh http://127.0.0.1:8700
 ```
 
-Use the same run ID/database to restart a controller; use a fresh ID for a new
-simulator world. `python -m controller status --run-id example01` prints the concise
+Startup prints a persisted automatic run ID. It reuses that ID on controller restart
+and creates a fresh one for observed world resets or scenario changes. Use `SIM_RUN_ID`
+for an explicit override; keep it on restart and change it for a new world.
+`python -m controller status --run-id <PRINTED_ID>` prints the concise
 supervisor view; add `--json` for complete evidence. `DATABASE_URL` must be set for
 these direct commands. Windows commands, audit queries, crash/profile reproduction
 and alert meanings are in [OPERATIONS.md](./docs/OPERATIONS.md).

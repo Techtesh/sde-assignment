@@ -14,7 +14,7 @@ limits, [GOVERNANCE.md](./GOVERNANCE.md) for permissions, and [WorkPlan.md](../W
 
 ## Run
 
-Install [requirements.txt](../requirements.txt), start the simulator using the commands in
+Install [requirements-lock.txt](../requirements-lock.txt), start the simulator using the commands in
 [SIMULATOR.md](./SIMULATOR.md), then run `./run.sh http://127.0.0.1:8700`.
 The launcher starts the project's PostgreSQL 17 container if `DATABASE_URL` is unset.
 Docker Compose is required for that default; an external PostgreSQL database avoids Docker.
@@ -28,12 +28,22 @@ $env:DATABASE_URL = 'postgresql://controller:controller@127.0.0.1:55432/controll
 python -m controller --url http://127.0.0.1:8700 --run-id mine01
 ```
 
-Use the **same run ID** to restart a controller against the same running simulator.
-Use a **fresh run ID** when starting a new simulator world. `SIM_RUN_ID` sets the launcher's
-run ID; its default is `default`. Backward simulated time, a changed scenario, conflicting
-event contents, and a decreasing event counter fail rather than corrupting existing evidence.
-The simulator API has no unique world ID; matching restarted worlds cannot always be distinguished,
-so assigning a fresh run ID is the operator's responsibility.
+With no run-ID flag, startup persists an automatic identity per simulator URL and prints it.
+A restart reuses it, including after a lost advance response. A changed scenario, backward
+time/event counter or finished-to-unfinished reset creates a fresh namespace without deleting
+old evidence. A compatible legacy `default` run is adopted once. An endpoint session lock
+prevents two automatic writers from advancing the same URL.
+
+`SIM_RUN_ID` or `--run-id` overrides automatic selection. Keep that ID on restart and use a
+fresh explicit ID for a new world. Explicit mismatches and conflicting event contents still
+fail. The API has no unique world token: a reset that catches up beyond saved time/counters
+can be indistinguishable, so use a fresh explicit ID for that case. Status/audit require the
+printed ID; they do not contact the simulator to guess a world.
+
+For tests, install [requirements-dev.txt](../requirements-dev.txt); pytest is not a runtime
+dependency. The lock records tested package versions; base image tags remain mutable.
+The runtime snapshot was built and checked on Linux/Python 3.12.16; the controller
+suite also passes on Windows/Python 3.14.2. This does not certify every Python/platform pair.
 
 `--max-ticks N` stops after N advances for development. `--max-ticks 0` imports outstanding
 history/events and reconciles existing proposals without advancing time; approved changes can

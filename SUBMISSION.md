@@ -1,13 +1,13 @@
 # Outcome-First Agent Loop — Submission
 
-**Name:** Not supplied · **Date:** 2026-11-08 · **Hours actually spent (be honest):** Not tracked; not inferred from the estimate · **Language / storage:** Python / PostgreSQL 17
+**Name:** [TODO] · **Date:** 2026-11-08 · **Hours actually spent (be honest):** [TODO] · **Language / storage:** Python / PostgreSQL 17
 
 ## 0. TL;DR
 
 One Python process and PostgreSQL provide governed experiments, incident repair, durable evidence and a concise supervisor CLI.
 Public_01: ten changes, one beneficial and one harmful; no voice winner qualified.
 Public_02: two beneficial repairs, no harmful changes, five credits, no LLM call; prompt repair still took 27h30m.
-All five real crash boundaries match a clean run; 118 focused tests and a fresh-checkout run pass.
+All five real crash boundaries match a clean run; the latest focused suite passes 137 tests on Linux and 136 on Windows (one Linux-only skip). A fresh-checkout run also passes.
 Welcome interactions, new cohort discovery, person-level timing, caller exploration, cross-client transfer and a web/notification service are cut.
 
 ## 1. Assumptions
@@ -16,11 +16,11 @@ Welcome interactions, new cohort discovery, person-level timing, caller explorat
 2. Simulated Asia/Kolkata time governs windows, permission and checkpoints. Cadence, capacity and calling windows are business-owned. Reads do not advance the world.
 3. History supports matched cohort/hour comparisons, not causal counterfactuals. Unobserved treatments and future uploads remain unknown.
 4. Stable person IDs identify repeated observations. Clustered inference assumes independent people and estimates rates under per-call assignment, not lifetime person-randomized effects.
-5. A new world needs a fresh run ID; restart retains its ID and database. There is no API world-instance token, so identical resets cannot always be recognized.
+5. Startup persists/reuses an automatic identity per simulator URL and isolates observed resets/scenario changes. Explicit run IDs still require operator lifecycle control. The API has no world-instance token; a reset caught up beyond saved counters/time can remain indistinguishable.
 6. PostgreSQL commits are durable. Process exits are demonstrated; database failover/disk loss is not. Ambiguous paid results require review because the API lacks idempotency/retrieval.
 7. Impact is affected share of known active leads, not predicted lift. If validation policy is absent, use an explicit 0.97 safety threshold.
 8. The measured application budget includes controller and PostgreSQL. The simulator is external; Docker Desktop quotas are not dedicated bare-metal resources. Profiling overhead is included where labelled.
-9. Name and actual hours were not supplied. AI assistance was used; the author must be able to defend the implementation and decisions.
+9. Name and actual hours are [TODO], to be filled honestly by the author. AI assistance was used; the author must be able to defend the implementation and decisions.
 
 ## 2. Scope decisions
 
@@ -151,7 +151,7 @@ At 10×, include ingestion/WAL, decision inference and person-counter transfer. 
 
 ## 9. Reliability
 
-[crash_test.py](./tests/crash_test.py) reuses the external verification harness. Each case starts a fresh world, exits 137 mid-ingest, after advance, after saved intent, after accepted POST, or after apply, then restarts. All five completed cases match their clean reference's evidence, typed counters, decisions and remote approvals/config history. Duplicate remote proposal IDs are rejected. Extra recovery audit transitions are allowed. [Matrix](./reports/steps567_crash_final.json); [fresh checkout](./reports/steps567_fresh_clone.json). The focused suite passes 118 checks on Windows and Linux, including an interruption between a decay conclusion and restore intent. The measured profile predates that final checkpoint-ordering correction; its normal hot path is unchanged.
+[crash_test.py](./tests/crash_test.py) reuses the external verification harness. Each case starts a fresh world, exits 137 mid-ingest, after advance, after saved intent, after accepted POST, or after apply, then restarts. All five completed cases match their clean reference's evidence, typed counters, decisions and remote approvals/config history. Duplicate remote proposal IDs are rejected. Extra recovery audit transitions are allowed. [Matrix](./reports/steps567_crash_final.json); [fresh checkout](./reports/steps567_fresh_clone.json). The earlier suite passed 118 checks on Windows and Linux, including an interruption between a decay conclusion and restore intent. The [PR follow-up](./reports/PR1_FOLLOWUP.md) adds startup/approval/allocation checks: 137 pass on Linux and 136 on Windows, with one Linux-only skip. The measured profile predates that final checkpoint-ordering correction; its normal hot path is unchanged.
 
 Reads retry bounded transport/5xx failures. Failed streams roll back the chunk. Mutations reconcile rather than blindly retry; stale/duplicate 409s, lapse 410s and credit 402s remain explicit. Paid unknown results require review. Database failover and every instruction-level crash are unproven.
 
@@ -235,8 +235,8 @@ Public_01 applies eight neutral, one beneficial and **one harmful** change: the 
 - Paid uncertainty requires review. Tenant shares can strand credits; tenant-wide attention preferences are incomplete.
 - Kestrel's stricter 11:00/two-request preference, external notification delivery, named human identity and external watchdog remain unimplemented.
 - Person/time counters can grow with calls. Retention, database failover and continuous-arrival SLOs need production work.
-- The backend crash and one-record input anomaly have unresolved origins. Version ranges are not a production dependency lock; matching world resets may evade detection.
-- Profile/cold-start limits must be read with the measured results. Name/effort and external reviewer/form/deadline details remain unreported.
+- The backend crash and one-record input anomaly have unresolved origins. Runtime/test package snapshots are pinned; base image tags remain mutable. Indistinguishable world resets may evade detection.
+- Profile/cold-start limits must be read with the measured results. Name/effort are [TODO]; external reviewer/form/deadline details remain [TODO].
 
 ## 14. If this went to production at Formi next month
 

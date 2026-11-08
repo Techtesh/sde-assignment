@@ -1,8 +1,12 @@
 # Added Steps 5–7: delivery evidence
 
+The later [PR follow-up](./PR1_FOLLOWUP.md) adds automatic world identity,
+dependency snapshots and boundary tests. The full scenario/profile artifacts
+below retain their recorded versions.
+
 Steps 5 and 6 and the local Step 7 work are complete. External submission is
-pending reviewer identity, submission-form URL, deadline, author name and actual
-hours. No reviewer access, form submission or public publication is claimed.
+pending reviewer identity, submission-form URL, deadline, author name [TODO] and actual
+hours [TODO]. No reviewer access, form submission or public publication is claimed.
 The user's original [work plan](../WorkPlan.md), including the added requirements,
 remains a byte-for-byte prefix; completion notes are appended separately.
 
@@ -91,5 +95,5 @@ answers and the likely review questions. The [status example](./status_example.t
 and [detailed JSON](./status_example.json) show the final incident-run view.
 
 The repository must remain private. Reviewer access and form submission require
-the missing recipient/form details; author name and actual hours must be supplied
+the missing recipient/form details; author name [TODO] and actual hours [TODO] must be supplied
 honestly. These external items remain unchecked in the work plan.

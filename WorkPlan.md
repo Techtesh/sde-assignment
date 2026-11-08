@@ -241,6 +241,17 @@ The Step 5–7 requirements above are retained verbatim. This records implementa
 - [x] Decision evidence: campaign/conclusion state and exact-time person counters updated with ingestion; one-time atomic backfill for old runs; no raw-call JSON queries in learning.
 - [x] Step 6 final crash matrix, profiled public_03 run, all three grades, and measured 10× discussion. All five recovery cases match; the load average is 6m29s/day including bootstrap, while cold start plus D0 is 13m40s.
 - [x] Step 7 local work: final submission, six policy-checked replies, fresh-clone run, and three-decision rehearsal. See [delivery evidence](./reports/STEPS_5_7.md) for version boundaries, results and retained failures.
-- [ ] Step 7 external submission: reviewer email, form URL, deadline, author name and actual hours are still required from the user.
+- [ ] Step 7 external submission: reviewer email, form URL, deadline, author name [TODO] and actual hours [TODO] are still required from the user.
 
 Choices: existing declared experiment shares/rules and incident validation/budgets remain unchanged on restart. New incident budgets are 18 credits (old records retain 12), preserving the six-credit reserve. A lost significance test retires insufficiently supported benefit at a fixed checkpoint; it is not described as proof of harm. QA persistence follows prompt/cohort changes, not unrelated voice edits. Unknown event types fail the chunk transaction.
+
+## PR review follow-up
+
+- [x] Checked the older review against current code; retained the original notes and commit history.
+- [x] Automatic per-URL run identity survives restart and isolates observed scenario/world resets without deleting evidence. Explicit run IDs retain strict checks.
+- [x] Verified unequal-allocation arm sample planning; retained the declared effect threshold and documented its learning/power limits. Added approval closing-time/TTL/timezone coverage and renamed the engaged-per-dial dry-run intermediate.
+- [x] Pinned runtime/test package snapshots, removed pytest from runtime dependencies, and declared the measured database resource cap in Compose.
+- [x] GitHub repository changed to private and verified after explicit approval.
+- [x] Focused suite: 136 passed on Windows (one Linux-only skip), 137 passed on Linux, including the real Bash launcher recovery/reset test.
+- [x] Reports index and [finding-by-finding response](./reports/PR1_FOLLOWUP.md) added. Existing grade/load artifacts retain their original source versions.
+- [ ] Personal facts: author name [TODO], actual hours [TODO]. External reviewer/form/deadline: [TODO].

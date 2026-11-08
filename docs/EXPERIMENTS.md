@@ -27,7 +27,18 @@ start a test. Automatic language-cohort creation, welcome-message tests, and int
 Before sending the split proposal, persist the cohort, context, arms, shares, KPI/guardrail, sample
 target, stopping/start rules, alpha, and rule version. The primary sample target is a working 80%-power
 calculation from historical rate, 8-point effect, and 20/80 split, with a floor of 200 observations per
-arm. It does not guarantee power under clustered calls; final measured uncertainty is decisive.
+arm. Specifically, `z = z(1-alpha) + z(0.8)` and the challenger target is
+`z²*p*(1-p)/(lift²*(1-share))`. Total N divides this by `share`; control is expected
+to receive `(1-share)/share` times the challenger population. Both observed arms must clear
+the stored target, a conservative floor for control at 20/80. The formula targets primary
+positivity under independent binomial observations, not the joint winner rule or clustered
+power. Requiring an observed effect at least the planning lift can itself limit winner
+probability near that boundary. Final measured uncertainty is decisive.
+
+Eight points is an intentionally large absolute improvement requirement, not a claim that
+smaller changes have no value. It limits learning in these runs and can remove smaller true
+benefits after inconclusive trials. It remains predeclared rather than being lowered after
+grading; future calibration must consider traffic, precision, cleanup cost and guardrail power.
 
 The start rule handles approval latency and `next_campaign_only`: old campaign calls are excluded until
 the permitted epoch actually appears. An unapproved or never-exposed arm provides no learning evidence.

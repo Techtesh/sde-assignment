@@ -1,9 +1,12 @@
 # Operating the loop
 
 The required entry point remains `./run.sh <SIM_URL>`. Install
-[requirements.txt](../requirements.txt) first. The launcher uses the project's
+[requirements-lock.txt](../requirements-lock.txt) first; use
+[requirements-dev.txt](../requirements-dev.txt) for tests. The launcher uses the project's
 PostgreSQL container unless `DATABASE_URL` points to an existing database.
-Set `SIM_RUN_ID` for each new simulator world; reuse it on controller restart.
+Without `SIM_RUN_ID`, startup prints and persists an automatic identity and reuses it
+on restart. Detected scenario changes/resets get a fresh namespace. If using an
+explicit `SIM_RUN_ID`, change it for a new world and keep it on restart.
 See [CONTROLLER.md](./CONTROLLER.md) for setup and restart constraints.
 
 ## One supervisor view
