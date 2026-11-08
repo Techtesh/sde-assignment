@@ -1,6 +1,9 @@
 services:
   postgres:
     image: postgres:17
+    cpus: 1.0
+    mem_limit: 2g
+    memswap_limit: 2g
     environment:
       POSTGRES_USER: controller
       POSTGRES_PASSWORD: controller
