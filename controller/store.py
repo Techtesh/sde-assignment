@@ -56,6 +56,8 @@ class Store:
     def __init__(self, connection: psycopg.Connection, run_id: str, simulator_url: str):
         self.db = connection
         self.run_id = run_id
+        # Repeated loop queries should not pay LLVM compilation costs as evidence grows.
+        self.db.execute("SET jit=off")
         self.db.execute(Path(__file__).with_name("schema.sql").read_text(encoding="utf-8"))
         locked = self.db.execute(
             "SELECT pg_try_advisory_lock(hashtextextended(%s, 0))", (run_id,)
@@ -122,27 +124,42 @@ class Store:
             ).fetchone()
             if existing:
                 return 0
+            prior_max = self.db.execute(
+                "SELECT COALESCE(max(event_id),0) FROM events WHERE run_id=%s", (self.run_id,),
+            ).fetchone()[0]
             self.db.execute("CREATE TEMP TABLE incoming (LIKE events) ON COMMIT DROP")
             count = 0
+            minimum_id = None
             with self.db.cursor().copy("COPY incoming FROM STDIN") as copy:
                 for event in events:
                     copy.write_row(event_row(self.run_id, number, kind == "history", event))
                     count += 1
+                    minimum_id = event["event_id"] if minimum_id is None else min(minimum_id, event["event_id"])
                     if count == 1:
                         crash_at("mid_ingest")
             if count != chunk["events"]:
                 raise ValueError(f"Chunk {number}: expected {chunk['events']} events, got {count}")
-            conflict = self.db.execute(
-                "SELECT 1 FROM incoming GROUP BY event_id HAVING count(DISTINCT payload) > 1 "
-                "UNION ALL SELECT 1 FROM incoming i JOIN events e USING (run_id, event_id) "
-                "WHERE i.payload <> e.payload OR i.history <> e.history LIMIT 1"
+            # Sort narrow IDs first; ordinary chunks need neither JSON sorting nor a scan of prior evidence.
+            duplicates = self.db.execute(
+                "SELECT 1 FROM incoming GROUP BY event_id HAVING count(*)>1 LIMIT 1"
             ).fetchone()
+            conflict = None
+            if duplicates:
+                conflict = self.db.execute(
+                    "SELECT 1 FROM incoming GROUP BY event_id HAVING count(DISTINCT payload)>1 LIMIT 1"
+                ).fetchone()
+            if not conflict and minimum_id is not None and minimum_id <= prior_max:
+                conflict = self.db.execute(
+                    "SELECT 1 FROM incoming i JOIN events e USING (run_id,event_id) "
+                    "WHERE i.payload<>e.payload OR i.history<>e.history LIMIT 1"
+                ).fetchone()
             if conflict:
                 raise ValueError("Conflicting event_id; use a fresh run_id for a new world")
             self.db.execute("CREATE TEMP TABLE fresh_events (LIKE events) ON COMMIT DROP")
+            source = ("SELECT DISTINCT ON (event_id) * FROM incoming ORDER BY event_id"
+                      if duplicates else "SELECT * FROM incoming")
             self.db.execute(
-                "WITH added AS (INSERT INTO events SELECT DISTINCT ON (event_id) * FROM incoming "
-                "ORDER BY event_id ON CONFLICT DO NOTHING RETURNING *) "
+                "WITH added AS (INSERT INTO events " + source + " ON CONFLICT DO NOTHING RETURNING *) "
                 "INSERT INTO fresh_events SELECT * FROM added"
             )
             self.db.execute(

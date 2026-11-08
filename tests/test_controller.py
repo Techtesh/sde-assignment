@@ -77,6 +77,23 @@ def test_error_after_counter_updates_rolls_back_everything(database):
         assert store.ingest(chunk(), sample_events()) == 3
 
 
+@pytest.mark.parametrize("conflicting", [False, True])
+def test_duplicate_ids_inside_new_chunk_are_checked_before_insert(database, conflicting):
+    events = sample_events()
+    duplicate = copy.deepcopy(events[1])
+    duplicate["engaged"] = conflicting
+    events.append(duplicate)
+    with open_store(database) as store:
+        if conflicting:
+            with pytest.raises(ValueError, match="Conflicting event_id"):
+                store.ingest(chunk(count=4), events)
+            assert table_count(store, "events") == 0
+            assert store.last_chunk("history") == -1
+        else:
+            assert store.ingest(chunk(count=4), events) == 3
+            assert store.summary()[0]["dials"] == 1
+
+
 def test_process_crash_mid_stream_can_restart(database):
     script = """
 import json, os, psycopg
