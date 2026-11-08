@@ -50,6 +50,12 @@ hourly metrics, audit records, and chunk completion in one transaction. A failed
 process exit before commit leaves the chunk unprocessed. A committed chunk can be skipped
 on restart. Separate history/live chunk cursors avoid skipping globally numbered chunks.
 
+Ingestion checks narrow IDs before comparing duplicate payloads. It skips the prior-event
+comparison only when every actual input ID is newer than the committed maximum; overlaps still
+receive the full equality check. Unique chunks avoid DISTINCT sorting. Controller database sessions
+disable JIT compilation; the measured load findings and unresolved server crash are recorded in
+[LOAD.md](../reports/LOAD.md) and [LOAD_ATTEMPT.md](../reports/LOAD_ATTEMPT.md).
+
 Raw events preserve person IDs and lead features for future clustered analysis. Hourly metrics
 retain workflow, config version, cohort, and observed voice/caller-ID/prompt dimensions;
 the `all` dimension is the unduplicated workflow total. Lead and call events are stored in

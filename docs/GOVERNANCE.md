@@ -59,8 +59,8 @@ objects are atomic for conflict detection. Prompt evidence must be supplied agai
 
 Expired, rejected, and lapsed proposals are terminal; the client does not silently resubmit them. A
 new proposal recomputes affected-lead counts, historical replay, and reach score and links its parent.
-The later learning layer must re-evaluate statistical justification; governance cannot invent fresh
-experiment evidence. Automatic experiment interruption will be added with the experiment engine.
+The learning layer must re-evaluate statistical justification; governance cannot invent fresh
+experiment evidence. The experiment engine interrupts changed epochs and preserves supervisor edits.
 
 ## Attention and proposal facts
 

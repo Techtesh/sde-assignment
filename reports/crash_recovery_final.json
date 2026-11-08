@@ -1,0 +1,294 @@
+{
+  "case": "mid_ingest",
+  "schema": "delivery01_final_mid_d352b8",
+  "run_id": "delivery01",
+  "directory": "runs\\delivery01_mid_ingest_e007ecff",
+  "application_commit": "7c20533ec44a66adc737f096dc958546cfd4f76e",
+  "exit": 0,
+  "timings": {
+    "ticks": 769,
+    "simulated_days": 8.0,
+    "wall_seconds": 123.482,
+    "wall_seconds_per_day_including_bootstrap": 15.435,
+    "bootstrap": {
+      "mode": "controller",
+      "ts": "2027-01-04T00:00:00+05:30",
+      "finished": false,
+      "ingested_events": 187400,
+      "ingest_seconds": 14.277,
+      "stream_fetch_seconds": 0.878,
+      "parse_seconds": 1.463,
+      "write_seconds": 11.936,
+      "decision_seconds": 4.476,
+      "advance_seconds": 0.0,
+      "loop_seconds": 18.752,
+      "credits_remaining": 200.0,
+      "peak_rss_mib": 48.48
+    },
+    "totals": {
+      "ingest_seconds": 38.127,
+      "stream_fetch_seconds": 4.732,
+      "parse_seconds": 2.318,
+      "write_seconds": 31.123,
+      "decision_seconds": 75.949,
+      "advance_seconds": 6.578,
+      "loop_seconds": 114.095
+    },
+    "live_events": 109637,
+    "live_ingest_events_per_second": 4596.9,
+    "max_decision_lag_bound_seconds": 4.795,
+    "live_wall_seconds_by_simulated_day": {
+      "0": 12.156,
+      "1": 11.878,
+      "2": 12.16,
+      "3": 21.08,
+      "4": 12.031,
+      "5": 11.646,
+      "6": 11.3,
+      "7": 9.67
+    },
+    "peak_controller_rss_mib": 52.09
+  },
+  "signature": {
+    "ingested_chunks": {
+      "rows": 394,
+      "sha256": "4b2a202ac9aff354c5953d830661e1fdded2f2ab1642ff698c06696d7b954a91"
+    },
+    "hourly_metrics": {
+      "rows": 3672,
+      "sha256": "d874998dcb091b03b56682ced378e2133fba0bd5bc39c7ab20dedaf1c9548d9c"
+    },
+    "proposals": {
+      "rows": 9,
+      "sha256": "ee8b7227d1062050760a4aca5eb94df4a5fc5515f11da6aab9affee2e7bded1c"
+    },
+    "experiments": {
+      "rows": 5,
+      "sha256": "4f4dddb75e4aba4ace76d219497e989d0f324b384957fac0a17fe61059c18fb9"
+    },
+    "experiment_people": {
+      "rows": 28739,
+      "sha256": "a693c48cb3b0308c56b1f9162ac15157ce2d366861991d4c7b570d1beab5e4a8"
+    },
+    "incidents": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "audit_log": {
+      "rows": 79,
+      "sha256": "892560e5259253baf9fcc3b2b73cf6b548514b236a1e62db16651e12bcf6a7cd"
+    },
+    "events": [
+      297037,
+      1,
+      297037,
+      "-567847391755195506489"
+    ],
+    "state": {
+      "scenario": "public_01_dev",
+      "sim_minute": 11520,
+      "ts": "2027-01-12T00:00:00+05:30",
+      "end_minute": 11520,
+      "finished": true,
+      "tick_minutes": 15,
+      "credits_remaining": 200.0,
+      "chunks": 394,
+      "last_event_id": 297037
+    },
+    "config_history": {
+      "nw_renewal": [
+        {
+          "version": 1,
+          "actor": "business_default",
+          "changed_dims": [],
+          "applied_at": null,
+          "proposal_id": null,
+          "approval_id": null
+        },
+        {
+          "version": 2,
+          "actor": "controller_approved",
+          "changed_dims": [
+            "voice"
+          ],
+          "applied_at": "2027-01-04T12:45:00+05:30",
+          "proposal_id": "6f8d7ae4008cdb9ce7f20549fc88d18cf6302ea8b03a05af8ed12e3da40f58c4",
+          "approval_id": "apr_00001"
+        },
+        {
+          "version": 3,
+          "actor": "controller_approved",
+          "changed_dims": [
+            "voice"
+          ],
+          "applied_at": "2027-01-07T14:45:00+05:30",
+          "proposal_id": "4d7966855d199395a3566022ad0c6f7fb6c61dcce878f701421d66707fdc5822",
+          "approval_id": "apr_00003"
+        },
+        {
+          "version": 4,
+          "actor": "controller_approved",
+          "changed_dims": [
+            "voice"
+          ],
+          "applied_at": "2027-01-07T17:45:00+05:30",
+          "proposal_id": "d17e9f32c5c4a27f47ee2a365eaa1995752afe48918181a731ba4a638df550d8",
+          "approval_id": "apr_00004"
+        },
+        {
+          "version": 5,
+          "actor": "controller_approved",
+          "changed_dims": [
+            "voice"
+          ],
+          "applied_at": "2027-01-11T10:15:00+05:30",
+          "proposal_id": "594b105eec80adc2e027480c65d8e50daef300eea504a24f5271545e846432de",
+          "approval_id": "apr_00005"
+        }
+      ],
+      "nw_kyc": [
+        {
+          "version": 1,
+          "actor": "business_default",
+          "changed_dims": [],
+          "applied_at": null,
+          "proposal_id": null,
+          "approval_id": null
+        }
+      ],
+      "ks_cancel": [
+        {
+          "version": 1,
+          "actor": "business_default",
+          "changed_dims": [],
+          "applied_at": null,
+          "proposal_id": null,
+          "approval_id": null
+        },
+        {
+          "version": 2,
+          "actor": "controller_auto",
+          "changed_dims": [
+            "voice"
+          ],
+          "applied_at": 0,
+          "proposal_id": "05894205bfd25bb833ddc9537e2742d15fd17e381eace5c219ac40a840b73d25",
+          "approval_id": null
+        },
+        {
+          "version": 3,
+          "actor": "controller_auto",
+          "changed_dims": [
+            "voice"
+          ],
+          "applied_at": "2027-01-07T09:15:00+05:30",
+          "proposal_id": "b0c700e60d3d62a1d317d8671372b3ae9cf820432ade7a15f3debb172c4097c7",
+          "approval_id": null
+        },
+        {
+          "version": 4,
+          "actor": "controller_auto",
+          "changed_dims": [
+            "voice"
+          ],
+          "applied_at": "2027-01-07T09:30:00+05:30",
+          "proposal_id": "49487d886fd0d6b9d78a9d37f60324c44ffa5871f29046e5df18faf38be2a9ee",
+          "approval_id": null
+        },
+        {
+          "version": 5,
+          "actor": "controller_auto",
+          "changed_dims": [
+            "voice"
+          ],
+          "applied_at": "2027-01-10T09:45:00+05:30",
+          "proposal_id": "ead4a24c07f6ef555a0495c3a8350220fb37220d052af02562631b6d2711b6f6",
+          "approval_id": null
+        }
+      ]
+    },
+    "approvals": {
+      "nw_renewal": [
+        {
+          "approval_id": "apr_00001",
+          "proposal_id": "6f8d7ae4008cdb9ce7f20549fc88d18cf6302ea8b03a05af8ed12e3da40f58c4",
+          "workflow_id": "nw_renewal",
+          "status": "applied",
+          "base_version": 1,
+          "changed_dims": [
+            "voice"
+          ],
+          "created_at": "2027-01-04T10:00:00+05:30",
+          "expires_at": "2027-01-05T10:00:00+05:30",
+          "decided_at": "2027-01-04T12:23:00+05:30",
+          "reasons": []
+        },
+        {
+          "approval_id": "apr_00003",
+          "proposal_id": "4d7966855d199395a3566022ad0c6f7fb6c61dcce878f701421d66707fdc5822",
+          "workflow_id": "nw_renewal",
+          "status": "applied",
+          "base_version": 2,
+          "changed_dims": [
+            "voice"
+          ],
+          "created_at": "2027-01-07T13:00:00+05:30",
+          "expires_at": "2027-01-08T13:00:00+05:30",
+          "decided_at": "2027-01-07T14:27:00+05:30",
+          "reasons": []
+        },
+        {
+          "approval_id": "apr_00004",
+          "proposal_id": "d17e9f32c5c4a27f47ee2a365eaa1995752afe48918181a731ba4a638df550d8",
+          "workflow_id": "nw_renewal",
+          "status": "applied",
+          "base_version": 3,
+          "changed_dims": [
+            "voice"
+          ],
+          "created_at": "2027-01-07T14:45:00+05:30",
+          "expires_at": "2027-01-08T14:45:00+05:30",
+          "decided_at": "2027-01-07T17:16:00+05:30",
+          "reasons": []
+        },
+        {
+          "approval_id": "apr_00005",
+          "proposal_id": "594b105eec80adc2e027480c65d8e50daef300eea504a24f5271545e846432de",
+          "workflow_id": "nw_renewal",
+          "status": "applied",
+          "base_version": 4,
+          "changed_dims": [
+            "voice"
+          ],
+          "created_at": "2027-01-10T18:00:00+05:30",
+          "expires_at": "2027-01-11T18:00:00+05:30",
+          "decided_at": "2027-01-11T10:00:00+05:30",
+          "reasons": []
+        }
+      ],
+      "nw_kyc": [
+        {
+          "approval_id": "apr_00002",
+          "proposal_id": "8d8fb72b740a70cbcef274f9457977a471bfa4160f004c64b918f63ecc9e5952",
+          "workflow_id": "nw_kyc",
+          "status": "rejected",
+          "base_version": 1,
+          "changed_dims": [
+            "voice"
+          ],
+          "created_at": "2027-01-04T10:15:00+05:30",
+          "expires_at": "2027-01-05T10:15:00+05:30",
+          "decided_at": "2027-01-04T15:33:00+05:30",
+          "reasons": [
+            "approver declined (judgement call)"
+          ]
+        }
+      ],
+      "ks_cancel": []
+    }
+  },
+  "matches_clean": true,
+  "reference": "crash_recovery.json clean case (18e3e82)",
+  "fresh_checkout": true,
+  "checkout_directory": "runs/delivery_checkout_7c20533"
+}

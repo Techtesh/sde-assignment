@@ -1,0 +1,718 @@
+{
+  "run_id": "delivery02",
+  "as_of": "2027-01-14T00:00:00+05:30",
+  "finished": true,
+  "health": {
+    "last_tick": {
+      "ts": "2027-01-13 18:30:00+00:00",
+      "recorded_at": "2026-11-08 10:25:05.802706+00:00",
+      "metrics": {
+        "ts": "2027-01-14T00:00:00+05:30",
+        "mode": "controller",
+        "finished": true,
+        "loop_seconds": 0.038,
+        "peak_rss_mib": 51.6,
+        "parse_seconds": 0.0,
+        "write_seconds": 0.007,
+        "ingest_seconds": 0.007,
+        "advance_seconds": 0.006,
+        "ingested_events": 0,
+        "decision_seconds": 0.031,
+        "credits_remaining": 194.0,
+        "stream_fetch_seconds": 0.0
+      },
+      "wall_age_seconds": 476.025751
+    },
+    "ingested_event_id": 324326,
+    "event_backlog_at_last_observation": 0,
+    "chunk_checkpoints": [
+      {
+        "kind": "history",
+        "last_chunk": 0,
+        "chunks": 1
+      },
+      {
+        "kind": "events",
+        "last_chunk": 492,
+        "chunks": 492
+      }
+    ],
+    "new_proposals_last_sim_hour": 0,
+    "decision_transitions_last_sim_hour": []
+  },
+  "recent_metrics": [
+    {
+      "workflow_id": "ks_cancel",
+      "cohort_id": "default",
+      "dials": 4800,
+      "connected": 829,
+      "engaged": 419,
+      "hallucinations": 19,
+      "pickup_rate": 0.17270833333333332,
+      "engagement_rate": 0.5054282267792521
+    },
+    {
+      "workflow_id": "nw_kyc",
+      "cohort_id": "default",
+      "dials": 2000,
+      "connected": 498,
+      "engaged": 303,
+      "hallucinations": 8,
+      "pickup_rate": 0.249,
+      "engagement_rate": 0.608433734939759
+    },
+    {
+      "workflow_id": "nw_renewal",
+      "cohort_id": "default",
+      "dials": 3600,
+      "connected": 943,
+      "engaged": 522,
+      "hallucinations": 11,
+      "pickup_rate": 0.2619444444444444,
+      "engagement_rate": 0.5535524920466596
+    }
+  ],
+  "cohorts": [
+    {
+      "workflow_id": "ks_cancel",
+      "version": 10,
+      "cohorts": []
+    },
+    {
+      "workflow_id": "nw_kyc",
+      "version": 3,
+      "cohorts": []
+    },
+    {
+      "workflow_id": "nw_renewal",
+      "version": 5,
+      "cohorts": []
+    }
+  ],
+  "experiments": [
+    {
+      "workflow_id": "ks_cancel",
+      "experiment_id": "ae2302949ed2af5abf9ddaa63540b93cc0c6265b976315d68e93eec20df7d7b6",
+      "status": "interrupted",
+      "proposal_id": "2f80af21bf376031f0b79b9c9312633c11001f55c73742bb4dd32011bbe74ace",
+      "cohort_id": "default",
+      "plan": {
+        "alpha": 0.025,
+        "control": "V1",
+        "objective": {
+          "primary": "engagement_rate",
+          "guardrail": {
+            "pickup_rate_max_drop": 0.02
+          }
+        },
+        "challenger": "V2",
+        "start_rule": "first observed call in the authorized config epoch and cohort",
+        "min_primary": 384,
+        "trial_index": 1,
+        "trial_share": 0.2,
+        "minimum_lift": 0.08,
+        "rule_version": "clustered-fixed-v1",
+        "winner_share": 0.8,
+        "duration_hours": 72,
+        "decay_interval_hours": 24,
+        "safety_interval_hours": 1,
+        "minimum_people_per_arm": 100
+      },
+      "result": null,
+      "checkpoint": "2027-01-07T03:35:00+00:00"
+    },
+    {
+      "workflow_id": "ks_cancel",
+      "experiment_id": "dde30f21be2213fb38847b3d4b9398821985612e6512e0e741b02df59e1f1019",
+      "status": "interrupted",
+      "proposal_id": "c8f63fcae2dba0842279209ecc5d8840fc8e2d643f7c461732faa8e623722eaa",
+      "cohort_id": "default",
+      "plan": {
+        "alpha": 0.008333333333333333,
+        "control": "V1",
+        "objective": {
+          "primary": "engagement_rate",
+          "guardrail": {
+            "pickup_rate_max_drop": 0.02
+          }
+        },
+        "challenger": "V2",
+        "start_rule": "first observed call in the authorized config epoch and cohort",
+        "min_primary": 512,
+        "trial_index": 2,
+        "trial_share": 0.2,
+        "minimum_lift": 0.08,
+        "rule_version": "clustered-fixed-v1",
+        "winner_share": 0.8,
+        "duration_hours": 72,
+        "decay_interval_hours": 24,
+        "safety_interval_hours": 1,
+        "minimum_people_per_arm": 100
+      },
+      "result": null,
+      "checkpoint": "2027-01-09T10:38:00+00:00"
+    },
+    {
+      "workflow_id": "ks_cancel",
+      "experiment_id": "d87f20d559f6eae566bc742ec6b30f0b35460df6813ce608eb171b59cbcb4347",
+      "status": "inconclusive",
+      "proposal_id": "c71dfc689ef972e8cfe20115af10bf9b5c023771a509362a4135fa0a797c246f",
+      "cohort_id": "default",
+      "plan": {
+        "alpha": 0.004166666666666667,
+        "control": "V1",
+        "objective": {
+          "primary": "engagement_rate",
+          "guardrail": {
+            "pickup_rate_max_drop": 0.02
+          }
+        },
+        "challenger": "V3",
+        "start_rule": "first observed call in the authorized config epoch and cohort",
+        "min_primary": 592,
+        "trial_index": 3,
+        "trial_share": 0.2,
+        "minimum_lift": 0.08,
+        "rule_version": "clustered-fixed-v1",
+        "winner_share": 0.8,
+        "duration_hours": 72,
+        "decay_interval_hours": 24,
+        "safety_interval_hours": 1,
+        "minimum_people_per_arm": 100
+      },
+      "result": {
+        "method": "person-clustered delta-method normal intervals",
+        "primary": {
+          "arms": {
+            "V1": {
+              "rate": 0.49930907415937353,
+              "people": 2012,
+              "successes": 1084,
+              "observations": 2171
+            },
+            "V3": {
+              "rate": 0.5,
+              "people": 539,
+              "successes": 274,
+              "observations": 548
+            }
+          },
+          "alpha": 0.004166666666666667,
+          "lower": -0.06288547704276386,
+          "upper": 0.06426732872401679,
+          "metric": "engagement_rate",
+          "clusters": 6320,
+          "difference": 0.0006909258406264662,
+          "standard_error": 0.024097878369385865
+        },
+        "decision": "inconclusive",
+        "guardrail": {
+          "arms": {
+            "V1": {
+              "rate": 0.18673662480646827,
+              "people": 5856,
+              "successes": 2171,
+              "observations": 11626
+            },
+            "V3": {
+              "rate": 0.1906750173973556,
+              "people": 2369,
+              "successes": 548,
+              "observations": 2874
+            }
+          },
+          "alpha": 0.004166666666666667,
+          "lower": -0.01758692549684508,
+          "upper": 0.025463710678619727,
+          "metric": "pickup_rate",
+          "clusters": 6320,
+          "difference": 0.003938392590887324,
+          "standard_error": 0.00815891547201759
+        },
+        "enough_evidence": false,
+        "guardrail_margin": 0.02
+      },
+      "checkpoint": "2027-01-11T03:40:00+00:00"
+    },
+    {
+      "workflow_id": "nw_kyc",
+      "experiment_id": "392cf1cd93335878f84101b58bd278184a37c16e883be9cf2e114b4d785222cc",
+      "status": "inconclusive",
+      "proposal_id": "7b996459bedd1850207dfff97067004a8d906db22f2dce9bf3bda7c405e17f00",
+      "cohort_id": "default",
+      "plan": {
+        "alpha": 0.025,
+        "control": "V1",
+        "objective": {
+          "primary": "pickup_rate",
+          "guardrail": {
+            "engagement_rate_max_drop": 0.02
+          }
+        },
+        "challenger": "V2",
+        "start_rule": "first observed call in the authorized config epoch and cohort",
+        "min_primary": 297,
+        "trial_index": 1,
+        "trial_share": 0.2,
+        "minimum_lift": 0.08,
+        "rule_version": "clustered-fixed-v1",
+        "winner_share": 0.8,
+        "duration_hours": 72,
+        "decay_interval_hours": 24,
+        "safety_interval_hours": 1,
+        "minimum_people_per_arm": 100
+      },
+      "result": {
+        "method": "person-clustered delta-method normal intervals",
+        "primary": {
+          "arms": {
+            "V1": {
+              "rate": 0.24738571855392888,
+              "people": 1769,
+              "successes": 828,
+              "observations": 3347
+            },
+            "V2": {
+              "rate": 0.2213209733487833,
+              "people": 710,
+              "successes": 191,
+              "observations": 863
+            }
+          },
+          "alpha": 0.025,
+          "lower": -0.057480301150902025,
+          "upper": 0.00535081074061089,
+          "metric": "pickup_rate",
+          "clusters": 1950,
+          "difference": -0.026064745205145567,
+          "standard_error": 0.01602863940029427
+        },
+        "decision": "inconclusive",
+        "guardrail": {
+          "arms": {
+            "V1": {
+              "rate": 0.6195652173913043,
+              "people": 750,
+              "successes": 513,
+              "observations": 828
+            },
+            "V2": {
+              "rate": 0.5759162303664922,
+              "people": 184,
+              "successes": 110,
+              "observations": 191
+            }
+          },
+          "alpha": 0.025,
+          "lower": -0.12161450793531699,
+          "upper": 0.03431653388569274,
+          "metric": "engagement_rate",
+          "clusters": 1950,
+          "difference": -0.043648987024812125,
+          "standard_error": 0.03977905794468009
+        },
+        "enough_evidence": true,
+        "guardrail_margin": 0.02
+      },
+      "checkpoint": "2027-01-08T04:30:00+00:00"
+    },
+    {
+      "workflow_id": "nw_renewal",
+      "experiment_id": "5b0f3642f59cb65d496647c98e6d79e22f300d92f123695e1c46127dbad53297",
+      "status": "inconclusive",
+      "proposal_id": "4677c7ab606c53a12efaf49d06d7f0d314f90ced68e95ab9aac82d1a896b90cd",
+      "cohort_id": "default",
+      "plan": {
+        "alpha": 0.025,
+        "control": "V1",
+        "objective": {
+          "primary": "engagement_rate",
+          "guardrail": {
+            "pickup_rate_max_drop": 0.02
+          }
+        },
+        "challenger": "V2",
+        "start_rule": "first observed call in the authorized config epoch and cohort",
+        "min_primary": 379,
+        "trial_index": 1,
+        "trial_share": 0.2,
+        "minimum_lift": 0.08,
+        "rule_version": "clustered-fixed-v1",
+        "winner_share": 0.8,
+        "duration_hours": 72,
+        "decay_interval_hours": 24,
+        "safety_interval_hours": 1,
+        "minimum_people_per_arm": 100
+      },
+      "result": {
+        "method": "person-clustered delta-method normal intervals",
+        "primary": {
+          "arms": {
+            "V1": {
+              "rate": 0.5458694659972615,
+              "people": 1935,
+              "successes": 1196,
+              "observations": 2191
+            },
+            "V2": {
+              "rate": 0.5596491228070175,
+              "people": 553,
+              "successes": 319,
+              "observations": 570
+            }
+          },
+          "alpha": 0.025,
+          "lower": -0.03180996879505121,
+          "upper": 0.05936928241456324,
+          "metric": "engagement_rate",
+          "clusters": 4750,
+          "difference": 0.013779656809756013,
+          "standard_error": 0.02326044047972942
+        },
+        "decision": "inconclusive",
+        "guardrail": {
+          "arms": {
+            "V1": {
+              "rate": 0.25285631852279283,
+              "people": 4316,
+              "successes": 2191,
+              "observations": 8665
+            },
+            "V2": {
+              "rate": 0.2579185520361991,
+              "people": 1821,
+              "successes": 570,
+              "observations": 2210
+            }
+          },
+          "alpha": 0.025,
+          "lower": -0.014914589451018506,
+          "upper": 0.025039056477831084,
+          "metric": "pickup_rate",
+          "clusters": 4750,
+          "difference": 0.005062233513406289,
+          "standard_error": 0.01019244390305099
+        },
+        "enough_evidence": true,
+        "guardrail_margin": 0.02
+      },
+      "checkpoint": "2027-01-07T08:10:00+00:00"
+    },
+    {
+      "workflow_id": "nw_renewal",
+      "experiment_id": "930f2aa6ab0b5ed2c519174cddf542588f240b9462bbf1c8c14b2fcd8f1d11cf",
+      "status": "interrupted",
+      "proposal_id": "469a122e6cd4d6e12379c50c963fd6dc91d2f28cab91ddb046cb0d4e0b6a8639",
+      "cohort_id": "default",
+      "plan": {
+        "alpha": 0.008333333333333333,
+        "control": "V1",
+        "objective": {
+          "primary": "engagement_rate",
+          "guardrail": {
+            "pickup_rate_max_drop": 0.02
+          }
+        },
+        "challenger": "V3",
+        "start_rule": "first observed call in the authorized config epoch and cohort",
+        "min_primary": 506,
+        "trial_index": 2,
+        "trial_share": 0.2,
+        "minimum_lift": 0.08,
+        "rule_version": "clustered-fixed-v1",
+        "winner_share": 0.8,
+        "duration_hours": 72,
+        "decay_interval_hours": 24,
+        "safety_interval_hours": 1,
+        "minimum_people_per_arm": 100
+      },
+      "result": null,
+      "checkpoint": "2027-01-11T04:49:00+00:00"
+    }
+  ],
+  "pending_proposals": [],
+  "recent_changes": [
+    {
+      "workflow_id": "ks_cancel",
+      "ts": "2027-01-11 03:45:00+00:00",
+      "actor": "controller_auto",
+      "evidence": {
+        "ts": "2027-01-11T09:15:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_auto",
+        "version": 10,
+        "event_id": 286695,
+        "approval_id": null,
+        "proposal_id": "c71dfc689ef972e8cfe20115af10bf9b5c023771a509362a4135fa0a797c246f",
+        "workflow_id": "ks_cancel",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    },
+    {
+      "workflow_id": "nw_renewal",
+      "ts": "2027-01-09 09:30:00+00:00",
+      "actor": "supervisor",
+      "evidence": {
+        "ts": "2027-01-09T15:00:00+05:30",
+        "type": "config_changed",
+        "actor": "supervisor",
+        "version": 5,
+        "event_id": 264313,
+        "approval_id": null,
+        "proposal_id": null,
+        "workflow_id": "nw_renewal",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    },
+    {
+      "workflow_id": "nw_kyc",
+      "ts": "2027-01-08 08:30:00+00:00",
+      "actor": "controller_approved",
+      "evidence": {
+        "ts": "2027-01-08T14:00:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_approved",
+        "version": 3,
+        "event_id": 249709,
+        "approval_id": "apr_00007",
+        "proposal_id": "7b996459bedd1850207dfff97067004a8d906db22f2dce9bf3bda7c405e17f00",
+        "workflow_id": "nw_kyc",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    },
+    {
+      "workflow_id": "nw_renewal",
+      "ts": "2027-01-08 04:45:00+00:00",
+      "actor": "controller_approved",
+      "evidence": {
+        "ts": "2027-01-08T10:15:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_approved",
+        "version": 4,
+        "event_id": 246332,
+        "approval_id": "apr_00005",
+        "proposal_id": "469a122e6cd4d6e12379c50c963fd6dc91d2f28cab91ddb046cb0d4e0b6a8639",
+        "workflow_id": "nw_renewal",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    },
+    {
+      "workflow_id": "ks_cancel",
+      "ts": "2027-01-07 15:30:00+00:00",
+      "actor": "controller_auto",
+      "evidence": {
+        "ts": "2027-01-07T21:00:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_auto",
+        "version": 9,
+        "event_id": 242102,
+        "approval_id": null,
+        "proposal_id": "2bec5ead3d748ec4e6860974e080667c27b38d38abf8cd1521d747a347598c4b",
+        "workflow_id": "ks_cancel",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    },
+    {
+      "workflow_id": "ks_cancel",
+      "ts": "2027-01-07 13:00:00+00:00",
+      "actor": "controller_approved",
+      "evidence": {
+        "ts": "2027-01-07T18:30:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_approved",
+        "version": 8,
+        "event_id": 240051,
+        "approval_id": "apr_00006",
+        "proposal_id": "2eeb329011a86dfeb997a6695f28320e178abe8a9f0a350c58698666fdf7430c",
+        "workflow_id": "ks_cancel",
+        "changed_dims": [
+          "prompt_version"
+        ]
+      }
+    },
+    {
+      "workflow_id": "nw_renewal",
+      "ts": "2027-01-07 10:45:00+00:00",
+      "actor": "controller_approved",
+      "evidence": {
+        "ts": "2027-01-07T16:15:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_approved",
+        "version": 3,
+        "event_id": 238024,
+        "approval_id": "apr_00004",
+        "proposal_id": "4677c7ab606c53a12efaf49d06d7f0d314f90ced68e95ab9aac82d1a896b90cd",
+        "workflow_id": "nw_renewal",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    },
+    {
+      "workflow_id": "ks_cancel",
+      "ts": "2027-01-07 06:15:00+00:00",
+      "actor": "controller_auto",
+      "evidence": {
+        "ts": "2027-01-07T11:45:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_auto",
+        "version": 7,
+        "event_id": 233972,
+        "approval_id": null,
+        "proposal_id": "c8f63fcae2dba0842279209ecc5d8840fc8e2d643f7c461732faa8e623722eaa",
+        "workflow_id": "ks_cancel",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    },
+    {
+      "workflow_id": "ks_cancel",
+      "ts": "2027-01-07 06:00:00+00:00",
+      "actor": "supervisor",
+      "evidence": {
+        "ts": "2027-01-07T11:30:00+05:30",
+        "type": "config_changed",
+        "actor": "supervisor",
+        "version": 6,
+        "event_id": 233746,
+        "approval_id": null,
+        "proposal_id": null,
+        "workflow_id": "ks_cancel",
+        "changed_dims": [
+          "prompt_version"
+        ]
+      }
+    },
+    {
+      "workflow_id": "ks_cancel",
+      "ts": "2027-01-06 10:30:00+00:00",
+      "actor": "controller_auto",
+      "evidence": {
+        "ts": "2027-01-06T16:00:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_auto",
+        "version": 5,
+        "event_id": 224092,
+        "approval_id": null,
+        "proposal_id": "fdc0c7ddc2235d19398e4b1ea4dd53f603403e3965c76052072eb9397f40bfd0",
+        "workflow_id": "ks_cancel",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    },
+    {
+      "workflow_id": "ks_cancel",
+      "ts": "2027-01-06 08:45:00+00:00",
+      "actor": "controller_auto",
+      "evidence": {
+        "ts": "2027-01-06T14:15:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_auto",
+        "version": 4,
+        "event_id": 222516,
+        "approval_id": null,
+        "proposal_id": "2f80af21bf376031f0b79b9c9312633c11001f55c73742bb4dd32011bbe74ace",
+        "workflow_id": "ks_cancel",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    },
+    {
+      "workflow_id": "ks_cancel",
+      "ts": "2027-01-06 08:45:00+00:00",
+      "actor": "controller_approved",
+      "evidence": {
+        "ts": "2027-01-06T14:15:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_approved",
+        "version": 3,
+        "event_id": 222515,
+        "approval_id": "apr_00003",
+        "proposal_id": "4e80c760d455a2cc206c4db4f9b475c754a3e2028072226e90932ce7bdc71e44",
+        "workflow_id": "ks_cancel",
+        "changed_dims": [
+          "caller_id"
+        ]
+      }
+    },
+    {
+      "workflow_id": "nw_kyc",
+      "ts": "2027-01-04 09:15:00+00:00",
+      "actor": "controller_approved",
+      "evidence": {
+        "ts": "2027-01-04T14:45:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_approved",
+        "version": 2,
+        "event_id": 195557,
+        "approval_id": "apr_00002",
+        "proposal_id": "c73db1d5c5d5ce1087cd3b2400e91b951b0073d903b0a0aae05b85fa3f5d9b1e",
+        "workflow_id": "nw_kyc",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    },
+    {
+      "workflow_id": "nw_renewal",
+      "ts": "2027-01-04 08:00:00+00:00",
+      "actor": "controller_approved",
+      "evidence": {
+        "ts": "2027-01-04T13:30:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_approved",
+        "version": 2,
+        "event_id": 194430,
+        "approval_id": "apr_00001",
+        "proposal_id": "07777f9e1f76b1ec13eba34a69c01c26aaac985920c4ac07e8398b4f27c8684a",
+        "workflow_id": "nw_renewal",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    },
+    {
+      "workflow_id": "ks_cancel",
+      "ts": "2027-01-03 18:30:00+00:00",
+      "actor": "controller_auto",
+      "evidence": {
+        "ts": "2027-01-04T00:00:00+05:30",
+        "type": "config_changed",
+        "actor": "controller_auto",
+        "version": 2,
+        "event_id": 187275,
+        "approval_id": null,
+        "proposal_id": "fbdc3f4a5e4d0d7a0215689403823057aae43da9a03a9a549ae90a29d940289c",
+        "workflow_id": "ks_cancel",
+        "changed_dims": [
+          "voice"
+        ]
+      }
+    }
+  ],
+  "open_incidents": [],
+  "credits": {
+    "remaining_at_last_observation": 194.0,
+    "by_workflow": [
+      {
+        "workflow_id": "ks_cancel",
+        "status": "succeeded",
+        "credits": 6
+      }
+    ]
+  },
+  "alerts": []
+}

@@ -117,5 +117,6 @@ FROM external_actions WHERE run_id = 'your-run' ORDER BY id;
 
 See [step 3 verification](../reports/INCIDENTS.md) and the public scenario reports for measured outcomes.
 [Voice experiments](./EXPERIMENTS.md) now run after incident handling, with incident priority and
-separate epochs. The load benchmark and final submission remain separate work. The
+separate epochs. See [delivery evidence](../reports/DELIVERY.md) and
+[load measurements](../reports/LOAD.md) for the completed verification. The
 `sequential_testing` option remains false and rejects activation until implemented.
