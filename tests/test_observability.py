@@ -90,3 +90,25 @@ def test_credit_reserve_crash_loop_and_chunk_lag_are_visible(database):
         assert any("starts" in alert["reason"] and alert["severity"]=="page" for alert in view["alerts"])
         assert any("reserve" in alert["reason"] and alert["severity"]=="ticket" for alert in view["alerts"])
         assert "Backlog: 3 chunks" in status_text(view)
+
+
+def test_exact_version_disambiguates_changes_at_the_same_timestamp(database):
+    events=sample_events()
+    events.append({**events[2],"event_id":4,"version":3,"actor":"controller_auto"})
+    with open_store(database) as store:
+        store.observe_state({"ts":TS,"last_event_id":4,"scenario":"test"})
+        store.ingest(chunk(kind="events",count=4),events)
+        assert audit(store.db,"test","wf",TS)["change"]["evidence"]["version"]==3
+        assert audit(store.db,"test","wf",TS,2)["change"]["actor"]=="supervisor"
+
+
+def test_apply_deadline_survives_intent_response_replacement(database):
+    with open_store(database) as store:
+        store.observe_state({"ts":TS,"last_event_id":0,"scenario":"test","finished":False})
+        body={"proposal_id":"p","workflow_id":"wf","base_version":1,"proposed_config":{},"change_summary":"repair"}
+        store.save_proposal(body,"d",{},"approval",TS,True,None,{})
+        store.transition("p","approved",TS,{"apply_by":"2027-01-04T09:15:00+05:30"},"apr")
+        store.transition("p","applying",TS,{"request":{"approval_id":"apr"}})
+        view=status(store.db,"test")
+        assert view["pending_proposals"][0]["apply_by"]=="2027-01-04T09:15:00+05:30"
+        assert any("apply_by" in item["reason"] for item in view["alerts"])

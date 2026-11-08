@@ -24,9 +24,11 @@ def status(db, run_id: str) -> dict:
                           "data->'evaluation' AS result,data->'checkpoint' AS checkpoint FROM experiments "
                           "WHERE run_id=%s ORDER BY workflow_id,created_at", (run_id,))
     proposals = rows(db, "SELECT workflow_id,proposal_id,status,route,urgent,approval_id,created_at, "
-                        "body->>'change_summary' AS summary,body->'impact_score' AS impact_score,response->>'apply_by' AS apply_by, "
+                        "body->>'change_summary' AS summary,body->'impact_score' AS impact_score, "
+                        "COALESCE(response->>'apply_by',(SELECT a.evidence->>'apply_by' FROM proposal_audit a "
+                        "WHERE a.run_id=p.run_id AND a.proposal_id=p.proposal_id AND a.status='approved' ORDER BY a.id DESC LIMIT 1)) AS apply_by, "
                         "EXTRACT(epoch FROM %s::timestamptz-created_at)::float/3600 AS age_sim_hours "
-                        "FROM proposals WHERE run_id=%s AND status IN "
+                        "FROM proposals p WHERE run_id=%s AND status IN "
                         "('planned','submitted','pending','approved','applying') "
                         "ORDER BY urgent DESC,created_at,workflow_id", (now, run_id))
     decisions = rows(db, "SELECT source,count(*) AS transitions FROM ( "
@@ -92,7 +94,7 @@ def status(db, run_id: str) -> dict:
                                "reason": "Incident open for over six simulated hours",
                                "action": "Inspect incident evidence, current config and pending permission; escalate a safety issue"})
         for proposal in proposals:
-            if proposal["apply_by"] and now and (datetime.fromisoformat(proposal["apply_by"])-datetime.fromisoformat(now)).total_seconds()<=1800:
+            if proposal["status"] in {"approved","applying"} and proposal["apply_by"] and now and (datetime.fromisoformat(proposal["apply_by"])-datetime.fromisoformat(now)).total_seconds()<=1800:
                 alerts.append({"severity": "page", "workflow_id": proposal["workflow_id"], "proposal_id": proposal["proposal_id"],
                                "reason": "Approved proposal is within 30 simulated minutes of apply_by or overdue",
                                "action": "Reconcile approval and current base version immediately; do not bypass expiry or governance"})
@@ -116,7 +118,7 @@ def status_text(view: dict) -> str:
     lines = [f"Run {view['run_id']} | {view['as_of']} | {'finished' if view['finished'] else 'running'}",
              f"Backlog: {health['chunk_backlog_at_last_observation']} chunks / {health['event_backlog_at_last_observation']} event IDs (last observed)",
              f"Last tick: {tick['metrics'].get('loop_seconds','?') if tick else '?'}s | new proposals/hour: {health['new_proposals_last_sim_hour']} | credits left: {view['credits']['remaining_at_last_observation']}",
-             "WORKFLOW           EXPERIMENT       PENDING (age h)       INCIDENT          CREDITS spent/uncertain"]
+             "WORKFLOW           EXPERIMENT / ARMS             PENDING (age h)       INCIDENT          CREDITS spent/uncertain"]
     names = {row["workflow_id"] for key in ("cohorts", "experiments", "pending_proposals", "open_incidents") for row in view[key]}
     for name in sorted(names):
         trials = [r for r in view["experiments"] if r["workflow_id"]==name]
@@ -124,19 +126,24 @@ def status_text(view: dict) -> str:
         incidents = [r["status"] for r in view["open_incidents"] if r["workflow_id"]==name]
         spent = sum(r["credits"] for r in view["credits"]["by_workflow"] if r["workflow_id"]==name and r["status"]=="succeeded")
         uncertain = sum(r["credits"] for r in view["credits"]["by_workflow"] if r["workflow_id"]==name and r["status"]=="uncertain")
-        lines.append(f"{name:<18} {(trials[-1]['status'] if trials else '-'):<16} {','.join(pending) or '-':<21} {','.join(incidents) or '-':<17} {spent}/{uncertain}")
+        latest = trials[-1] if trials else None
+        plan = (latest.get("plan") or {}) if latest else {}
+        label = f"{latest['status']}:{plan.get('control','?')}>{plan.get('challenger','?')}" if latest else "-"
+        lines.append(f"{name:<18} {label:<29} {','.join(pending) or '-':<21} {','.join(incidents) or '-':<17} {spent}/{uncertain}")
     lines.append(f"Recent changes: {len(view['recent_changes'])} shown by --json; experiments: {len(view['experiments'])}")
     lines.extend(f"{alert['severity'].upper()}: {alert.get('reason',alert.get('message'))}; {alert['action']}" for alert in view["alerts"])
     return "\n".join(lines)
 
 
-def audit(db, run_id: str, workflow_id: str, at: str) -> dict:
+def audit(db, run_id: str, workflow_id: str, at: str, version: int | None = None) -> dict:
     instant = datetime.fromisoformat(at)
     if instant.tzinfo is None:
         raise ValueError("--at must include a timezone")
+    if version is not None and version < 1:
+        raise ValueError("--version must be positive")
     changes = rows(db, "SELECT ts,actor,evidence FROM audit_log WHERE run_id=%s AND workflow_id=%s "
-                       "AND kind='config_changed' AND ts<=%s ORDER BY ts DESC,event_id DESC LIMIT 1",
-                   (run_id, workflow_id, instant))
+                       "AND kind='config_changed' AND ts<=%s AND (%s::integer IS NULL OR (evidence->>'version')::integer=%s) "
+                       "ORDER BY ts DESC,event_id DESC LIMIT 1", (run_id, workflow_id, instant, version, version))
     if not changes:
         raise ValueError("No recorded config change at or before this timestamp")
     change = changes[0]

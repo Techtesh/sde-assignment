@@ -98,6 +98,7 @@ def main() -> None:
     parser.add_argument("--workflow", help="workflow to inspect with audit")
     parser.add_argument("--at", help="audit the latest change at or before this ISO timestamp")
     parser.add_argument("--json", action="store_true", help="print the detailed status as JSON")
+    parser.add_argument("--version", type=int, help="select an exact config version for audit when changes share a timestamp")
     parser.add_argument("--run-id", default=os.environ.get("SIM_RUN_ID", "default"))
     parser.add_argument("--sequential-testing", action="store_true", default=False)
     parser.add_argument("--observe-only", action="store_true", help="ingest and reconcile without config writes or paid calls")
@@ -116,7 +117,7 @@ def main() -> None:
                 parser.error("audit requires --workflow and --at")
             with connection.transaction():
                 connection.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY")
-                result = status(connection, args.run_id) if args.command == "status" else audit(connection, args.run_id, args.workflow, args.at)
+                result = status(connection, args.run_id) if args.command == "status" else audit(connection, args.run_id, args.workflow, args.at, args.version)
             print(status_text(result) if args.command == "status" and not args.json else json.dumps(result, default=str, indent=2))
             return
         if not args.url:
