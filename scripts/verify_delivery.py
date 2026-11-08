@@ -200,10 +200,10 @@ def main():
             admin.execute(sql.SQL("CREATE SCHEMA {}").format(sql.Identifier(schema)))
             result = run_case(args, case, schema, dsn)
             if results:
-                assert result["signature"] == results[0]["signature"], f"Recovery differs from clean run: {case}"
-                result["matches_clean"] = True
+                result["matches_clean"] = result["signature"] == results[0]["signature"]
             results.append(result)
             Path(args.out).write_text(json.dumps(results, indent=2, default=str)+"\n", encoding="utf-8")
+            assert result.get("matches_clean",True), f"Recovery differs from clean run: {case}; both signatures retained in {args.out}"
             print(json.dumps({"case": case, "finished": True, "matches_clean": result.get("matches_clean"),
                               "wall_seconds": result["timings"]["wall_seconds"], "schema": schema}), flush=True)
 

@@ -40,19 +40,22 @@ class IncidentEngine:
             wid = workflow["workflow_id"]
             recent = self.store.window_metrics(wid, start.isoformat(), end.isoformat())
             baseline = self.store.window_metrics(wid, start.isoformat(), end.isoformat(), history=True)
+            prompt_epoch = self.store.prompt_alarm_epoch(wid)
             for alarm in alarms(recent, baseline, current["config"]):
-                window = self.store.detection_window(wid, current["version"], start.isoformat(), alarm)
+                epoch = prompt_epoch if alarm["kind"] == "prompt_version" else current["version"]
+                window = self.store.detection_window(wid, epoch, start.isoformat(), alarm)
                 if window["streak"] < 2:
                     continue
                 if self.store.incident_held_for_review(wid, alarm["kind"], alarm["subject"]):
                     continue
-                identity = [wid, current["version"], alarm["kind"], alarm["subject"], window["episode_start"].isoformat()]
+                identity = [wid, epoch, alarm["kind"], alarm["subject"], window["episode_start"].isoformat()]
                 iid = hashlib.sha256(json.dumps(identity).encode()).hexdigest()
                 if self.store.incident(iid):
                     continue
                 if any(row["workflow_id"] == wid and row["kind"] == alarm["kind"] for row in self.store.open_incidents()):
                     continue
-                data = {"alarm": alarm, "epoch": current["version"], "rule_version": "hourly-v2", "validation_n": VALIDATION_N,
+                data = {"alarm": alarm, "epoch": epoch, "config_version_at_detection": current["version"],
+                        "rule_version": "hourly-prompt-v3", "validation_n": VALIDATION_N,
                         "credit_limit": INCIDENT_CREDIT_LIMIT,
                         "window_start": start.isoformat(), "window_end": end.isoformat(),
                         "proposal_attempt": 0, "candidate_index": 0, "expected_prompt": current["config"]["prompt_version"],

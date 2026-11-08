@@ -238,3 +238,12 @@ def test_invalid_call_evidence_is_rejected(change):
     event = {**sample_events()[1], **change}
     with pytest.raises(ValueError):
         event_row("test", 0, True, event)
+
+
+def test_misspelled_event_type_rolls_back_instead_of_corrupting_counts(database):
+    events=sample_events()
+    events[1]["type"]="ball"
+    with open_store(database) as store:
+        with pytest.raises(ValueError,match="Unsupported event type"):
+            store.ingest(chunk(),events)
+        assert table_count(store,"events")==0 and store.last_chunk("history")==-1

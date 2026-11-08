@@ -21,6 +21,8 @@ def event_row(run_id: str, chunk: int, history: bool, event: dict) -> tuple:
     timestamp = datetime.fromisoformat(event["ts"])
     if timestamp.tzinfo is None:
         raise ValueError("Event timestamp must include a timezone")
+    if event["type"] not in {"lead", "call", "campaign_created", "config_changed", "approval_decided"}:
+        raise ValueError(f"Unsupported event type: {event['type']}")
     if event["type"] == "lead":
         for field in ("lead_id", "person_id", "campaign_id"):
             if not isinstance(event.get(field), str) or not event[field]:
@@ -341,6 +343,14 @@ class Store:
                 ).fetchone()
         return {"change": {**change, "ts": change["ts"].isoformat()} if change else None,
                 "previous": previous, "interpretation": "latest observed prompt edit; temporal attribution, not proof of causation"}
+
+    def prompt_alarm_epoch(self, workflow_id: str) -> int:
+        return self.db.execute(
+            "SELECT COALESCE(max((evidence->>'version')::integer),1) FROM audit_log "
+            "WHERE run_id=%s AND workflow_id=%s AND kind='config_changed' "
+            "AND (evidence->'changed_dims' ? 'prompt_version' OR evidence->'changed_dims' ? 'cohorts')",
+            (self.run_id, workflow_id),
+        ).fetchone()[0]
 
     def uncertain_paid_action(self, incident_id: str) -> bool:
         return bool(self.db.execute("SELECT 1 FROM external_actions WHERE run_id=%s AND incident_id=%s "

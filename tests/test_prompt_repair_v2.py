@@ -71,3 +71,24 @@ def test_denied_prompt_proposal_moves_to_a_new_candidate(database,status):
         tick(world,api,engine,12)
         assert len([p for p in world.paid if p[0]=="/llm/suggest-fixes"])==1
         assert world.config["prompt_version"]=="P2"
+
+
+def test_voice_edit_does_not_reset_an_unchanged_prompt_alarm(database):
+    with setup(database) as (world, store, api, governance, engine):
+        seed_alarm(store,"prompt_version")
+        tick(world,api,engine,10)
+        world.version += 1
+        tick(world,api,engine,11)
+        assert len(store.open_incidents())==1
+
+
+def test_cohort_definition_change_resets_prompt_alarm_population(database):
+    with setup(database) as (world, store, api, governance, engine):
+        seed_alarm(store,"prompt_version")
+        tick(world,api,engine,10)
+        world.version += 1
+        world.config["cohorts"]=[{"id":"en","where":{"lang":["en"]}}]
+        store.ingest({"chunk":0,"kind":"events","events":1},[{"event_id":1,"type":"config_changed",
+                     "ts":world.now,"workflow_id":"wf","version":2,"actor":"supervisor","changed_dims":["cohorts"]}])
+        tick(world,api,engine,11)
+        assert store.open_incidents()==[]
