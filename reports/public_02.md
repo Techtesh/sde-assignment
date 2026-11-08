@@ -4,10 +4,10 @@
 
 | workflow | conclusion rate | Δ | pickup | Δ | engagement | Δ | engagement gap captured | hallucinated calls (base) |
 |---|---|---|---|---|---|---|---|---|
-| ks_cancel | 0.280 | +13.0% | 0.201 | +9.6% | 0.485 | +1.7% | 25% | 122 (330) |
-| nw_kyc | 0.379 | +1.1% | 0.244 | +0.8% | 0.596 | +0.6% | 5% | 43 (31) |
-| nw_renewal | 0.429 | +0.6% | 0.261 | -0.5% | 0.553 | +1.0% | 6% | 61 (55) |
-| ALL | 0.351 | +4.9% | 0.230 | +3.6% | 0.534 | +0.8% | 13% | 226 (416) |
+| ks_cancel | 0.283 | +14.4% | 0.202 | +9.8% | 0.489 | +2.6% | 29% | 77 (330) |
+| nw_kyc | 0.386 | +3.1% | 0.240 | -0.6% | 0.615 | +3.8% | 5% | 28 (31) |
+| nw_renewal | 0.429 | +0.5% | 0.261 | -0.2% | 0.551 | +0.6% | 6% | 52 (55) |
+| ALL | 0.353 | +5.8% | 0.230 | +3.6% | 0.539 | +1.6% | 15% | 157 (416) |
 
 ## Changes applied by the controller
 
@@ -21,13 +21,13 @@
 - ks_cancel v5 (controller_auto) dims=['voice'] engageΔ=+0.000 didΔ=+0.000 → **neutral**
 - ks_cancel v7 (controller_auto) dims=['voice'] engageΔ=+0.000 didΔ=+0.000 → **neutral**
 - nw_renewal v3 (controller_approved) dims=['voice'] engageΔ=-0.005 didΔ=+0.000 → **neutral**
-- ks_cancel v8 (controller_auto) dims=['voice'] engageΔ=+0.000 didΔ=+0.000 → **neutral**
+- ks_cancel v8 (controller_approved) dims=['prompt_version'] engageΔ=+0.102 didΔ=+0.000 → **beneficial**
 - nw_renewal v4 (controller_approved) dims=['voice'] engageΔ=+0.000 didΔ=+0.000 → **neutral**
+- ks_cancel v9 (controller_auto) dims=['voice'] engageΔ=+0.005 didΔ=+0.000 → **neutral**
 - nw_kyc v3 (controller_approved) dims=['voice'] engageΔ=-0.008 didΔ=+0.000 → **neutral**
-- ks_cancel v9 (controller_auto) dims=['voice'] engageΔ=+0.000 didΔ=+0.000 → **neutral**
-- ks_cancel v10 (controller_approved) dims=['prompt_version'] engageΔ=+0.102 didΔ=+0.000 → **beneficial**
-- ks_cancel v11 (controller_auto) dims=['voice'] engageΔ=+0.006 didΔ=+0.000 → **neutral**
-- ks_cancel v12 (controller_auto) dims=['voice'] engageΔ=-0.005 didΔ=+0.000 → **neutral**
+- ks_cancel v10 (controller_auto) dims=['voice'] engageΔ=-0.005 didΔ=+0.000 → **neutral**
+- ks_cancel v11 (controller_auto) dims=['voice'] engageΔ=+0.000 didΔ=+0.000 → **neutral**
+- ks_cancel v12 (controller_auto) dims=['voice'] engageΔ=+0.000 didΔ=+0.000 → **neutral**
 
 ## Governance
 
@@ -75,7 +75,7 @@
     "type": "supervisor_edit",
     "workflow": "ks_cancel",
     "at": "D3 11:30",
-    "mttr_minutes": 1650,
+    "mttr_minutes": 345,
     "fixed_by": "controller_approved"
   },
   {

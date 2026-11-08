@@ -89,7 +89,10 @@ def test_step1_against_real_http_events_and_restart():
             env={**os.environ, "DATABASE_URL": dsn}, capture_output=True, text=True, timeout=30,
         )
         assert result.returncode == 0, result.stderr
-        tick = json.loads(result.stdout.splitlines()[0])
+        ticks = [entry for line in result.stdout.splitlines()
+                 if (entry := json.loads(line)).get("mode") == "controller"]
+        assert len(ticks) == 1
+        tick = ticks[0]
         assert tick["finished"] and tick["ingested_events"] == 0
         assert db.execute("SELECT count(*) FROM events WHERE run_id=%s", (run_id,)).fetchone()[0] == event_count
         assert get("/sim/state") == state

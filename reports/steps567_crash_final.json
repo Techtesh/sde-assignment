@@ -1,113 +1,126 @@
 [
   {
     "case": "clean",
-    "schema": "steps567_finaldev_clean_67f3af",
-    "run_id": "steps567_finaldev",
-    "directory": "runs\\steps567_finaldev_clean_2c4cda5e",
-    "application_commit": "3d837791701fa74cc39193adf6040cf77dc7dc01",
+    "schema": "steps567_finalinc_clean_f9ef0b",
+    "run_id": "steps567_finalinc",
+    "directory": "runs/final_verify_b7441e2f/checkout/runs/steps567_finalinc_clean_55d0d465",
+    "application_commit": "63d8c6ef546e810b859593336451d32b160c6ca4",
+    "application_tree_sha256": "0ec34f8e51b4c039079c05ede3ca325d9670105e5b764cf1a7e74a2741eb3285",
+    "application_controller_tree": "e1fa57c374547592749eaf78b08d0e301e34ecf5",
+    "application_dirty": false,
     "profiled": false,
     "exit": 0,
     "timings": {
-      "ticks": 769,
-      "simulated_days": 8.0,
-      "wall_seconds": 152.368,
-      "wall_seconds_per_day_including_bootstrap": 19.046,
+      "ticks": 961,
+      "simulated_days": 10.0,
+      "wall_seconds": 167.155,
+      "wall_seconds_per_day_including_bootstrap": 16.715,
       "bootstrap": {
         "mode": "controller",
         "ts": "2027-01-04T00:00:00+05:30",
         "finished": false,
-        "ingested_events": 187400,
-        "ingest_seconds": 17.283,
-        "stream_fetch_seconds": 0.402,
-        "parse_seconds": 1.438,
-        "write_seconds": 15.443,
-        "decision_seconds": 18.689,
+        "ingested_events": 187274,
+        "ingest_seconds": 17.6,
+        "stream_fetch_seconds": 2.047,
+        "parse_seconds": 1.616,
+        "write_seconds": 13.936,
+        "decision_seconds": 9.86,
         "advance_seconds": 0.0,
-        "loop_seconds": 35.972,
+        "loop_seconds": 27.46,
         "credits_remaining": 200.0,
-        "peak_rss_mib": 48.52
+        "peak_rss_mib": 47.77
       },
       "totals": {
-        "ingest_seconds": 47.802,
-        "stream_fetch_seconds": 4.427,
-        "parse_seconds": 2.329,
-        "write_seconds": 41.054,
-        "decision_seconds": 93.965,
-        "advance_seconds": 6.953,
-        "loop_seconds": 141.789
+        "ingest_seconds": 51.908,
+        "stream_fetch_seconds": 6.954,
+        "parse_seconds": 2.69,
+        "write_seconds": 42.308,
+        "decision_seconds": 103.609,
+        "advance_seconds": 8.538,
+        "loop_seconds": 155.538
       },
-      "live_events": 109640,
-      "live_ingest_events_per_second": 3592.5,
-      "max_decision_lag_bound_seconds": 0.543,
+      "live_events": 137054,
+      "live_ingest_events_per_second": 3994.8,
+      "max_decision_lag_bound_seconds": 10.653,
       "live_wall_seconds_by_simulated_day": {
-        "0": 15.071,
-        "1": 12.972,
-        "2": 13.734,
-        "3": 17.222,
-        "4": 14.962,
-        "5": 13.724,
-        "6": 12.671,
-        "7": 12.414
+        "0": 13.232,
+        "1": 12.701,
+        "2": 24.234,
+        "3": 14.276,
+        "4": 13.123,
+        "5": 13.448,
+        "6": 13.318,
+        "7": 10.412,
+        "8": 10.816,
+        "9": 11.056
       },
-      "peak_controller_rss_mib": 52.54
+      "peak_controller_rss_mib": 51.68
     },
     "signature": {
       "ingested_chunks": {
-        "rows": 394,
-        "sha256": "6b58513299f7e7529202dbefa90ba2d9e9e674603da84119b1fb73fe1e1daa8d"
+        "rows": 492,
+        "sha256": "5b501680db5ed337a0b6ec7c658714326a9a2654bc8793af23daa27e6d483fdc"
       },
       "hourly_metrics": {
-        "rows": 3882,
-        "sha256": "bf63d05a7802149047dd6d89767f92747db1b495ff1c167522456256ec13598c"
+        "rows": 4142,
+        "sha256": "1e24a21a667b75256128dee061c40d90a9a77f9121393b5d32903ff69986a5c8"
       },
       "proposals": {
-        "rows": 10,
-        "sha256": "058cac48c27fa30a54ad4c39c50e75455bb33b933470dbcae8060633da208aaa"
+        "rows": 15,
+        "sha256": "f6dfcc34b8a8b866e685b1edff0692ef5aa550295b7e9b4836dfc55998984aec"
       },
       "experiments": {
-        "rows": 5,
-        "sha256": "e8ab490443e56bda4766a9f637624fe22c3c15f3a1524a8950d1b7f53b4c877a"
+        "rows": 7,
+        "sha256": "0fc860cef7cdadc3702a7d8c43babb4601f41e4ec33bb04121dfc89076c32b70"
       },
       "experiment_people": {
-        "rows": 31078,
-        "sha256": "ff491f50354f3d3a4d0300d1248492d9856bdf158c8386d99eb104cd1fd7133a"
+        "rows": 38630,
+        "sha256": "91225fcfb706e2d45b85ee518965ec7e541ce43e8c19faf7f1065f583f06bc34"
       },
       "incidents": {
-        "rows": 0,
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        "rows": 2,
+        "sha256": "ad100486eb82f27b813f90c58168f79fc0c094c0187519939efdd778ab866d00"
       },
       "audit_log": {
-        "rows": 82,
-        "sha256": "18eaf60d3b960e135a635208a556a3edc4fb0e572ff33d2a185917d8cc57d21a"
+        "rows": 96,
+        "sha256": "c56bc1f394c74b7ed259aeb0c2aa956b309be967cd80b3ea9ae29fcc45f089f7"
+      },
+      "detection_windows": {
+        "rows": 775,
+        "sha256": "57c52d625d3d09bdc27639f342a4d3be19f9ca0cd1b5180fc5726c4a498dbb22"
       },
       "campaigns": {
-        "rows": 66,
-        "fingerprint": "58114119866981825431"
+        "rows": 72,
+        "fingerprint": "-22874037047344732349"
       },
       "concluded_leads": {
-        "rows": 30476,
-        "fingerprint": "637878241394019290055"
+        "rows": 32869,
+        "fingerprint": "-563593811833197910683"
       },
       "person_metrics": {
-        "rows": 83200,
-        "fingerprint": "390710962457889537706"
+        "rows": 104000,
+        "fingerprint": "-1335718672027887676455"
+      },
+      "qa_metrics": {
+        "rows": 3387,
+        "fingerprint": "-164546506131966888471"
       },
       "events": [
-        297040,
+        324328,
         1,
-        297040,
-        "-1601363396620356570045"
+        324328,
+        "-1485679544854842847207"
       ],
       "state": {
-        "scenario": "public_01_dev",
-        "sim_minute": 11520,
-        "ts": "2027-01-12T00:00:00+05:30",
-        "end_minute": 11520,
+        "scenario": "public_02_incidents",
+        "sim_minute": 14400,
+        "ts": "2027-01-14T00:00:00+05:30",
+        "end_minute": 14400,
         "finished": true,
         "tick_minutes": 15,
-        "credits_remaining": 200.0,
-        "chunks": 394,
-        "last_event_id": 297040
+        "credits_remaining": 195.0,
+        "chunks": 492,
+        "last_event_id": 324328
       },
       "config_history": {
         "nw_renewal": [
@@ -125,8 +138,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-04T14:00:00+05:30",
-            "proposal_id": "e97a894db2e73605054d3e4827cccfa9c41dfa504fd96abf58454faf06b03415",
+            "applied_at": "2027-01-04T13:15:00+05:30",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
             "approval_id": "apr_00001"
           },
           {
@@ -135,9 +148,9 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T16:15:00+05:30",
-            "proposal_id": "a65936b147a634b372357b6919e3b1ff8986cc26b7023169a00371587de205f3",
-            "approval_id": "apr_00003"
+            "applied_at": "2027-01-07T14:30:00+05:30",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
+            "approval_id": "apr_00004"
           },
           {
             "version": 4,
@@ -145,19 +158,19 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T19:15:00+05:30",
-            "proposal_id": "3d6393514a75572aab7af5bff1f840cddc826e4992525747b448e8c45c547d11",
-            "approval_id": "apr_00004"
+            "applied_at": "2027-01-07T17:15:00+05:30",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
+            "approval_id": "apr_00005"
           },
           {
             "version": 5,
-            "actor": "controller_approved",
+            "actor": "supervisor",
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-11T13:00:00+05:30",
-            "proposal_id": "b8bbb69010be1e9975ee02ff17e039f695e85c023ff75523eaa3cf090e989375",
-            "approval_id": "apr_00006"
+            "applied_at": "2027-01-09T15:00:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
           }
         ],
         "nw_kyc": [
@@ -175,8 +188,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-04T16:15:00+05:30",
-            "proposal_id": "88c3bc6e71f89f4c2717449f5bd5c968b3c3a817274680aca577a86a85ee16a7",
+            "applied_at": "2027-01-04T16:00:00+05:30",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
             "approval_id": "apr_00002"
           },
           {
@@ -185,9 +198,9 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-08T13:00:00+05:30",
-            "proposal_id": "04dcd4230f754f58cdbb1c18eaddcf3318c629741db026463b329155ce403740",
-            "approval_id": "apr_00005"
+            "applied_at": "2027-01-08T12:30:00+05:30",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
+            "approval_id": "apr_00007"
           }
         ],
         "ks_cancel": [
@@ -206,18 +219,18 @@
               "voice"
             ],
             "applied_at": 0,
-            "proposal_id": "fcc112616b792be0daf2d7e28cb76cfcf8aa12290b136b39f4fee0d7409f0ac9",
+            "proposal_id": "b8a07651f1971fc6d8fb15929a5ad3233e77b283231527b757fcc25eba0c25c6",
             "approval_id": null
           },
           {
             "version": 3,
-            "actor": "controller_auto",
+            "actor": "controller_approved",
             "changed_dims": [
-              "voice"
+              "caller_id"
             ],
-            "applied_at": "2027-01-07T09:15:00+05:30",
-            "proposal_id": "dfceaeefe5ae98579aae5f0010351779ef282bd8fe613e3d8cc674d712f9a4d5",
-            "approval_id": null
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "approval_id": "apr_00003"
           },
           {
             "version": 4,
@@ -225,8 +238,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T09:30:00+05:30",
-            "proposal_id": "5f0d4e103433bf0c842acc292862151be7b74a47e88bc86b69fb0c8a27734b0d",
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "1896c078caa1bb8ec352007168b2de3b64381215da1660b3ce8a3a4d4d15d2f0",
             "approval_id": null
           },
           {
@@ -235,8 +248,78 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-10T09:45:00+05:30",
-            "proposal_id": "1b13b65d966fd04d83d4df422e46193648df79b4bd4810f88da46e55c078bc08",
+            "applied_at": "2027-01-06T16:00:00+05:30",
+            "proposal_id": "74b8a0840af1bdc7406e18e7feedf3e92d38603854b30a5007403a627e8a93f0",
+            "approval_id": null
+          },
+          {
+            "version": 6,
+            "actor": "supervisor",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-07T11:30:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 7,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T11:45:00+05:30",
+            "proposal_id": "90cd0244584e22f1643d1b69cc379b692345d36dfc921b9d338b81ebd09cab84",
+            "approval_id": null
+          },
+          {
+            "version": 8,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-07T17:15:00+05:30",
+            "proposal_id": "0d868ca3bf4b824234044b1fad282c757cc7369f1c844b3c8ff6413b3e1019af",
+            "approval_id": "apr_00006"
+          },
+          {
+            "version": 9,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T20:00:00+05:30",
+            "proposal_id": "43886a1a920644bdf6028d3037c5d05db405fe979ec72356787068d9c14c0526",
+            "approval_id": null
+          },
+          {
+            "version": 10,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-10T20:15:00+05:30",
+            "proposal_id": "21a2ee3d04c1d3844dad882fe4b582cacadd9c1ed806a11b61328db6d586dbe0",
+            "approval_id": null
+          },
+          {
+            "version": 11,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-10T20:30:00+05:30",
+            "proposal_id": "6b1e27c5c34f3cbdb016c997b5354f68791c5547643ec6b922a5b9f842206a94",
+            "approval_id": null
+          },
+          {
+            "version": 12,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-13T20:45:00+05:30",
+            "proposal_id": "5df64fd291c5be124cc86f8f17d7e81517087825362224f2c0927529d6d01548",
             "approval_id": null
           }
         ]
@@ -245,7 +328,7 @@
         "nw_renewal": [
           {
             "approval_id": "apr_00001",
-            "proposal_id": "e97a894db2e73605054d3e4827cccfa9c41dfa504fd96abf58454faf06b03415",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 1,
@@ -254,56 +337,42 @@
             ],
             "created_at": "2027-01-04T10:00:00+05:30",
             "expires_at": "2027-01-05T10:00:00+05:30",
-            "decided_at": "2027-01-04T13:42:00+05:30",
+            "decided_at": "2027-01-04T12:52:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00003",
-            "proposal_id": "a65936b147a634b372357b6919e3b1ff8986cc26b7023169a00371587de205f3",
+            "approval_id": "apr_00004",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 2,
             "changed_dims": [
               "voice"
             ],
-            "created_at": "2027-01-07T14:15:00+05:30",
-            "expires_at": "2027-01-08T14:15:00+05:30",
-            "decided_at": "2027-01-07T15:53:00+05:30",
+            "created_at": "2027-01-07T13:30:00+05:30",
+            "expires_at": "2027-01-08T13:30:00+05:30",
+            "decided_at": "2027-01-07T14:01:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00004",
-            "proposal_id": "3d6393514a75572aab7af5bff1f840cddc826e4992525747b448e8c45c547d11",
+            "approval_id": "apr_00005",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 3,
             "changed_dims": [
               "voice"
             ],
-            "created_at": "2027-01-07T16:15:00+05:30",
-            "expires_at": "2027-01-08T16:15:00+05:30",
-            "decided_at": "2027-01-07T18:58:00+05:30",
-            "reasons": []
-          },
-          {
-            "approval_id": "apr_00006",
-            "proposal_id": "b8bbb69010be1e9975ee02ff17e039f695e85c023ff75523eaa3cf090e989375",
-            "workflow_id": "nw_renewal",
-            "status": "applied",
-            "base_version": 4,
-            "changed_dims": [
-              "voice"
-            ],
-            "created_at": "2027-01-11T10:00:00+05:30",
-            "expires_at": "2027-01-12T10:00:00+05:30",
-            "decided_at": "2027-01-11T12:40:00+05:30",
+            "created_at": "2027-01-07T14:30:00+05:30",
+            "expires_at": "2027-01-08T14:30:00+05:30",
+            "decided_at": "2027-01-07T16:54:00+05:30",
             "reasons": []
           }
         ],
         "nw_kyc": [
           {
             "approval_id": "apr_00002",
-            "proposal_id": "88c3bc6e71f89f4c2717449f5bd5c968b3c3a817274680aca577a86a85ee16a7",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
             "workflow_id": "nw_kyc",
             "status": "applied",
             "base_version": 1,
@@ -312,12 +381,12 @@
             ],
             "created_at": "2027-01-04T10:15:00+05:30",
             "expires_at": "2027-01-05T10:15:00+05:30",
-            "decided_at": "2027-01-04T15:53:00+05:30",
+            "decided_at": "2027-01-04T15:41:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00005",
-            "proposal_id": "04dcd4230f754f58cdbb1c18eaddcf3318c629741db026463b329155ce403740",
+            "approval_id": "apr_00007",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
             "workflow_id": "nw_kyc",
             "status": "applied",
             "base_version": 2,
@@ -326,123 +395,424 @@
             ],
             "created_at": "2027-01-08T10:15:00+05:30",
             "expires_at": "2027-01-09T10:15:00+05:30",
-            "decided_at": "2027-01-08T12:33:00+05:30",
+            "decided_at": "2027-01-08T12:07:00+05:30",
             "reasons": []
           }
         ],
-        "ks_cancel": []
-      }
-    }
+        "ks_cancel": [
+          {
+            "approval_id": "apr_00003",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "caller_id"
+            ],
+            "created_at": "2027-01-06T12:00:00+05:30",
+            "expires_at": "2027-01-07T00:00:00+05:30",
+            "decided_at": "2027-01-06T13:31:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00006",
+            "proposal_id": "0d868ca3bf4b824234044b1fad282c757cc7369f1c844b3c8ff6413b3e1019af",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 7,
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "created_at": "2027-01-07T16:00:00+05:30",
+            "expires_at": "2027-01-08T04:00:00+05:30",
+            "decided_at": "2027-01-07T16:57:00+05:30",
+            "reasons": []
+          }
+        ]
+      },
+      "workflows": [
+        {
+          "workflow_id": "nw_renewal",
+          "tenant_id": "northwind_life",
+          "use_case": "life-insurance renewal premium reminder (persistency)",
+          "languages": [
+            "hi",
+            "en",
+            "ta"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 300,
+          "cadence": [
+            2,
+            3,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 1100,
+            "at_hour": 8,
+            "returning_share": 0.4
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "primary": "engagement_rate",
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": true,
+              "allowed_dims": [
+                "schedule",
+                "caller_id"
+              ],
+              "max_shift": 0.5
+            },
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              30,
+              240
+            ],
+            "proposal_ttl_hours": 24,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 3,
+            "base_reject_rate": 0.1,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 5
+        },
+        {
+          "workflow_id": "nw_kyc",
+          "tenant_id": "northwind_life",
+          "use_case": "KYC document reminder for new policies",
+          "languages": [
+            "en",
+            "hi"
+          ],
+          "dialling_window": [
+            10,
+            20
+          ],
+          "dials_per_hour": 200,
+          "cadence": [
+            2,
+            2,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 700,
+            "at_hour": 8,
+            "returning_share": 0.2
+          },
+          "mid_flight": "next_campaign_only",
+          "objective": {
+            "primary": "pickup_rate",
+            "guardrail": {
+              "engagement_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2"
+            ],
+            "voice": [
+              "V1",
+              "V2"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": false,
+              "allowed_dims": [],
+              "max_shift": 0
+            },
+            "approver_hours": [
+              10,
+              18
+            ],
+            "approver_latency_minutes": [
+              60,
+              480
+            ],
+            "proposal_ttl_hours": 24,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 2,
+            "base_reject_rate": 0.15,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "ks_cancel",
+          "tenant_id": "kestrel_finance",
+          "use_case": "consumer-loan cancellation reconfirmation",
+          "languages": [
+            "hi",
+            "en",
+            "kn"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 400,
+          "cadence": [
+            2,
+            2,
+            2
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 1500,
+            "at_hour": 8,
+            "returning_share": 0.3
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "primary": "engagement_rate",
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P2",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P2": "Supervisor edit: adds payment-urgency language and benefit claims",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": true,
+              "allowed_dims": [
+                "schedule",
+                "caller_id",
+                "welcome_message",
+                "voice"
+              ],
+              "max_shift": 0.2
+            },
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              20,
+              120
+            ],
+            "proposal_ttl_hours": 12,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 4,
+            "base_reject_rate": 0.05,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 12
+        }
+      ]
+    },
+    "verification_started_at": "2026-11-08T20:16:31.693897+00:00",
+    "verification_finished_at": "2026-11-08T21:16:37.716059+00:00"
   },
   {
     "case": "mid_ingest",
-    "schema": "steps567_finaldev_mid_ingest_7135fd",
-    "run_id": "steps567_finaldev",
-    "directory": "runs\\steps567_finaldev_mid_ingest_04606fc4",
-    "application_commit": "3d837791701fa74cc39193adf6040cf77dc7dc01",
+    "schema": "steps567_finalinc_mid_ingest_b6e33e",
+    "run_id": "steps567_finalinc",
+    "directory": "runs/final_verify_b7441e2f/checkout/runs/steps567_finalinc_mid_ingest_9320da5f",
+    "application_commit": "63d8c6ef546e810b859593336451d32b160c6ca4",
+    "application_tree_sha256": "0ec34f8e51b4c039079c05ede3ca325d9670105e5b764cf1a7e74a2741eb3285",
+    "application_controller_tree": "e1fa57c374547592749eaf78b08d0e301e34ecf5",
+    "application_dirty": false,
     "profiled": false,
     "exit": 0,
     "timings": {
-      "ticks": 769,
-      "simulated_days": 8.0,
-      "wall_seconds": 140.758,
-      "wall_seconds_per_day_including_bootstrap": 17.595,
+      "ticks": 961,
+      "simulated_days": 10.0,
+      "wall_seconds": 180.685,
+      "wall_seconds_per_day_including_bootstrap": 18.069,
       "bootstrap": {
         "mode": "controller",
         "ts": "2027-01-04T00:00:00+05:30",
         "finished": false,
-        "ingested_events": 187400,
-        "ingest_seconds": 16.483,
-        "stream_fetch_seconds": 0.359,
-        "parse_seconds": 1.538,
-        "write_seconds": 14.586,
-        "decision_seconds": 12.582,
+        "ingested_events": 187274,
+        "ingest_seconds": 18.014,
+        "stream_fetch_seconds": 1.666,
+        "parse_seconds": 1.559,
+        "write_seconds": 14.789,
+        "decision_seconds": 9.834,
         "advance_seconds": 0.0,
-        "loop_seconds": 29.066,
+        "loop_seconds": 27.848,
         "credits_remaining": 200.0,
-        "peak_rss_mib": 48.41
+        "peak_rss_mib": 47.04
       },
       "totals": {
-        "ingest_seconds": 44.674,
-        "stream_fetch_seconds": 4.32,
-        "parse_seconds": 2.426,
-        "write_seconds": 37.946,
-        "decision_seconds": 86.449,
-        "advance_seconds": 6.853,
-        "loop_seconds": 131.136
+        "ingest_seconds": 56.918,
+        "stream_fetch_seconds": 6.804,
+        "parse_seconds": 2.688,
+        "write_seconds": 47.443,
+        "decision_seconds": 111.438,
+        "advance_seconds": 8.88,
+        "loop_seconds": 168.355
       },
-      "live_events": 109640,
-      "live_ingest_events_per_second": 3889.2,
-      "max_decision_lag_bound_seconds": 0.438,
+      "live_events": 137054,
+      "live_ingest_events_per_second": 3522.9,
+      "max_decision_lag_bound_seconds": 10.556,
       "live_wall_seconds_by_simulated_day": {
-        "0": 14.381,
-        "1": 15.137,
-        "2": 14.356,
-        "3": 14.232,
-        "4": 13.503,
-        "5": 14.255,
-        "6": 12.515,
-        "7": 10.544
+        "0": 13.23,
+        "1": 13.447,
+        "2": 23.969,
+        "3": 13.879,
+        "4": 12.773,
+        "5": 13.491,
+        "6": 17.634,
+        "7": 12.932,
+        "8": 13.122,
+        "9": 14.91
       },
-      "peak_controller_rss_mib": 52.52
+      "peak_controller_rss_mib": 50.4
     },
     "signature": {
       "ingested_chunks": {
-        "rows": 394,
-        "sha256": "6b58513299f7e7529202dbefa90ba2d9e9e674603da84119b1fb73fe1e1daa8d"
+        "rows": 492,
+        "sha256": "5b501680db5ed337a0b6ec7c658714326a9a2654bc8793af23daa27e6d483fdc"
       },
       "hourly_metrics": {
-        "rows": 3882,
-        "sha256": "bf63d05a7802149047dd6d89767f92747db1b495ff1c167522456256ec13598c"
+        "rows": 4142,
+        "sha256": "1e24a21a667b75256128dee061c40d90a9a77f9121393b5d32903ff69986a5c8"
       },
       "proposals": {
-        "rows": 10,
-        "sha256": "058cac48c27fa30a54ad4c39c50e75455bb33b933470dbcae8060633da208aaa"
+        "rows": 15,
+        "sha256": "f6dfcc34b8a8b866e685b1edff0692ef5aa550295b7e9b4836dfc55998984aec"
       },
       "experiments": {
-        "rows": 5,
-        "sha256": "e8ab490443e56bda4766a9f637624fe22c3c15f3a1524a8950d1b7f53b4c877a"
+        "rows": 7,
+        "sha256": "0fc860cef7cdadc3702a7d8c43babb4601f41e4ec33bb04121dfc89076c32b70"
       },
       "experiment_people": {
-        "rows": 31078,
-        "sha256": "ff491f50354f3d3a4d0300d1248492d9856bdf158c8386d99eb104cd1fd7133a"
+        "rows": 38630,
+        "sha256": "91225fcfb706e2d45b85ee518965ec7e541ce43e8c19faf7f1065f583f06bc34"
       },
       "incidents": {
-        "rows": 0,
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        "rows": 2,
+        "sha256": "ad100486eb82f27b813f90c58168f79fc0c094c0187519939efdd778ab866d00"
       },
       "audit_log": {
-        "rows": 82,
-        "sha256": "18eaf60d3b960e135a635208a556a3edc4fb0e572ff33d2a185917d8cc57d21a"
+        "rows": 96,
+        "sha256": "c56bc1f394c74b7ed259aeb0c2aa956b309be967cd80b3ea9ae29fcc45f089f7"
+      },
+      "detection_windows": {
+        "rows": 775,
+        "sha256": "57c52d625d3d09bdc27639f342a4d3be19f9ca0cd1b5180fc5726c4a498dbb22"
       },
       "campaigns": {
-        "rows": 66,
-        "fingerprint": "58114119866981825431"
+        "rows": 72,
+        "fingerprint": "-22874037047344732349"
       },
       "concluded_leads": {
-        "rows": 30476,
-        "fingerprint": "637878241394019290055"
+        "rows": 32869,
+        "fingerprint": "-563593811833197910683"
       },
       "person_metrics": {
-        "rows": 83200,
-        "fingerprint": "390710962457889537706"
+        "rows": 104000,
+        "fingerprint": "-1335718672027887676455"
+      },
+      "qa_metrics": {
+        "rows": 3387,
+        "fingerprint": "-164546506131966888471"
       },
       "events": [
-        297040,
+        324328,
         1,
-        297040,
-        "-1601363396620356570045"
+        324328,
+        "-1485679544854842847207"
       ],
       "state": {
-        "scenario": "public_01_dev",
-        "sim_minute": 11520,
-        "ts": "2027-01-12T00:00:00+05:30",
-        "end_minute": 11520,
+        "scenario": "public_02_incidents",
+        "sim_minute": 14400,
+        "ts": "2027-01-14T00:00:00+05:30",
+        "end_minute": 14400,
         "finished": true,
         "tick_minutes": 15,
-        "credits_remaining": 200.0,
-        "chunks": 394,
-        "last_event_id": 297040
+        "credits_remaining": 195.0,
+        "chunks": 492,
+        "last_event_id": 324328
       },
       "config_history": {
         "nw_renewal": [
@@ -460,8 +830,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-04T14:00:00+05:30",
-            "proposal_id": "e97a894db2e73605054d3e4827cccfa9c41dfa504fd96abf58454faf06b03415",
+            "applied_at": "2027-01-04T13:15:00+05:30",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
             "approval_id": "apr_00001"
           },
           {
@@ -470,9 +840,9 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T16:15:00+05:30",
-            "proposal_id": "a65936b147a634b372357b6919e3b1ff8986cc26b7023169a00371587de205f3",
-            "approval_id": "apr_00003"
+            "applied_at": "2027-01-07T14:30:00+05:30",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
+            "approval_id": "apr_00004"
           },
           {
             "version": 4,
@@ -480,19 +850,19 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T19:15:00+05:30",
-            "proposal_id": "3d6393514a75572aab7af5bff1f840cddc826e4992525747b448e8c45c547d11",
-            "approval_id": "apr_00004"
+            "applied_at": "2027-01-07T17:15:00+05:30",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
+            "approval_id": "apr_00005"
           },
           {
             "version": 5,
-            "actor": "controller_approved",
+            "actor": "supervisor",
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-11T13:00:00+05:30",
-            "proposal_id": "b8bbb69010be1e9975ee02ff17e039f695e85c023ff75523eaa3cf090e989375",
-            "approval_id": "apr_00006"
+            "applied_at": "2027-01-09T15:00:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
           }
         ],
         "nw_kyc": [
@@ -510,8 +880,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-04T16:15:00+05:30",
-            "proposal_id": "88c3bc6e71f89f4c2717449f5bd5c968b3c3a817274680aca577a86a85ee16a7",
+            "applied_at": "2027-01-04T16:00:00+05:30",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
             "approval_id": "apr_00002"
           },
           {
@@ -520,9 +890,9 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-08T13:00:00+05:30",
-            "proposal_id": "04dcd4230f754f58cdbb1c18eaddcf3318c629741db026463b329155ce403740",
-            "approval_id": "apr_00005"
+            "applied_at": "2027-01-08T12:30:00+05:30",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
+            "approval_id": "apr_00007"
           }
         ],
         "ks_cancel": [
@@ -541,18 +911,18 @@
               "voice"
             ],
             "applied_at": 0,
-            "proposal_id": "fcc112616b792be0daf2d7e28cb76cfcf8aa12290b136b39f4fee0d7409f0ac9",
+            "proposal_id": "b8a07651f1971fc6d8fb15929a5ad3233e77b283231527b757fcc25eba0c25c6",
             "approval_id": null
           },
           {
             "version": 3,
-            "actor": "controller_auto",
+            "actor": "controller_approved",
             "changed_dims": [
-              "voice"
+              "caller_id"
             ],
-            "applied_at": "2027-01-07T09:15:00+05:30",
-            "proposal_id": "dfceaeefe5ae98579aae5f0010351779ef282bd8fe613e3d8cc674d712f9a4d5",
-            "approval_id": null
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "approval_id": "apr_00003"
           },
           {
             "version": 4,
@@ -560,8 +930,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T09:30:00+05:30",
-            "proposal_id": "5f0d4e103433bf0c842acc292862151be7b74a47e88bc86b69fb0c8a27734b0d",
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "1896c078caa1bb8ec352007168b2de3b64381215da1660b3ce8a3a4d4d15d2f0",
             "approval_id": null
           },
           {
@@ -570,8 +940,78 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-10T09:45:00+05:30",
-            "proposal_id": "1b13b65d966fd04d83d4df422e46193648df79b4bd4810f88da46e55c078bc08",
+            "applied_at": "2027-01-06T16:00:00+05:30",
+            "proposal_id": "74b8a0840af1bdc7406e18e7feedf3e92d38603854b30a5007403a627e8a93f0",
+            "approval_id": null
+          },
+          {
+            "version": 6,
+            "actor": "supervisor",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-07T11:30:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 7,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T11:45:00+05:30",
+            "proposal_id": "90cd0244584e22f1643d1b69cc379b692345d36dfc921b9d338b81ebd09cab84",
+            "approval_id": null
+          },
+          {
+            "version": 8,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-07T17:15:00+05:30",
+            "proposal_id": "0d868ca3bf4b824234044b1fad282c757cc7369f1c844b3c8ff6413b3e1019af",
+            "approval_id": "apr_00006"
+          },
+          {
+            "version": 9,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T20:00:00+05:30",
+            "proposal_id": "43886a1a920644bdf6028d3037c5d05db405fe979ec72356787068d9c14c0526",
+            "approval_id": null
+          },
+          {
+            "version": 10,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-10T20:15:00+05:30",
+            "proposal_id": "21a2ee3d04c1d3844dad882fe4b582cacadd9c1ed806a11b61328db6d586dbe0",
+            "approval_id": null
+          },
+          {
+            "version": 11,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-10T20:30:00+05:30",
+            "proposal_id": "6b1e27c5c34f3cbdb016c997b5354f68791c5547643ec6b922a5b9f842206a94",
+            "approval_id": null
+          },
+          {
+            "version": 12,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-13T20:45:00+05:30",
+            "proposal_id": "5df64fd291c5be124cc86f8f17d7e81517087825362224f2c0927529d6d01548",
             "approval_id": null
           }
         ]
@@ -580,7 +1020,7 @@
         "nw_renewal": [
           {
             "approval_id": "apr_00001",
-            "proposal_id": "e97a894db2e73605054d3e4827cccfa9c41dfa504fd96abf58454faf06b03415",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 1,
@@ -589,56 +1029,42 @@
             ],
             "created_at": "2027-01-04T10:00:00+05:30",
             "expires_at": "2027-01-05T10:00:00+05:30",
-            "decided_at": "2027-01-04T13:42:00+05:30",
+            "decided_at": "2027-01-04T12:52:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00003",
-            "proposal_id": "a65936b147a634b372357b6919e3b1ff8986cc26b7023169a00371587de205f3",
+            "approval_id": "apr_00004",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 2,
             "changed_dims": [
               "voice"
             ],
-            "created_at": "2027-01-07T14:15:00+05:30",
-            "expires_at": "2027-01-08T14:15:00+05:30",
-            "decided_at": "2027-01-07T15:53:00+05:30",
+            "created_at": "2027-01-07T13:30:00+05:30",
+            "expires_at": "2027-01-08T13:30:00+05:30",
+            "decided_at": "2027-01-07T14:01:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00004",
-            "proposal_id": "3d6393514a75572aab7af5bff1f840cddc826e4992525747b448e8c45c547d11",
+            "approval_id": "apr_00005",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 3,
             "changed_dims": [
               "voice"
             ],
-            "created_at": "2027-01-07T16:15:00+05:30",
-            "expires_at": "2027-01-08T16:15:00+05:30",
-            "decided_at": "2027-01-07T18:58:00+05:30",
-            "reasons": []
-          },
-          {
-            "approval_id": "apr_00006",
-            "proposal_id": "b8bbb69010be1e9975ee02ff17e039f695e85c023ff75523eaa3cf090e989375",
-            "workflow_id": "nw_renewal",
-            "status": "applied",
-            "base_version": 4,
-            "changed_dims": [
-              "voice"
-            ],
-            "created_at": "2027-01-11T10:00:00+05:30",
-            "expires_at": "2027-01-12T10:00:00+05:30",
-            "decided_at": "2027-01-11T12:40:00+05:30",
+            "created_at": "2027-01-07T14:30:00+05:30",
+            "expires_at": "2027-01-08T14:30:00+05:30",
+            "decided_at": "2027-01-07T16:54:00+05:30",
             "reasons": []
           }
         ],
         "nw_kyc": [
           {
             "approval_id": "apr_00002",
-            "proposal_id": "88c3bc6e71f89f4c2717449f5bd5c968b3c3a817274680aca577a86a85ee16a7",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
             "workflow_id": "nw_kyc",
             "status": "applied",
             "base_version": 1,
@@ -647,12 +1073,12 @@
             ],
             "created_at": "2027-01-04T10:15:00+05:30",
             "expires_at": "2027-01-05T10:15:00+05:30",
-            "decided_at": "2027-01-04T15:53:00+05:30",
+            "decided_at": "2027-01-04T15:41:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00005",
-            "proposal_id": "04dcd4230f754f58cdbb1c18eaddcf3318c629741db026463b329155ce403740",
+            "approval_id": "apr_00007",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
             "workflow_id": "nw_kyc",
             "status": "applied",
             "base_version": 2,
@@ -661,123 +1087,424 @@
             ],
             "created_at": "2027-01-08T10:15:00+05:30",
             "expires_at": "2027-01-09T10:15:00+05:30",
-            "decided_at": "2027-01-08T12:33:00+05:30",
+            "decided_at": "2027-01-08T12:07:00+05:30",
             "reasons": []
           }
         ],
-        "ks_cancel": []
-      }
+        "ks_cancel": [
+          {
+            "approval_id": "apr_00003",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "caller_id"
+            ],
+            "created_at": "2027-01-06T12:00:00+05:30",
+            "expires_at": "2027-01-07T00:00:00+05:30",
+            "decided_at": "2027-01-06T13:31:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00006",
+            "proposal_id": "0d868ca3bf4b824234044b1fad282c757cc7369f1c844b3c8ff6413b3e1019af",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 7,
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "created_at": "2027-01-07T16:00:00+05:30",
+            "expires_at": "2027-01-08T04:00:00+05:30",
+            "decided_at": "2027-01-07T16:57:00+05:30",
+            "reasons": []
+          }
+        ]
+      },
+      "workflows": [
+        {
+          "workflow_id": "nw_renewal",
+          "tenant_id": "northwind_life",
+          "use_case": "life-insurance renewal premium reminder (persistency)",
+          "languages": [
+            "hi",
+            "en",
+            "ta"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 300,
+          "cadence": [
+            2,
+            3,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 1100,
+            "at_hour": 8,
+            "returning_share": 0.4
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "primary": "engagement_rate",
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": true,
+              "allowed_dims": [
+                "schedule",
+                "caller_id"
+              ],
+              "max_shift": 0.5
+            },
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              30,
+              240
+            ],
+            "proposal_ttl_hours": 24,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 3,
+            "base_reject_rate": 0.1,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 5
+        },
+        {
+          "workflow_id": "nw_kyc",
+          "tenant_id": "northwind_life",
+          "use_case": "KYC document reminder for new policies",
+          "languages": [
+            "en",
+            "hi"
+          ],
+          "dialling_window": [
+            10,
+            20
+          ],
+          "dials_per_hour": 200,
+          "cadence": [
+            2,
+            2,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 700,
+            "at_hour": 8,
+            "returning_share": 0.2
+          },
+          "mid_flight": "next_campaign_only",
+          "objective": {
+            "primary": "pickup_rate",
+            "guardrail": {
+              "engagement_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2"
+            ],
+            "voice": [
+              "V1",
+              "V2"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": false,
+              "allowed_dims": [],
+              "max_shift": 0
+            },
+            "approver_hours": [
+              10,
+              18
+            ],
+            "approver_latency_minutes": [
+              60,
+              480
+            ],
+            "proposal_ttl_hours": 24,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 2,
+            "base_reject_rate": 0.15,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "ks_cancel",
+          "tenant_id": "kestrel_finance",
+          "use_case": "consumer-loan cancellation reconfirmation",
+          "languages": [
+            "hi",
+            "en",
+            "kn"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 400,
+          "cadence": [
+            2,
+            2,
+            2
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 1500,
+            "at_hour": 8,
+            "returning_share": 0.3
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "primary": "engagement_rate",
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P2",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P2": "Supervisor edit: adds payment-urgency language and benefit claims",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": true,
+              "allowed_dims": [
+                "schedule",
+                "caller_id",
+                "welcome_message",
+                "voice"
+              ],
+              "max_shift": 0.2
+            },
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              20,
+              120
+            ],
+            "proposal_ttl_hours": 12,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 4,
+            "base_reject_rate": 0.05,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 12
+        }
+      ]
     },
-    "matches_clean": true
+    "matches_clean": true,
+    "verification_started_at": "2026-11-08T20:16:31.693897+00:00",
+    "verification_finished_at": "2026-11-08T21:16:37.716059+00:00"
   },
   {
     "case": "after_advance",
-    "schema": "steps567_finaldev_after_advance_930a97",
-    "run_id": "steps567_finaldev",
-    "directory": "runs\\steps567_finaldev_after_advance_98d1f01e",
-    "application_commit": "3d837791701fa74cc39193adf6040cf77dc7dc01",
+    "schema": "steps567_finalinc_after_advance_b1e67f",
+    "run_id": "steps567_finalinc",
+    "directory": "runs/final_verify_b7441e2f/checkout/runs/steps567_finalinc_after_advance_84e56acd",
+    "application_commit": "63d8c6ef546e810b859593336451d32b160c6ca4",
+    "application_tree_sha256": "0ec34f8e51b4c039079c05ede3ca325d9670105e5b764cf1a7e74a2741eb3285",
+    "application_controller_tree": "e1fa57c374547592749eaf78b08d0e301e34ecf5",
+    "application_dirty": false,
     "profiled": false,
     "exit": 0,
     "timings": {
-      "ticks": 768,
-      "simulated_days": 7.989583333333333,
-      "wall_seconds": 103.677,
-      "wall_seconds_per_day_including_bootstrap": 12.977,
+      "ticks": 960,
+      "simulated_days": 9.989583333333334,
+      "wall_seconds": 135.452,
+      "wall_seconds_per_day_including_bootstrap": 13.559,
       "bootstrap": {
         "mode": "controller",
         "ts": "2027-01-04T00:15:00+05:30",
         "finished": false,
         "ingested_events": 1,
-        "ingest_seconds": 0.037,
-        "stream_fetch_seconds": 0.004,
+        "ingest_seconds": 0.035,
+        "stream_fetch_seconds": 0.003,
         "parse_seconds": 0.0,
-        "write_seconds": 0.033,
-        "decision_seconds": 0.107,
+        "write_seconds": 0.032,
+        "decision_seconds": 0.108,
         "advance_seconds": 0.0,
         "loop_seconds": 0.143,
         "credits_remaining": 200.0,
-        "peak_rss_mib": 47.33
+        "peak_rss_mib": 46.64
       },
       "totals": {
-        "ingest_seconds": 27.566,
-        "stream_fetch_seconds": 3.893,
-        "parse_seconds": 0.876,
-        "write_seconds": 22.81,
-        "decision_seconds": 66.695,
-        "advance_seconds": 6.726,
-        "loop_seconds": 94.277
+        "ingest_seconds": 35.676,
+        "stream_fetch_seconds": 5.11,
+        "parse_seconds": 1.134,
+        "write_seconds": 29.437,
+        "decision_seconds": 87.96,
+        "advance_seconds": 8.588,
+        "loop_seconds": 123.689
       },
-      "live_events": 109639,
-      "live_ingest_events_per_second": 3982.7,
-      "max_decision_lag_bound_seconds": 0.412,
+      "live_events": 137053,
+      "live_ingest_events_per_second": 3845.4,
+      "max_decision_lag_bound_seconds": 0.434,
       "live_wall_seconds_by_simulated_day": {
-        "0": 13.643,
-        "1": 12.241,
-        "2": 12.688,
-        "3": 13.454,
-        "4": 14.229,
-        "5": 11.865,
-        "6": 22.74
+        "0": 14.597,
+        "1": 13.869,
+        "2": 14.848,
+        "3": 14.324,
+        "4": 13.582,
+        "5": 13.841,
+        "6": 14.821,
+        "7": 10.366,
+        "8": 21.886
       },
-      "peak_controller_rss_mib": 51.93
+      "peak_controller_rss_mib": 50.98
     },
     "signature": {
       "ingested_chunks": {
-        "rows": 394,
-        "sha256": "6b58513299f7e7529202dbefa90ba2d9e9e674603da84119b1fb73fe1e1daa8d"
+        "rows": 492,
+        "sha256": "5b501680db5ed337a0b6ec7c658714326a9a2654bc8793af23daa27e6d483fdc"
       },
       "hourly_metrics": {
-        "rows": 3882,
-        "sha256": "bf63d05a7802149047dd6d89767f92747db1b495ff1c167522456256ec13598c"
+        "rows": 4142,
+        "sha256": "1e24a21a667b75256128dee061c40d90a9a77f9121393b5d32903ff69986a5c8"
       },
       "proposals": {
-        "rows": 10,
-        "sha256": "058cac48c27fa30a54ad4c39c50e75455bb33b933470dbcae8060633da208aaa"
+        "rows": 15,
+        "sha256": "f6dfcc34b8a8b866e685b1edff0692ef5aa550295b7e9b4836dfc55998984aec"
       },
       "experiments": {
-        "rows": 5,
-        "sha256": "e8ab490443e56bda4766a9f637624fe22c3c15f3a1524a8950d1b7f53b4c877a"
+        "rows": 7,
+        "sha256": "0fc860cef7cdadc3702a7d8c43babb4601f41e4ec33bb04121dfc89076c32b70"
       },
       "experiment_people": {
-        "rows": 31078,
-        "sha256": "ff491f50354f3d3a4d0300d1248492d9856bdf158c8386d99eb104cd1fd7133a"
+        "rows": 38630,
+        "sha256": "91225fcfb706e2d45b85ee518965ec7e541ce43e8c19faf7f1065f583f06bc34"
       },
       "incidents": {
-        "rows": 0,
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        "rows": 2,
+        "sha256": "ad100486eb82f27b813f90c58168f79fc0c094c0187519939efdd778ab866d00"
       },
       "audit_log": {
-        "rows": 82,
-        "sha256": "18eaf60d3b960e135a635208a556a3edc4fb0e572ff33d2a185917d8cc57d21a"
+        "rows": 96,
+        "sha256": "c56bc1f394c74b7ed259aeb0c2aa956b309be967cd80b3ea9ae29fcc45f089f7"
+      },
+      "detection_windows": {
+        "rows": 775,
+        "sha256": "57c52d625d3d09bdc27639f342a4d3be19f9ca0cd1b5180fc5726c4a498dbb22"
       },
       "campaigns": {
-        "rows": 66,
-        "fingerprint": "58114119866981825431"
+        "rows": 72,
+        "fingerprint": "-22874037047344732349"
       },
       "concluded_leads": {
-        "rows": 30476,
-        "fingerprint": "637878241394019290055"
+        "rows": 32869,
+        "fingerprint": "-563593811833197910683"
       },
       "person_metrics": {
-        "rows": 83200,
-        "fingerprint": "390710962457889537706"
+        "rows": 104000,
+        "fingerprint": "-1335718672027887676455"
+      },
+      "qa_metrics": {
+        "rows": 3387,
+        "fingerprint": "-164546506131966888471"
       },
       "events": [
-        297040,
+        324328,
         1,
-        297040,
-        "-1601363396620356570045"
+        324328,
+        "-1485679544854842847207"
       ],
       "state": {
-        "scenario": "public_01_dev",
-        "sim_minute": 11520,
-        "ts": "2027-01-12T00:00:00+05:30",
-        "end_minute": 11520,
+        "scenario": "public_02_incidents",
+        "sim_minute": 14400,
+        "ts": "2027-01-14T00:00:00+05:30",
+        "end_minute": 14400,
         "finished": true,
         "tick_minutes": 15,
-        "credits_remaining": 200.0,
-        "chunks": 394,
-        "last_event_id": 297040
+        "credits_remaining": 195.0,
+        "chunks": 492,
+        "last_event_id": 324328
       },
       "config_history": {
         "nw_renewal": [
@@ -795,8 +1522,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-04T14:00:00+05:30",
-            "proposal_id": "e97a894db2e73605054d3e4827cccfa9c41dfa504fd96abf58454faf06b03415",
+            "applied_at": "2027-01-04T13:15:00+05:30",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
             "approval_id": "apr_00001"
           },
           {
@@ -805,9 +1532,9 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T16:15:00+05:30",
-            "proposal_id": "a65936b147a634b372357b6919e3b1ff8986cc26b7023169a00371587de205f3",
-            "approval_id": "apr_00003"
+            "applied_at": "2027-01-07T14:30:00+05:30",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
+            "approval_id": "apr_00004"
           },
           {
             "version": 4,
@@ -815,19 +1542,19 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T19:15:00+05:30",
-            "proposal_id": "3d6393514a75572aab7af5bff1f840cddc826e4992525747b448e8c45c547d11",
-            "approval_id": "apr_00004"
+            "applied_at": "2027-01-07T17:15:00+05:30",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
+            "approval_id": "apr_00005"
           },
           {
             "version": 5,
-            "actor": "controller_approved",
+            "actor": "supervisor",
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-11T13:00:00+05:30",
-            "proposal_id": "b8bbb69010be1e9975ee02ff17e039f695e85c023ff75523eaa3cf090e989375",
-            "approval_id": "apr_00006"
+            "applied_at": "2027-01-09T15:00:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
           }
         ],
         "nw_kyc": [
@@ -845,8 +1572,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-04T16:15:00+05:30",
-            "proposal_id": "88c3bc6e71f89f4c2717449f5bd5c968b3c3a817274680aca577a86a85ee16a7",
+            "applied_at": "2027-01-04T16:00:00+05:30",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
             "approval_id": "apr_00002"
           },
           {
@@ -855,9 +1582,9 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-08T13:00:00+05:30",
-            "proposal_id": "04dcd4230f754f58cdbb1c18eaddcf3318c629741db026463b329155ce403740",
-            "approval_id": "apr_00005"
+            "applied_at": "2027-01-08T12:30:00+05:30",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
+            "approval_id": "apr_00007"
           }
         ],
         "ks_cancel": [
@@ -876,18 +1603,18 @@
               "voice"
             ],
             "applied_at": 0,
-            "proposal_id": "fcc112616b792be0daf2d7e28cb76cfcf8aa12290b136b39f4fee0d7409f0ac9",
+            "proposal_id": "b8a07651f1971fc6d8fb15929a5ad3233e77b283231527b757fcc25eba0c25c6",
             "approval_id": null
           },
           {
             "version": 3,
-            "actor": "controller_auto",
+            "actor": "controller_approved",
             "changed_dims": [
-              "voice"
+              "caller_id"
             ],
-            "applied_at": "2027-01-07T09:15:00+05:30",
-            "proposal_id": "dfceaeefe5ae98579aae5f0010351779ef282bd8fe613e3d8cc674d712f9a4d5",
-            "approval_id": null
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "approval_id": "apr_00003"
           },
           {
             "version": 4,
@@ -895,8 +1622,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T09:30:00+05:30",
-            "proposal_id": "5f0d4e103433bf0c842acc292862151be7b74a47e88bc86b69fb0c8a27734b0d",
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "1896c078caa1bb8ec352007168b2de3b64381215da1660b3ce8a3a4d4d15d2f0",
             "approval_id": null
           },
           {
@@ -905,8 +1632,78 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-10T09:45:00+05:30",
-            "proposal_id": "1b13b65d966fd04d83d4df422e46193648df79b4bd4810f88da46e55c078bc08",
+            "applied_at": "2027-01-06T16:00:00+05:30",
+            "proposal_id": "74b8a0840af1bdc7406e18e7feedf3e92d38603854b30a5007403a627e8a93f0",
+            "approval_id": null
+          },
+          {
+            "version": 6,
+            "actor": "supervisor",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-07T11:30:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 7,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T11:45:00+05:30",
+            "proposal_id": "90cd0244584e22f1643d1b69cc379b692345d36dfc921b9d338b81ebd09cab84",
+            "approval_id": null
+          },
+          {
+            "version": 8,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-07T17:15:00+05:30",
+            "proposal_id": "0d868ca3bf4b824234044b1fad282c757cc7369f1c844b3c8ff6413b3e1019af",
+            "approval_id": "apr_00006"
+          },
+          {
+            "version": 9,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T20:00:00+05:30",
+            "proposal_id": "43886a1a920644bdf6028d3037c5d05db405fe979ec72356787068d9c14c0526",
+            "approval_id": null
+          },
+          {
+            "version": 10,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-10T20:15:00+05:30",
+            "proposal_id": "21a2ee3d04c1d3844dad882fe4b582cacadd9c1ed806a11b61328db6d586dbe0",
+            "approval_id": null
+          },
+          {
+            "version": 11,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-10T20:30:00+05:30",
+            "proposal_id": "6b1e27c5c34f3cbdb016c997b5354f68791c5547643ec6b922a5b9f842206a94",
+            "approval_id": null
+          },
+          {
+            "version": 12,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-13T20:45:00+05:30",
+            "proposal_id": "5df64fd291c5be124cc86f8f17d7e81517087825362224f2c0927529d6d01548",
             "approval_id": null
           }
         ]
@@ -915,7 +1712,7 @@
         "nw_renewal": [
           {
             "approval_id": "apr_00001",
-            "proposal_id": "e97a894db2e73605054d3e4827cccfa9c41dfa504fd96abf58454faf06b03415",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 1,
@@ -924,56 +1721,42 @@
             ],
             "created_at": "2027-01-04T10:00:00+05:30",
             "expires_at": "2027-01-05T10:00:00+05:30",
-            "decided_at": "2027-01-04T13:42:00+05:30",
+            "decided_at": "2027-01-04T12:52:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00003",
-            "proposal_id": "a65936b147a634b372357b6919e3b1ff8986cc26b7023169a00371587de205f3",
+            "approval_id": "apr_00004",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 2,
             "changed_dims": [
               "voice"
             ],
-            "created_at": "2027-01-07T14:15:00+05:30",
-            "expires_at": "2027-01-08T14:15:00+05:30",
-            "decided_at": "2027-01-07T15:53:00+05:30",
+            "created_at": "2027-01-07T13:30:00+05:30",
+            "expires_at": "2027-01-08T13:30:00+05:30",
+            "decided_at": "2027-01-07T14:01:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00004",
-            "proposal_id": "3d6393514a75572aab7af5bff1f840cddc826e4992525747b448e8c45c547d11",
+            "approval_id": "apr_00005",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 3,
             "changed_dims": [
               "voice"
             ],
-            "created_at": "2027-01-07T16:15:00+05:30",
-            "expires_at": "2027-01-08T16:15:00+05:30",
-            "decided_at": "2027-01-07T18:58:00+05:30",
-            "reasons": []
-          },
-          {
-            "approval_id": "apr_00006",
-            "proposal_id": "b8bbb69010be1e9975ee02ff17e039f695e85c023ff75523eaa3cf090e989375",
-            "workflow_id": "nw_renewal",
-            "status": "applied",
-            "base_version": 4,
-            "changed_dims": [
-              "voice"
-            ],
-            "created_at": "2027-01-11T10:00:00+05:30",
-            "expires_at": "2027-01-12T10:00:00+05:30",
-            "decided_at": "2027-01-11T12:40:00+05:30",
+            "created_at": "2027-01-07T14:30:00+05:30",
+            "expires_at": "2027-01-08T14:30:00+05:30",
+            "decided_at": "2027-01-07T16:54:00+05:30",
             "reasons": []
           }
         ],
         "nw_kyc": [
           {
             "approval_id": "apr_00002",
-            "proposal_id": "88c3bc6e71f89f4c2717449f5bd5c968b3c3a817274680aca577a86a85ee16a7",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
             "workflow_id": "nw_kyc",
             "status": "applied",
             "base_version": 1,
@@ -982,12 +1765,12 @@
             ],
             "created_at": "2027-01-04T10:15:00+05:30",
             "expires_at": "2027-01-05T10:15:00+05:30",
-            "decided_at": "2027-01-04T15:53:00+05:30",
+            "decided_at": "2027-01-04T15:41:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00005",
-            "proposal_id": "04dcd4230f754f58cdbb1c18eaddcf3318c629741db026463b329155ce403740",
+            "approval_id": "apr_00007",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
             "workflow_id": "nw_kyc",
             "status": "applied",
             "base_version": 2,
@@ -996,124 +1779,425 @@
             ],
             "created_at": "2027-01-08T10:15:00+05:30",
             "expires_at": "2027-01-09T10:15:00+05:30",
-            "decided_at": "2027-01-08T12:33:00+05:30",
+            "decided_at": "2027-01-08T12:07:00+05:30",
             "reasons": []
           }
         ],
-        "ks_cancel": []
-      }
+        "ks_cancel": [
+          {
+            "approval_id": "apr_00003",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "caller_id"
+            ],
+            "created_at": "2027-01-06T12:00:00+05:30",
+            "expires_at": "2027-01-07T00:00:00+05:30",
+            "decided_at": "2027-01-06T13:31:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00006",
+            "proposal_id": "0d868ca3bf4b824234044b1fad282c757cc7369f1c844b3c8ff6413b3e1019af",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 7,
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "created_at": "2027-01-07T16:00:00+05:30",
+            "expires_at": "2027-01-08T04:00:00+05:30",
+            "decided_at": "2027-01-07T16:57:00+05:30",
+            "reasons": []
+          }
+        ]
+      },
+      "workflows": [
+        {
+          "workflow_id": "nw_renewal",
+          "tenant_id": "northwind_life",
+          "use_case": "life-insurance renewal premium reminder (persistency)",
+          "languages": [
+            "hi",
+            "en",
+            "ta"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 300,
+          "cadence": [
+            2,
+            3,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 1100,
+            "at_hour": 8,
+            "returning_share": 0.4
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "primary": "engagement_rate",
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": true,
+              "allowed_dims": [
+                "schedule",
+                "caller_id"
+              ],
+              "max_shift": 0.5
+            },
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              30,
+              240
+            ],
+            "proposal_ttl_hours": 24,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 3,
+            "base_reject_rate": 0.1,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 5
+        },
+        {
+          "workflow_id": "nw_kyc",
+          "tenant_id": "northwind_life",
+          "use_case": "KYC document reminder for new policies",
+          "languages": [
+            "en",
+            "hi"
+          ],
+          "dialling_window": [
+            10,
+            20
+          ],
+          "dials_per_hour": 200,
+          "cadence": [
+            2,
+            2,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 700,
+            "at_hour": 8,
+            "returning_share": 0.2
+          },
+          "mid_flight": "next_campaign_only",
+          "objective": {
+            "primary": "pickup_rate",
+            "guardrail": {
+              "engagement_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2"
+            ],
+            "voice": [
+              "V1",
+              "V2"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": false,
+              "allowed_dims": [],
+              "max_shift": 0
+            },
+            "approver_hours": [
+              10,
+              18
+            ],
+            "approver_latency_minutes": [
+              60,
+              480
+            ],
+            "proposal_ttl_hours": 24,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 2,
+            "base_reject_rate": 0.15,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "ks_cancel",
+          "tenant_id": "kestrel_finance",
+          "use_case": "consumer-loan cancellation reconfirmation",
+          "languages": [
+            "hi",
+            "en",
+            "kn"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 400,
+          "cadence": [
+            2,
+            2,
+            2
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 1500,
+            "at_hour": 8,
+            "returning_share": 0.3
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "primary": "engagement_rate",
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P2",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P2": "Supervisor edit: adds payment-urgency language and benefit claims",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": true,
+              "allowed_dims": [
+                "schedule",
+                "caller_id",
+                "welcome_message",
+                "voice"
+              ],
+              "max_shift": 0.2
+            },
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              20,
+              120
+            ],
+            "proposal_ttl_hours": 12,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 4,
+            "base_reject_rate": 0.05,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 12
+        }
+      ]
     },
-    "matches_clean": true
+    "matches_clean": true,
+    "verification_started_at": "2026-11-08T20:16:31.693897+00:00",
+    "verification_finished_at": "2026-11-08T21:16:37.716059+00:00"
   },
   {
     "case": "after_intent",
-    "schema": "steps567_finaldev_after_intent_10be82",
-    "run_id": "steps567_finaldev",
-    "directory": "runs\\steps567_finaldev_after_intent_d5e5c3b2",
-    "application_commit": "3d837791701fa74cc39193adf6040cf77dc7dc01",
+    "schema": "steps567_finalinc_after_intent_3c3553",
+    "run_id": "steps567_finalinc",
+    "directory": "runs/final_verify_b7441e2f/checkout/runs/steps567_finalinc_after_intent_0a7f4844",
+    "application_commit": "63d8c6ef546e810b859593336451d32b160c6ca4",
+    "application_tree_sha256": "0ec34f8e51b4c039079c05ede3ca325d9670105e5b764cf1a7e74a2741eb3285",
+    "application_controller_tree": "e1fa57c374547592749eaf78b08d0e301e34ecf5",
+    "application_dirty": false,
     "profiled": false,
     "exit": 0,
     "timings": {
-      "ticks": 769,
-      "simulated_days": 8.0,
-      "wall_seconds": 139.803,
-      "wall_seconds_per_day_including_bootstrap": 17.475,
+      "ticks": 961,
+      "simulated_days": 10.0,
+      "wall_seconds": 155.287,
+      "wall_seconds_per_day_including_bootstrap": 15.529,
       "bootstrap": {
         "mode": "controller",
         "ts": "2027-01-04T00:00:00+05:30",
         "finished": false,
         "ingested_events": 0,
-        "ingest_seconds": 0.009,
+        "ingest_seconds": 0.006,
         "stream_fetch_seconds": 0.0,
         "parse_seconds": 0.0,
-        "write_seconds": 0.009,
-        "decision_seconds": 0.17,
+        "write_seconds": 0.006,
+        "decision_seconds": 0.129,
         "advance_seconds": 0.0,
-        "loop_seconds": 0.179,
+        "loop_seconds": 0.136,
         "credits_remaining": 200.0,
         "peak_rss_mib": 46.54
       },
       "totals": {
-        "ingest_seconds": 37.347,
-        "stream_fetch_seconds": 4.393,
-        "parse_seconds": 0.987,
-        "write_seconds": 31.972,
-        "decision_seconds": 91.268,
-        "advance_seconds": 7.526,
-        "loop_seconds": 128.626
+        "ingest_seconds": 38.183,
+        "stream_fetch_seconds": 4.998,
+        "parse_seconds": 1.111,
+        "write_seconds": 32.056,
+        "decision_seconds": 104.939,
+        "advance_seconds": 8.577,
+        "loop_seconds": 143.098
       },
-      "live_events": 109640,
-      "live_ingest_events_per_second": 2936.4,
-      "max_decision_lag_bound_seconds": 0.82,
+      "live_events": 137054,
+      "live_ingest_events_per_second": 3590.0,
+      "max_decision_lag_bound_seconds": 10.894,
       "live_wall_seconds_by_simulated_day": {
-        "0": 21.522,
-        "1": 20.514,
-        "2": 19.871,
-        "3": 17.286,
-        "4": 14.214,
-        "5": 16.468,
-        "6": 13.626,
-        "7": 12.472
+        "0": 13.267,
+        "1": 13.051,
+        "2": 24.732,
+        "3": 13.967,
+        "4": 14.654,
+        "5": 17.602,
+        "6": 16.526,
+        "7": 13.535,
+        "8": 12.462,
+        "9": 11.743
       },
-      "peak_controller_rss_mib": 51.64
+      "peak_controller_rss_mib": 50.69
     },
     "signature": {
       "ingested_chunks": {
-        "rows": 394,
-        "sha256": "6b58513299f7e7529202dbefa90ba2d9e9e674603da84119b1fb73fe1e1daa8d"
+        "rows": 492,
+        "sha256": "5b501680db5ed337a0b6ec7c658714326a9a2654bc8793af23daa27e6d483fdc"
       },
       "hourly_metrics": {
-        "rows": 3882,
-        "sha256": "bf63d05a7802149047dd6d89767f92747db1b495ff1c167522456256ec13598c"
+        "rows": 4142,
+        "sha256": "1e24a21a667b75256128dee061c40d90a9a77f9121393b5d32903ff69986a5c8"
       },
       "proposals": {
-        "rows": 10,
-        "sha256": "058cac48c27fa30a54ad4c39c50e75455bb33b933470dbcae8060633da208aaa"
+        "rows": 15,
+        "sha256": "f6dfcc34b8a8b866e685b1edff0692ef5aa550295b7e9b4836dfc55998984aec"
       },
       "experiments": {
-        "rows": 5,
-        "sha256": "e8ab490443e56bda4766a9f637624fe22c3c15f3a1524a8950d1b7f53b4c877a"
+        "rows": 7,
+        "sha256": "0fc860cef7cdadc3702a7d8c43babb4601f41e4ec33bb04121dfc89076c32b70"
       },
       "experiment_people": {
-        "rows": 31078,
-        "sha256": "ff491f50354f3d3a4d0300d1248492d9856bdf158c8386d99eb104cd1fd7133a"
+        "rows": 38630,
+        "sha256": "91225fcfb706e2d45b85ee518965ec7e541ce43e8c19faf7f1065f583f06bc34"
       },
       "incidents": {
-        "rows": 0,
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        "rows": 2,
+        "sha256": "ad100486eb82f27b813f90c58168f79fc0c094c0187519939efdd778ab866d00"
       },
       "audit_log": {
-        "rows": 82,
-        "sha256": "18eaf60d3b960e135a635208a556a3edc4fb0e572ff33d2a185917d8cc57d21a"
+        "rows": 96,
+        "sha256": "c56bc1f394c74b7ed259aeb0c2aa956b309be967cd80b3ea9ae29fcc45f089f7"
+      },
+      "detection_windows": {
+        "rows": 775,
+        "sha256": "57c52d625d3d09bdc27639f342a4d3be19f9ca0cd1b5180fc5726c4a498dbb22"
       },
       "campaigns": {
-        "rows": 66,
-        "fingerprint": "58114119866981825431"
+        "rows": 72,
+        "fingerprint": "-22874037047344732349"
       },
       "concluded_leads": {
-        "rows": 30476,
-        "fingerprint": "637878241394019290055"
+        "rows": 32869,
+        "fingerprint": "-563593811833197910683"
       },
       "person_metrics": {
-        "rows": 83200,
-        "fingerprint": "390710962457889537706"
+        "rows": 104000,
+        "fingerprint": "-1335718672027887676455"
+      },
+      "qa_metrics": {
+        "rows": 3387,
+        "fingerprint": "-164546506131966888471"
       },
       "events": [
-        297040,
+        324328,
         1,
-        297040,
-        "-1601363396620356570045"
+        324328,
+        "-1485679544854842847207"
       ],
       "state": {
-        "scenario": "public_01_dev",
-        "sim_minute": 11520,
-        "ts": "2027-01-12T00:00:00+05:30",
-        "end_minute": 11520,
+        "scenario": "public_02_incidents",
+        "sim_minute": 14400,
+        "ts": "2027-01-14T00:00:00+05:30",
+        "end_minute": 14400,
         "finished": true,
         "tick_minutes": 15,
-        "credits_remaining": 200.0,
-        "chunks": 394,
-        "last_event_id": 297040
+        "credits_remaining": 195.0,
+        "chunks": 492,
+        "last_event_id": 324328
       },
       "config_history": {
         "nw_renewal": [
@@ -1131,8 +2215,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-04T14:00:00+05:30",
-            "proposal_id": "e97a894db2e73605054d3e4827cccfa9c41dfa504fd96abf58454faf06b03415",
+            "applied_at": "2027-01-04T13:15:00+05:30",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
             "approval_id": "apr_00001"
           },
           {
@@ -1141,9 +2225,9 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T16:15:00+05:30",
-            "proposal_id": "a65936b147a634b372357b6919e3b1ff8986cc26b7023169a00371587de205f3",
-            "approval_id": "apr_00003"
+            "applied_at": "2027-01-07T14:30:00+05:30",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
+            "approval_id": "apr_00004"
           },
           {
             "version": 4,
@@ -1151,19 +2235,19 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T19:15:00+05:30",
-            "proposal_id": "3d6393514a75572aab7af5bff1f840cddc826e4992525747b448e8c45c547d11",
-            "approval_id": "apr_00004"
+            "applied_at": "2027-01-07T17:15:00+05:30",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
+            "approval_id": "apr_00005"
           },
           {
             "version": 5,
-            "actor": "controller_approved",
+            "actor": "supervisor",
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-11T13:00:00+05:30",
-            "proposal_id": "b8bbb69010be1e9975ee02ff17e039f695e85c023ff75523eaa3cf090e989375",
-            "approval_id": "apr_00006"
+            "applied_at": "2027-01-09T15:00:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
           }
         ],
         "nw_kyc": [
@@ -1181,8 +2265,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-04T16:15:00+05:30",
-            "proposal_id": "88c3bc6e71f89f4c2717449f5bd5c968b3c3a817274680aca577a86a85ee16a7",
+            "applied_at": "2027-01-04T16:00:00+05:30",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
             "approval_id": "apr_00002"
           },
           {
@@ -1191,9 +2275,9 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-08T13:00:00+05:30",
-            "proposal_id": "04dcd4230f754f58cdbb1c18eaddcf3318c629741db026463b329155ce403740",
-            "approval_id": "apr_00005"
+            "applied_at": "2027-01-08T12:30:00+05:30",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
+            "approval_id": "apr_00007"
           }
         ],
         "ks_cancel": [
@@ -1212,18 +2296,18 @@
               "voice"
             ],
             "applied_at": 0,
-            "proposal_id": "fcc112616b792be0daf2d7e28cb76cfcf8aa12290b136b39f4fee0d7409f0ac9",
+            "proposal_id": "b8a07651f1971fc6d8fb15929a5ad3233e77b283231527b757fcc25eba0c25c6",
             "approval_id": null
           },
           {
             "version": 3,
-            "actor": "controller_auto",
+            "actor": "controller_approved",
             "changed_dims": [
-              "voice"
+              "caller_id"
             ],
-            "applied_at": "2027-01-07T09:15:00+05:30",
-            "proposal_id": "dfceaeefe5ae98579aae5f0010351779ef282bd8fe613e3d8cc674d712f9a4d5",
-            "approval_id": null
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "approval_id": "apr_00003"
           },
           {
             "version": 4,
@@ -1231,8 +2315,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T09:30:00+05:30",
-            "proposal_id": "5f0d4e103433bf0c842acc292862151be7b74a47e88bc86b69fb0c8a27734b0d",
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "1896c078caa1bb8ec352007168b2de3b64381215da1660b3ce8a3a4d4d15d2f0",
             "approval_id": null
           },
           {
@@ -1241,8 +2325,78 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-10T09:45:00+05:30",
-            "proposal_id": "1b13b65d966fd04d83d4df422e46193648df79b4bd4810f88da46e55c078bc08",
+            "applied_at": "2027-01-06T16:00:00+05:30",
+            "proposal_id": "74b8a0840af1bdc7406e18e7feedf3e92d38603854b30a5007403a627e8a93f0",
+            "approval_id": null
+          },
+          {
+            "version": 6,
+            "actor": "supervisor",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-07T11:30:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 7,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T11:45:00+05:30",
+            "proposal_id": "90cd0244584e22f1643d1b69cc379b692345d36dfc921b9d338b81ebd09cab84",
+            "approval_id": null
+          },
+          {
+            "version": 8,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-07T17:15:00+05:30",
+            "proposal_id": "0d868ca3bf4b824234044b1fad282c757cc7369f1c844b3c8ff6413b3e1019af",
+            "approval_id": "apr_00006"
+          },
+          {
+            "version": 9,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T20:00:00+05:30",
+            "proposal_id": "43886a1a920644bdf6028d3037c5d05db405fe979ec72356787068d9c14c0526",
+            "approval_id": null
+          },
+          {
+            "version": 10,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-10T20:15:00+05:30",
+            "proposal_id": "21a2ee3d04c1d3844dad882fe4b582cacadd9c1ed806a11b61328db6d586dbe0",
+            "approval_id": null
+          },
+          {
+            "version": 11,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-10T20:30:00+05:30",
+            "proposal_id": "6b1e27c5c34f3cbdb016c997b5354f68791c5547643ec6b922a5b9f842206a94",
+            "approval_id": null
+          },
+          {
+            "version": 12,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-13T20:45:00+05:30",
+            "proposal_id": "5df64fd291c5be124cc86f8f17d7e81517087825362224f2c0927529d6d01548",
             "approval_id": null
           }
         ]
@@ -1251,7 +2405,7 @@
         "nw_renewal": [
           {
             "approval_id": "apr_00001",
-            "proposal_id": "e97a894db2e73605054d3e4827cccfa9c41dfa504fd96abf58454faf06b03415",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 1,
@@ -1260,56 +2414,42 @@
             ],
             "created_at": "2027-01-04T10:00:00+05:30",
             "expires_at": "2027-01-05T10:00:00+05:30",
-            "decided_at": "2027-01-04T13:42:00+05:30",
+            "decided_at": "2027-01-04T12:52:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00003",
-            "proposal_id": "a65936b147a634b372357b6919e3b1ff8986cc26b7023169a00371587de205f3",
+            "approval_id": "apr_00004",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 2,
             "changed_dims": [
               "voice"
             ],
-            "created_at": "2027-01-07T14:15:00+05:30",
-            "expires_at": "2027-01-08T14:15:00+05:30",
-            "decided_at": "2027-01-07T15:53:00+05:30",
+            "created_at": "2027-01-07T13:30:00+05:30",
+            "expires_at": "2027-01-08T13:30:00+05:30",
+            "decided_at": "2027-01-07T14:01:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00004",
-            "proposal_id": "3d6393514a75572aab7af5bff1f840cddc826e4992525747b448e8c45c547d11",
+            "approval_id": "apr_00005",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 3,
             "changed_dims": [
               "voice"
             ],
-            "created_at": "2027-01-07T16:15:00+05:30",
-            "expires_at": "2027-01-08T16:15:00+05:30",
-            "decided_at": "2027-01-07T18:58:00+05:30",
-            "reasons": []
-          },
-          {
-            "approval_id": "apr_00006",
-            "proposal_id": "b8bbb69010be1e9975ee02ff17e039f695e85c023ff75523eaa3cf090e989375",
-            "workflow_id": "nw_renewal",
-            "status": "applied",
-            "base_version": 4,
-            "changed_dims": [
-              "voice"
-            ],
-            "created_at": "2027-01-11T10:00:00+05:30",
-            "expires_at": "2027-01-12T10:00:00+05:30",
-            "decided_at": "2027-01-11T12:40:00+05:30",
+            "created_at": "2027-01-07T14:30:00+05:30",
+            "expires_at": "2027-01-08T14:30:00+05:30",
+            "decided_at": "2027-01-07T16:54:00+05:30",
             "reasons": []
           }
         ],
         "nw_kyc": [
           {
             "approval_id": "apr_00002",
-            "proposal_id": "88c3bc6e71f89f4c2717449f5bd5c968b3c3a817274680aca577a86a85ee16a7",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
             "workflow_id": "nw_kyc",
             "status": "applied",
             "base_version": 1,
@@ -1318,12 +2458,12 @@
             ],
             "created_at": "2027-01-04T10:15:00+05:30",
             "expires_at": "2027-01-05T10:15:00+05:30",
-            "decided_at": "2027-01-04T15:53:00+05:30",
+            "decided_at": "2027-01-04T15:41:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00005",
-            "proposal_id": "04dcd4230f754f58cdbb1c18eaddcf3318c629741db026463b329155ce403740",
+            "approval_id": "apr_00007",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
             "workflow_id": "nw_kyc",
             "status": "applied",
             "base_version": 2,
@@ -1332,123 +2472,424 @@
             ],
             "created_at": "2027-01-08T10:15:00+05:30",
             "expires_at": "2027-01-09T10:15:00+05:30",
-            "decided_at": "2027-01-08T12:33:00+05:30",
+            "decided_at": "2027-01-08T12:07:00+05:30",
             "reasons": []
           }
         ],
-        "ks_cancel": []
-      }
+        "ks_cancel": [
+          {
+            "approval_id": "apr_00003",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "caller_id"
+            ],
+            "created_at": "2027-01-06T12:00:00+05:30",
+            "expires_at": "2027-01-07T00:00:00+05:30",
+            "decided_at": "2027-01-06T13:31:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00006",
+            "proposal_id": "0d868ca3bf4b824234044b1fad282c757cc7369f1c844b3c8ff6413b3e1019af",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 7,
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "created_at": "2027-01-07T16:00:00+05:30",
+            "expires_at": "2027-01-08T04:00:00+05:30",
+            "decided_at": "2027-01-07T16:57:00+05:30",
+            "reasons": []
+          }
+        ]
+      },
+      "workflows": [
+        {
+          "workflow_id": "nw_renewal",
+          "tenant_id": "northwind_life",
+          "use_case": "life-insurance renewal premium reminder (persistency)",
+          "languages": [
+            "hi",
+            "en",
+            "ta"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 300,
+          "cadence": [
+            2,
+            3,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 1100,
+            "at_hour": 8,
+            "returning_share": 0.4
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "primary": "engagement_rate",
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": true,
+              "allowed_dims": [
+                "schedule",
+                "caller_id"
+              ],
+              "max_shift": 0.5
+            },
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              30,
+              240
+            ],
+            "proposal_ttl_hours": 24,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 3,
+            "base_reject_rate": 0.1,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 5
+        },
+        {
+          "workflow_id": "nw_kyc",
+          "tenant_id": "northwind_life",
+          "use_case": "KYC document reminder for new policies",
+          "languages": [
+            "en",
+            "hi"
+          ],
+          "dialling_window": [
+            10,
+            20
+          ],
+          "dials_per_hour": 200,
+          "cadence": [
+            2,
+            2,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 700,
+            "at_hour": 8,
+            "returning_share": 0.2
+          },
+          "mid_flight": "next_campaign_only",
+          "objective": {
+            "primary": "pickup_rate",
+            "guardrail": {
+              "engagement_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2"
+            ],
+            "voice": [
+              "V1",
+              "V2"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": false,
+              "allowed_dims": [],
+              "max_shift": 0
+            },
+            "approver_hours": [
+              10,
+              18
+            ],
+            "approver_latency_minutes": [
+              60,
+              480
+            ],
+            "proposal_ttl_hours": 24,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 2,
+            "base_reject_rate": 0.15,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "ks_cancel",
+          "tenant_id": "kestrel_finance",
+          "use_case": "consumer-loan cancellation reconfirmation",
+          "languages": [
+            "hi",
+            "en",
+            "kn"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 400,
+          "cadence": [
+            2,
+            2,
+            2
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 1500,
+            "at_hour": 8,
+            "returning_share": 0.3
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "primary": "engagement_rate",
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P2",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P2": "Supervisor edit: adds payment-urgency language and benefit claims",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": true,
+              "allowed_dims": [
+                "schedule",
+                "caller_id",
+                "welcome_message",
+                "voice"
+              ],
+              "max_shift": 0.2
+            },
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              20,
+              120
+            ],
+            "proposal_ttl_hours": 12,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 4,
+            "base_reject_rate": 0.05,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 12
+        }
+      ]
     },
-    "matches_clean": true
+    "matches_clean": true,
+    "verification_started_at": "2026-11-08T20:16:31.693897+00:00",
+    "verification_finished_at": "2026-11-08T21:16:37.716059+00:00"
   },
   {
     "case": "after_post",
-    "schema": "steps567_finaldev_after_post_42beb2",
-    "run_id": "steps567_finaldev",
-    "directory": "runs\\steps567_finaldev_after_post_8c35b700",
-    "application_commit": "3d837791701fa74cc39193adf6040cf77dc7dc01",
+    "schema": "steps567_finalinc_after_post_da5f83",
+    "run_id": "steps567_finalinc",
+    "directory": "runs/final_verify_b7441e2f/checkout/runs/steps567_finalinc_after_post_1d7484bc",
+    "application_commit": "63d8c6ef546e810b859593336451d32b160c6ca4",
+    "application_tree_sha256": "0ec34f8e51b4c039079c05ede3ca325d9670105e5b764cf1a7e74a2741eb3285",
+    "application_controller_tree": "e1fa57c374547592749eaf78b08d0e301e34ecf5",
+    "application_dirty": false,
     "profiled": false,
     "exit": 0,
     "timings": {
-      "ticks": 729,
-      "simulated_days": 7.583333333333333,
-      "wall_seconds": 105.663,
-      "wall_seconds_per_day_including_bootstrap": 13.934,
+      "ticks": 921,
+      "simulated_days": 9.583333333333334,
+      "wall_seconds": 127.586,
+      "wall_seconds_per_day_including_bootstrap": 13.313,
       "bootstrap": {
         "mode": "controller",
         "ts": "2027-01-04T10:00:00+05:30",
         "finished": false,
         "ingested_events": 0,
-        "ingest_seconds": 0.007,
+        "ingest_seconds": 0.006,
         "stream_fetch_seconds": 0.0,
         "parse_seconds": 0.0,
-        "write_seconds": 0.007,
-        "decision_seconds": 0.137,
+        "write_seconds": 0.006,
+        "decision_seconds": 0.138,
         "advance_seconds": 0.0,
-        "loop_seconds": 0.145,
+        "loop_seconds": 0.144,
         "credits_remaining": 200.0,
-        "peak_rss_mib": 47.66
+        "peak_rss_mib": 46.83
       },
       "totals": {
-        "ingest_seconds": 27.8,
-        "stream_fetch_seconds": 4.017,
-        "parse_seconds": 0.853,
-        "write_seconds": 22.976,
-        "decision_seconds": 68.307,
-        "advance_seconds": 6.766,
-        "loop_seconds": 96.135
+        "ingest_seconds": 34.846,
+        "stream_fetch_seconds": 4.877,
+        "parse_seconds": 1.066,
+        "write_seconds": 28.933,
+        "decision_seconds": 81.325,
+        "advance_seconds": 8.312,
+        "loop_seconds": 116.188
       },
-      "live_events": 105636,
-      "live_ingest_events_per_second": 3800.8,
-      "max_decision_lag_bound_seconds": 0.487,
+      "live_events": 133050,
+      "live_ingest_events_per_second": 3818.9,
+      "max_decision_lag_bound_seconds": 0.451,
       "live_wall_seconds_by_simulated_day": {
-        "0": 12.808,
-        "1": 14.238,
-        "2": 15.39,
-        "3": 13.526,
-        "4": 12.984,
-        "5": 12.697,
-        "6": 21.113
+        "0": 13.748,
+        "1": 15.105,
+        "2": 13.731,
+        "3": 13.517,
+        "4": 13.119,
+        "5": 13.41,
+        "6": 12.268,
+        "7": 10.718,
+        "8": 18.74
       },
-      "peak_controller_rss_mib": 52.25
+      "peak_controller_rss_mib": 51.05
     },
     "signature": {
       "ingested_chunks": {
-        "rows": 394,
-        "sha256": "6b58513299f7e7529202dbefa90ba2d9e9e674603da84119b1fb73fe1e1daa8d"
+        "rows": 492,
+        "sha256": "5b501680db5ed337a0b6ec7c658714326a9a2654bc8793af23daa27e6d483fdc"
       },
       "hourly_metrics": {
-        "rows": 3882,
-        "sha256": "bf63d05a7802149047dd6d89767f92747db1b495ff1c167522456256ec13598c"
+        "rows": 4142,
+        "sha256": "1e24a21a667b75256128dee061c40d90a9a77f9121393b5d32903ff69986a5c8"
       },
       "proposals": {
-        "rows": 10,
-        "sha256": "058cac48c27fa30a54ad4c39c50e75455bb33b933470dbcae8060633da208aaa"
+        "rows": 15,
+        "sha256": "f6dfcc34b8a8b866e685b1edff0692ef5aa550295b7e9b4836dfc55998984aec"
       },
       "experiments": {
-        "rows": 5,
-        "sha256": "e8ab490443e56bda4766a9f637624fe22c3c15f3a1524a8950d1b7f53b4c877a"
+        "rows": 7,
+        "sha256": "0fc860cef7cdadc3702a7d8c43babb4601f41e4ec33bb04121dfc89076c32b70"
       },
       "experiment_people": {
-        "rows": 31078,
-        "sha256": "ff491f50354f3d3a4d0300d1248492d9856bdf158c8386d99eb104cd1fd7133a"
+        "rows": 38630,
+        "sha256": "91225fcfb706e2d45b85ee518965ec7e541ce43e8c19faf7f1065f583f06bc34"
       },
       "incidents": {
-        "rows": 0,
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        "rows": 2,
+        "sha256": "ad100486eb82f27b813f90c58168f79fc0c094c0187519939efdd778ab866d00"
       },
       "audit_log": {
-        "rows": 82,
-        "sha256": "18eaf60d3b960e135a635208a556a3edc4fb0e572ff33d2a185917d8cc57d21a"
+        "rows": 96,
+        "sha256": "c56bc1f394c74b7ed259aeb0c2aa956b309be967cd80b3ea9ae29fcc45f089f7"
+      },
+      "detection_windows": {
+        "rows": 775,
+        "sha256": "57c52d625d3d09bdc27639f342a4d3be19f9ca0cd1b5180fc5726c4a498dbb22"
       },
       "campaigns": {
-        "rows": 66,
-        "fingerprint": "58114119866981825431"
+        "rows": 72,
+        "fingerprint": "-22874037047344732349"
       },
       "concluded_leads": {
-        "rows": 30476,
-        "fingerprint": "637878241394019290055"
+        "rows": 32869,
+        "fingerprint": "-563593811833197910683"
       },
       "person_metrics": {
-        "rows": 83200,
-        "fingerprint": "390710962457889537706"
+        "rows": 104000,
+        "fingerprint": "-1335718672027887676455"
+      },
+      "qa_metrics": {
+        "rows": 3387,
+        "fingerprint": "-164546506131966888471"
       },
       "events": [
-        297040,
+        324328,
         1,
-        297040,
-        "-1601363396620356570045"
+        324328,
+        "-1485679544854842847207"
       ],
       "state": {
-        "scenario": "public_01_dev",
-        "sim_minute": 11520,
-        "ts": "2027-01-12T00:00:00+05:30",
-        "end_minute": 11520,
+        "scenario": "public_02_incidents",
+        "sim_minute": 14400,
+        "ts": "2027-01-14T00:00:00+05:30",
+        "end_minute": 14400,
         "finished": true,
         "tick_minutes": 15,
-        "credits_remaining": 200.0,
-        "chunks": 394,
-        "last_event_id": 297040
+        "credits_remaining": 195.0,
+        "chunks": 492,
+        "last_event_id": 324328
       },
       "config_history": {
         "nw_renewal": [
@@ -1466,8 +2907,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-04T14:00:00+05:30",
-            "proposal_id": "e97a894db2e73605054d3e4827cccfa9c41dfa504fd96abf58454faf06b03415",
+            "applied_at": "2027-01-04T13:15:00+05:30",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
             "approval_id": "apr_00001"
           },
           {
@@ -1476,9 +2917,9 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T16:15:00+05:30",
-            "proposal_id": "a65936b147a634b372357b6919e3b1ff8986cc26b7023169a00371587de205f3",
-            "approval_id": "apr_00003"
+            "applied_at": "2027-01-07T14:30:00+05:30",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
+            "approval_id": "apr_00004"
           },
           {
             "version": 4,
@@ -1486,19 +2927,19 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T19:15:00+05:30",
-            "proposal_id": "3d6393514a75572aab7af5bff1f840cddc826e4992525747b448e8c45c547d11",
-            "approval_id": "apr_00004"
+            "applied_at": "2027-01-07T17:15:00+05:30",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
+            "approval_id": "apr_00005"
           },
           {
             "version": 5,
-            "actor": "controller_approved",
+            "actor": "supervisor",
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-11T13:00:00+05:30",
-            "proposal_id": "b8bbb69010be1e9975ee02ff17e039f695e85c023ff75523eaa3cf090e989375",
-            "approval_id": "apr_00006"
+            "applied_at": "2027-01-09T15:00:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
           }
         ],
         "nw_kyc": [
@@ -1516,8 +2957,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-04T16:15:00+05:30",
-            "proposal_id": "88c3bc6e71f89f4c2717449f5bd5c968b3c3a817274680aca577a86a85ee16a7",
+            "applied_at": "2027-01-04T16:00:00+05:30",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
             "approval_id": "apr_00002"
           },
           {
@@ -1526,9 +2967,9 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-08T13:00:00+05:30",
-            "proposal_id": "04dcd4230f754f58cdbb1c18eaddcf3318c629741db026463b329155ce403740",
-            "approval_id": "apr_00005"
+            "applied_at": "2027-01-08T12:30:00+05:30",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
+            "approval_id": "apr_00007"
           }
         ],
         "ks_cancel": [
@@ -1547,18 +2988,18 @@
               "voice"
             ],
             "applied_at": 0,
-            "proposal_id": "fcc112616b792be0daf2d7e28cb76cfcf8aa12290b136b39f4fee0d7409f0ac9",
+            "proposal_id": "b8a07651f1971fc6d8fb15929a5ad3233e77b283231527b757fcc25eba0c25c6",
             "approval_id": null
           },
           {
             "version": 3,
-            "actor": "controller_auto",
+            "actor": "controller_approved",
             "changed_dims": [
-              "voice"
+              "caller_id"
             ],
-            "applied_at": "2027-01-07T09:15:00+05:30",
-            "proposal_id": "dfceaeefe5ae98579aae5f0010351779ef282bd8fe613e3d8cc674d712f9a4d5",
-            "approval_id": null
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "approval_id": "apr_00003"
           },
           {
             "version": 4,
@@ -1566,8 +3007,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T09:30:00+05:30",
-            "proposal_id": "5f0d4e103433bf0c842acc292862151be7b74a47e88bc86b69fb0c8a27734b0d",
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "1896c078caa1bb8ec352007168b2de3b64381215da1660b3ce8a3a4d4d15d2f0",
             "approval_id": null
           },
           {
@@ -1576,8 +3017,78 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-10T09:45:00+05:30",
-            "proposal_id": "1b13b65d966fd04d83d4df422e46193648df79b4bd4810f88da46e55c078bc08",
+            "applied_at": "2027-01-06T16:00:00+05:30",
+            "proposal_id": "74b8a0840af1bdc7406e18e7feedf3e92d38603854b30a5007403a627e8a93f0",
+            "approval_id": null
+          },
+          {
+            "version": 6,
+            "actor": "supervisor",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-07T11:30:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 7,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T11:45:00+05:30",
+            "proposal_id": "90cd0244584e22f1643d1b69cc379b692345d36dfc921b9d338b81ebd09cab84",
+            "approval_id": null
+          },
+          {
+            "version": 8,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-07T17:15:00+05:30",
+            "proposal_id": "0d868ca3bf4b824234044b1fad282c757cc7369f1c844b3c8ff6413b3e1019af",
+            "approval_id": "apr_00006"
+          },
+          {
+            "version": 9,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T20:00:00+05:30",
+            "proposal_id": "43886a1a920644bdf6028d3037c5d05db405fe979ec72356787068d9c14c0526",
+            "approval_id": null
+          },
+          {
+            "version": 10,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-10T20:15:00+05:30",
+            "proposal_id": "21a2ee3d04c1d3844dad882fe4b582cacadd9c1ed806a11b61328db6d586dbe0",
+            "approval_id": null
+          },
+          {
+            "version": 11,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-10T20:30:00+05:30",
+            "proposal_id": "6b1e27c5c34f3cbdb016c997b5354f68791c5547643ec6b922a5b9f842206a94",
+            "approval_id": null
+          },
+          {
+            "version": 12,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-13T20:45:00+05:30",
+            "proposal_id": "5df64fd291c5be124cc86f8f17d7e81517087825362224f2c0927529d6d01548",
             "approval_id": null
           }
         ]
@@ -1586,7 +3097,7 @@
         "nw_renewal": [
           {
             "approval_id": "apr_00001",
-            "proposal_id": "e97a894db2e73605054d3e4827cccfa9c41dfa504fd96abf58454faf06b03415",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 1,
@@ -1595,56 +3106,42 @@
             ],
             "created_at": "2027-01-04T10:00:00+05:30",
             "expires_at": "2027-01-05T10:00:00+05:30",
-            "decided_at": "2027-01-04T13:42:00+05:30",
+            "decided_at": "2027-01-04T12:52:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00003",
-            "proposal_id": "a65936b147a634b372357b6919e3b1ff8986cc26b7023169a00371587de205f3",
+            "approval_id": "apr_00004",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 2,
             "changed_dims": [
               "voice"
             ],
-            "created_at": "2027-01-07T14:15:00+05:30",
-            "expires_at": "2027-01-08T14:15:00+05:30",
-            "decided_at": "2027-01-07T15:53:00+05:30",
+            "created_at": "2027-01-07T13:30:00+05:30",
+            "expires_at": "2027-01-08T13:30:00+05:30",
+            "decided_at": "2027-01-07T14:01:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00004",
-            "proposal_id": "3d6393514a75572aab7af5bff1f840cddc826e4992525747b448e8c45c547d11",
+            "approval_id": "apr_00005",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 3,
             "changed_dims": [
               "voice"
             ],
-            "created_at": "2027-01-07T16:15:00+05:30",
-            "expires_at": "2027-01-08T16:15:00+05:30",
-            "decided_at": "2027-01-07T18:58:00+05:30",
-            "reasons": []
-          },
-          {
-            "approval_id": "apr_00006",
-            "proposal_id": "b8bbb69010be1e9975ee02ff17e039f695e85c023ff75523eaa3cf090e989375",
-            "workflow_id": "nw_renewal",
-            "status": "applied",
-            "base_version": 4,
-            "changed_dims": [
-              "voice"
-            ],
-            "created_at": "2027-01-11T10:00:00+05:30",
-            "expires_at": "2027-01-12T10:00:00+05:30",
-            "decided_at": "2027-01-11T12:40:00+05:30",
+            "created_at": "2027-01-07T14:30:00+05:30",
+            "expires_at": "2027-01-08T14:30:00+05:30",
+            "decided_at": "2027-01-07T16:54:00+05:30",
             "reasons": []
           }
         ],
         "nw_kyc": [
           {
             "approval_id": "apr_00002",
-            "proposal_id": "88c3bc6e71f89f4c2717449f5bd5c968b3c3a817274680aca577a86a85ee16a7",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
             "workflow_id": "nw_kyc",
             "status": "applied",
             "base_version": 1,
@@ -1653,12 +3150,12 @@
             ],
             "created_at": "2027-01-04T10:15:00+05:30",
             "expires_at": "2027-01-05T10:15:00+05:30",
-            "decided_at": "2027-01-04T15:53:00+05:30",
+            "decided_at": "2027-01-04T15:41:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00005",
-            "proposal_id": "04dcd4230f754f58cdbb1c18eaddcf3318c629741db026463b329155ce403740",
+            "approval_id": "apr_00007",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
             "workflow_id": "nw_kyc",
             "status": "applied",
             "base_version": 2,
@@ -1667,124 +3164,425 @@
             ],
             "created_at": "2027-01-08T10:15:00+05:30",
             "expires_at": "2027-01-09T10:15:00+05:30",
-            "decided_at": "2027-01-08T12:33:00+05:30",
+            "decided_at": "2027-01-08T12:07:00+05:30",
             "reasons": []
           }
         ],
-        "ks_cancel": []
-      }
+        "ks_cancel": [
+          {
+            "approval_id": "apr_00003",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "caller_id"
+            ],
+            "created_at": "2027-01-06T12:00:00+05:30",
+            "expires_at": "2027-01-07T00:00:00+05:30",
+            "decided_at": "2027-01-06T13:31:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00006",
+            "proposal_id": "0d868ca3bf4b824234044b1fad282c757cc7369f1c844b3c8ff6413b3e1019af",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 7,
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "created_at": "2027-01-07T16:00:00+05:30",
+            "expires_at": "2027-01-08T04:00:00+05:30",
+            "decided_at": "2027-01-07T16:57:00+05:30",
+            "reasons": []
+          }
+        ]
+      },
+      "workflows": [
+        {
+          "workflow_id": "nw_renewal",
+          "tenant_id": "northwind_life",
+          "use_case": "life-insurance renewal premium reminder (persistency)",
+          "languages": [
+            "hi",
+            "en",
+            "ta"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 300,
+          "cadence": [
+            2,
+            3,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 1100,
+            "at_hour": 8,
+            "returning_share": 0.4
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "primary": "engagement_rate",
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": true,
+              "allowed_dims": [
+                "schedule",
+                "caller_id"
+              ],
+              "max_shift": 0.5
+            },
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              30,
+              240
+            ],
+            "proposal_ttl_hours": 24,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 3,
+            "base_reject_rate": 0.1,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 5
+        },
+        {
+          "workflow_id": "nw_kyc",
+          "tenant_id": "northwind_life",
+          "use_case": "KYC document reminder for new policies",
+          "languages": [
+            "en",
+            "hi"
+          ],
+          "dialling_window": [
+            10,
+            20
+          ],
+          "dials_per_hour": 200,
+          "cadence": [
+            2,
+            2,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 700,
+            "at_hour": 8,
+            "returning_share": 0.2
+          },
+          "mid_flight": "next_campaign_only",
+          "objective": {
+            "primary": "pickup_rate",
+            "guardrail": {
+              "engagement_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2"
+            ],
+            "voice": [
+              "V1",
+              "V2"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": false,
+              "allowed_dims": [],
+              "max_shift": 0
+            },
+            "approver_hours": [
+              10,
+              18
+            ],
+            "approver_latency_minutes": [
+              60,
+              480
+            ],
+            "proposal_ttl_hours": 24,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 2,
+            "base_reject_rate": 0.15,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "ks_cancel",
+          "tenant_id": "kestrel_finance",
+          "use_case": "consumer-loan cancellation reconfirmation",
+          "languages": [
+            "hi",
+            "en",
+            "kn"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 400,
+          "cadence": [
+            2,
+            2,
+            2
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 1500,
+            "at_hour": 8,
+            "returning_share": 0.3
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "primary": "engagement_rate",
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P2",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P2": "Supervisor edit: adds payment-urgency language and benefit claims",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": true,
+              "allowed_dims": [
+                "schedule",
+                "caller_id",
+                "welcome_message",
+                "voice"
+              ],
+              "max_shift": 0.2
+            },
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              20,
+              120
+            ],
+            "proposal_ttl_hours": 12,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 4,
+            "base_reject_rate": 0.05,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 12
+        }
+      ]
     },
-    "matches_clean": true
+    "matches_clean": true,
+    "verification_started_at": "2026-11-08T20:16:31.693897+00:00",
+    "verification_finished_at": "2026-11-08T21:16:37.716059+00:00"
   },
   {
     "case": "after_apply",
-    "schema": "steps567_finaldev_after_apply_a0f2f4",
-    "run_id": "steps567_finaldev",
-    "directory": "runs\\steps567_finaldev_after_apply_6aff40bd",
-    "application_commit": "3d837791701fa74cc39193adf6040cf77dc7dc01",
+    "schema": "steps567_finalinc_after_apply_4b027b",
+    "run_id": "steps567_finalinc",
+    "directory": "runs/final_verify_b7441e2f/checkout/runs/steps567_finalinc_after_apply_a7ac9141",
+    "application_commit": "63d8c6ef546e810b859593336451d32b160c6ca4",
+    "application_tree_sha256": "0ec34f8e51b4c039079c05ede3ca325d9670105e5b764cf1a7e74a2741eb3285",
+    "application_controller_tree": "e1fa57c374547592749eaf78b08d0e301e34ecf5",
+    "application_dirty": false,
     "profiled": false,
     "exit": 0,
     "timings": {
-      "ticks": 769,
-      "simulated_days": 8.0,
-      "wall_seconds": 109.93,
-      "wall_seconds_per_day_including_bootstrap": 13.741,
+      "ticks": 961,
+      "simulated_days": 10.0,
+      "wall_seconds": 141.02,
+      "wall_seconds_per_day_including_bootstrap": 14.102,
       "bootstrap": {
         "mode": "controller",
         "ts": "2027-01-04T00:00:00+05:30",
         "finished": false,
         "ingested_events": 0,
-        "ingest_seconds": 0.008,
+        "ingest_seconds": 0.006,
         "stream_fetch_seconds": 0.0,
         "parse_seconds": 0.0,
-        "write_seconds": 0.008,
-        "decision_seconds": 0.133,
+        "write_seconds": 0.006,
+        "decision_seconds": 0.111,
         "advance_seconds": 0.0,
-        "loop_seconds": 0.141,
+        "loop_seconds": 0.116,
         "credits_remaining": 200.0,
-        "peak_rss_mib": 47.26
+        "peak_rss_mib": 47.06
       },
       "totals": {
-        "ingest_seconds": 27.708,
-        "stream_fetch_seconds": 3.969,
-        "parse_seconds": 0.868,
-        "write_seconds": 22.914,
-        "decision_seconds": 72.641,
-        "advance_seconds": 6.726,
-        "loop_seconds": 100.359
+        "ingest_seconds": 34.937,
+        "stream_fetch_seconds": 4.937,
+        "parse_seconds": 1.096,
+        "write_seconds": 28.928,
+        "decision_seconds": 94.679,
+        "advance_seconds": 8.395,
+        "loop_seconds": 129.594
       },
-      "live_events": 109640,
-      "live_ingest_events_per_second": 3958.1,
-      "max_decision_lag_bound_seconds": 0.446,
+      "live_events": 137054,
+      "live_ingest_events_per_second": 3923.6,
+      "max_decision_lag_bound_seconds": 10.762,
       "live_wall_seconds_by_simulated_day": {
-        "0": 13.731,
-        "1": 13.205,
-        "2": 14.355,
-        "3": 15.129,
-        "4": 13.48,
-        "5": 13.47,
-        "6": 13.007,
-        "7": 10.567
+        "0": 13.04,
+        "1": 12.522,
+        "2": 24.027,
+        "3": 13.62,
+        "4": 13.311,
+        "5": 12.845,
+        "6": 12.914,
+        "7": 11.389,
+        "8": 11.956,
+        "9": 12.249
       },
-      "peak_controller_rss_mib": 51.88
+      "peak_controller_rss_mib": 50.77
     },
     "signature": {
       "ingested_chunks": {
-        "rows": 394,
-        "sha256": "6b58513299f7e7529202dbefa90ba2d9e9e674603da84119b1fb73fe1e1daa8d"
+        "rows": 492,
+        "sha256": "5b501680db5ed337a0b6ec7c658714326a9a2654bc8793af23daa27e6d483fdc"
       },
       "hourly_metrics": {
-        "rows": 3882,
-        "sha256": "bf63d05a7802149047dd6d89767f92747db1b495ff1c167522456256ec13598c"
+        "rows": 4142,
+        "sha256": "1e24a21a667b75256128dee061c40d90a9a77f9121393b5d32903ff69986a5c8"
       },
       "proposals": {
-        "rows": 10,
-        "sha256": "058cac48c27fa30a54ad4c39c50e75455bb33b933470dbcae8060633da208aaa"
+        "rows": 15,
+        "sha256": "f6dfcc34b8a8b866e685b1edff0692ef5aa550295b7e9b4836dfc55998984aec"
       },
       "experiments": {
-        "rows": 5,
-        "sha256": "e8ab490443e56bda4766a9f637624fe22c3c15f3a1524a8950d1b7f53b4c877a"
+        "rows": 7,
+        "sha256": "0fc860cef7cdadc3702a7d8c43babb4601f41e4ec33bb04121dfc89076c32b70"
       },
       "experiment_people": {
-        "rows": 31078,
-        "sha256": "ff491f50354f3d3a4d0300d1248492d9856bdf158c8386d99eb104cd1fd7133a"
+        "rows": 38630,
+        "sha256": "91225fcfb706e2d45b85ee518965ec7e541ce43e8c19faf7f1065f583f06bc34"
       },
       "incidents": {
-        "rows": 0,
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        "rows": 2,
+        "sha256": "ad100486eb82f27b813f90c58168f79fc0c094c0187519939efdd778ab866d00"
       },
       "audit_log": {
-        "rows": 82,
-        "sha256": "18eaf60d3b960e135a635208a556a3edc4fb0e572ff33d2a185917d8cc57d21a"
+        "rows": 96,
+        "sha256": "c56bc1f394c74b7ed259aeb0c2aa956b309be967cd80b3ea9ae29fcc45f089f7"
+      },
+      "detection_windows": {
+        "rows": 775,
+        "sha256": "57c52d625d3d09bdc27639f342a4d3be19f9ca0cd1b5180fc5726c4a498dbb22"
       },
       "campaigns": {
-        "rows": 66,
-        "fingerprint": "58114119866981825431"
+        "rows": 72,
+        "fingerprint": "-22874037047344732349"
       },
       "concluded_leads": {
-        "rows": 30476,
-        "fingerprint": "637878241394019290055"
+        "rows": 32869,
+        "fingerprint": "-563593811833197910683"
       },
       "person_metrics": {
-        "rows": 83200,
-        "fingerprint": "390710962457889537706"
+        "rows": 104000,
+        "fingerprint": "-1335718672027887676455"
+      },
+      "qa_metrics": {
+        "rows": 3387,
+        "fingerprint": "-164546506131966888471"
       },
       "events": [
-        297040,
+        324328,
         1,
-        297040,
-        "-1601363396620356570045"
+        324328,
+        "-1485679544854842847207"
       ],
       "state": {
-        "scenario": "public_01_dev",
-        "sim_minute": 11520,
-        "ts": "2027-01-12T00:00:00+05:30",
-        "end_minute": 11520,
+        "scenario": "public_02_incidents",
+        "sim_minute": 14400,
+        "ts": "2027-01-14T00:00:00+05:30",
+        "end_minute": 14400,
         "finished": true,
         "tick_minutes": 15,
-        "credits_remaining": 200.0,
-        "chunks": 394,
-        "last_event_id": 297040
+        "credits_remaining": 195.0,
+        "chunks": 492,
+        "last_event_id": 324328
       },
       "config_history": {
         "nw_renewal": [
@@ -1802,8 +3600,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-04T14:00:00+05:30",
-            "proposal_id": "e97a894db2e73605054d3e4827cccfa9c41dfa504fd96abf58454faf06b03415",
+            "applied_at": "2027-01-04T13:15:00+05:30",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
             "approval_id": "apr_00001"
           },
           {
@@ -1812,9 +3610,9 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T16:15:00+05:30",
-            "proposal_id": "a65936b147a634b372357b6919e3b1ff8986cc26b7023169a00371587de205f3",
-            "approval_id": "apr_00003"
+            "applied_at": "2027-01-07T14:30:00+05:30",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
+            "approval_id": "apr_00004"
           },
           {
             "version": 4,
@@ -1822,19 +3620,19 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T19:15:00+05:30",
-            "proposal_id": "3d6393514a75572aab7af5bff1f840cddc826e4992525747b448e8c45c547d11",
-            "approval_id": "apr_00004"
+            "applied_at": "2027-01-07T17:15:00+05:30",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
+            "approval_id": "apr_00005"
           },
           {
             "version": 5,
-            "actor": "controller_approved",
+            "actor": "supervisor",
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-11T13:00:00+05:30",
-            "proposal_id": "b8bbb69010be1e9975ee02ff17e039f695e85c023ff75523eaa3cf090e989375",
-            "approval_id": "apr_00006"
+            "applied_at": "2027-01-09T15:00:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
           }
         ],
         "nw_kyc": [
@@ -1852,8 +3650,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-04T16:15:00+05:30",
-            "proposal_id": "88c3bc6e71f89f4c2717449f5bd5c968b3c3a817274680aca577a86a85ee16a7",
+            "applied_at": "2027-01-04T16:00:00+05:30",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
             "approval_id": "apr_00002"
           },
           {
@@ -1862,9 +3660,9 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-08T13:00:00+05:30",
-            "proposal_id": "04dcd4230f754f58cdbb1c18eaddcf3318c629741db026463b329155ce403740",
-            "approval_id": "apr_00005"
+            "applied_at": "2027-01-08T12:30:00+05:30",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
+            "approval_id": "apr_00007"
           }
         ],
         "ks_cancel": [
@@ -1883,18 +3681,18 @@
               "voice"
             ],
             "applied_at": 0,
-            "proposal_id": "fcc112616b792be0daf2d7e28cb76cfcf8aa12290b136b39f4fee0d7409f0ac9",
+            "proposal_id": "b8a07651f1971fc6d8fb15929a5ad3233e77b283231527b757fcc25eba0c25c6",
             "approval_id": null
           },
           {
             "version": 3,
-            "actor": "controller_auto",
+            "actor": "controller_approved",
             "changed_dims": [
-              "voice"
+              "caller_id"
             ],
-            "applied_at": "2027-01-07T09:15:00+05:30",
-            "proposal_id": "dfceaeefe5ae98579aae5f0010351779ef282bd8fe613e3d8cc674d712f9a4d5",
-            "approval_id": null
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "approval_id": "apr_00003"
           },
           {
             "version": 4,
@@ -1902,8 +3700,8 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-07T09:30:00+05:30",
-            "proposal_id": "5f0d4e103433bf0c842acc292862151be7b74a47e88bc86b69fb0c8a27734b0d",
+            "applied_at": "2027-01-06T14:00:00+05:30",
+            "proposal_id": "1896c078caa1bb8ec352007168b2de3b64381215da1660b3ce8a3a4d4d15d2f0",
             "approval_id": null
           },
           {
@@ -1912,8 +3710,78 @@
             "changed_dims": [
               "voice"
             ],
-            "applied_at": "2027-01-10T09:45:00+05:30",
-            "proposal_id": "1b13b65d966fd04d83d4df422e46193648df79b4bd4810f88da46e55c078bc08",
+            "applied_at": "2027-01-06T16:00:00+05:30",
+            "proposal_id": "74b8a0840af1bdc7406e18e7feedf3e92d38603854b30a5007403a627e8a93f0",
+            "approval_id": null
+          },
+          {
+            "version": 6,
+            "actor": "supervisor",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-07T11:30:00+05:30",
+            "proposal_id": null,
+            "approval_id": null
+          },
+          {
+            "version": 7,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T11:45:00+05:30",
+            "proposal_id": "90cd0244584e22f1643d1b69cc379b692345d36dfc921b9d338b81ebd09cab84",
+            "approval_id": null
+          },
+          {
+            "version": 8,
+            "actor": "controller_approved",
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "applied_at": "2027-01-07T17:15:00+05:30",
+            "proposal_id": "0d868ca3bf4b824234044b1fad282c757cc7369f1c844b3c8ff6413b3e1019af",
+            "approval_id": "apr_00006"
+          },
+          {
+            "version": 9,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-07T20:00:00+05:30",
+            "proposal_id": "43886a1a920644bdf6028d3037c5d05db405fe979ec72356787068d9c14c0526",
+            "approval_id": null
+          },
+          {
+            "version": 10,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-10T20:15:00+05:30",
+            "proposal_id": "21a2ee3d04c1d3844dad882fe4b582cacadd9c1ed806a11b61328db6d586dbe0",
+            "approval_id": null
+          },
+          {
+            "version": 11,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-10T20:30:00+05:30",
+            "proposal_id": "6b1e27c5c34f3cbdb016c997b5354f68791c5547643ec6b922a5b9f842206a94",
+            "approval_id": null
+          },
+          {
+            "version": 12,
+            "actor": "controller_auto",
+            "changed_dims": [
+              "voice"
+            ],
+            "applied_at": "2027-01-13T20:45:00+05:30",
+            "proposal_id": "5df64fd291c5be124cc86f8f17d7e81517087825362224f2c0927529d6d01548",
             "approval_id": null
           }
         ]
@@ -1922,7 +3790,7 @@
         "nw_renewal": [
           {
             "approval_id": "apr_00001",
-            "proposal_id": "e97a894db2e73605054d3e4827cccfa9c41dfa504fd96abf58454faf06b03415",
+            "proposal_id": "6e433be72429e0089bf95cbf67d1850a1e0e38571855cdfba2f096133689fe21",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 1,
@@ -1931,56 +3799,42 @@
             ],
             "created_at": "2027-01-04T10:00:00+05:30",
             "expires_at": "2027-01-05T10:00:00+05:30",
-            "decided_at": "2027-01-04T13:42:00+05:30",
+            "decided_at": "2027-01-04T12:52:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00003",
-            "proposal_id": "a65936b147a634b372357b6919e3b1ff8986cc26b7023169a00371587de205f3",
+            "approval_id": "apr_00004",
+            "proposal_id": "7887e4a806e491741e2acaf195aad13f34a560107d549555f4b7ab5515f2d56d",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 2,
             "changed_dims": [
               "voice"
             ],
-            "created_at": "2027-01-07T14:15:00+05:30",
-            "expires_at": "2027-01-08T14:15:00+05:30",
-            "decided_at": "2027-01-07T15:53:00+05:30",
+            "created_at": "2027-01-07T13:30:00+05:30",
+            "expires_at": "2027-01-08T13:30:00+05:30",
+            "decided_at": "2027-01-07T14:01:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00004",
-            "proposal_id": "3d6393514a75572aab7af5bff1f840cddc826e4992525747b448e8c45c547d11",
+            "approval_id": "apr_00005",
+            "proposal_id": "bc2f8ede07385ec61f70eceb44308f4a7bb3e04d1ae717b5aef8f6f4e9785a04",
             "workflow_id": "nw_renewal",
             "status": "applied",
             "base_version": 3,
             "changed_dims": [
               "voice"
             ],
-            "created_at": "2027-01-07T16:15:00+05:30",
-            "expires_at": "2027-01-08T16:15:00+05:30",
-            "decided_at": "2027-01-07T18:58:00+05:30",
-            "reasons": []
-          },
-          {
-            "approval_id": "apr_00006",
-            "proposal_id": "b8bbb69010be1e9975ee02ff17e039f695e85c023ff75523eaa3cf090e989375",
-            "workflow_id": "nw_renewal",
-            "status": "applied",
-            "base_version": 4,
-            "changed_dims": [
-              "voice"
-            ],
-            "created_at": "2027-01-11T10:00:00+05:30",
-            "expires_at": "2027-01-12T10:00:00+05:30",
-            "decided_at": "2027-01-11T12:40:00+05:30",
+            "created_at": "2027-01-07T14:30:00+05:30",
+            "expires_at": "2027-01-08T14:30:00+05:30",
+            "decided_at": "2027-01-07T16:54:00+05:30",
             "reasons": []
           }
         ],
         "nw_kyc": [
           {
             "approval_id": "apr_00002",
-            "proposal_id": "88c3bc6e71f89f4c2717449f5bd5c968b3c3a817274680aca577a86a85ee16a7",
+            "proposal_id": "d81bcd695b192d5235ffd26eeac2ce9d23d96ef64bbeeb5e077886ea631facb1",
             "workflow_id": "nw_kyc",
             "status": "applied",
             "base_version": 1,
@@ -1989,12 +3843,12 @@
             ],
             "created_at": "2027-01-04T10:15:00+05:30",
             "expires_at": "2027-01-05T10:15:00+05:30",
-            "decided_at": "2027-01-04T15:53:00+05:30",
+            "decided_at": "2027-01-04T15:41:00+05:30",
             "reasons": []
           },
           {
-            "approval_id": "apr_00005",
-            "proposal_id": "04dcd4230f754f58cdbb1c18eaddcf3318c629741db026463b329155ce403740",
+            "approval_id": "apr_00007",
+            "proposal_id": "b737a18a3246b445f31e1a82621137f063c4c39b022d3425eb6c20414e1d48d1",
             "workflow_id": "nw_kyc",
             "status": "applied",
             "base_version": 2,
@@ -2003,13 +3857,301 @@
             ],
             "created_at": "2027-01-08T10:15:00+05:30",
             "expires_at": "2027-01-09T10:15:00+05:30",
-            "decided_at": "2027-01-08T12:33:00+05:30",
+            "decided_at": "2027-01-08T12:07:00+05:30",
             "reasons": []
           }
         ],
-        "ks_cancel": []
-      }
+        "ks_cancel": [
+          {
+            "approval_id": "apr_00003",
+            "proposal_id": "86cee9f4b5348ef84d13f6f9971d6fb3395b05b6b185d6d6f96197abfffab554",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 2,
+            "changed_dims": [
+              "caller_id"
+            ],
+            "created_at": "2027-01-06T12:00:00+05:30",
+            "expires_at": "2027-01-07T00:00:00+05:30",
+            "decided_at": "2027-01-06T13:31:00+05:30",
+            "reasons": []
+          },
+          {
+            "approval_id": "apr_00006",
+            "proposal_id": "0d868ca3bf4b824234044b1fad282c757cc7369f1c844b3c8ff6413b3e1019af",
+            "workflow_id": "ks_cancel",
+            "status": "applied",
+            "base_version": 7,
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "created_at": "2027-01-07T16:00:00+05:30",
+            "expires_at": "2027-01-08T04:00:00+05:30",
+            "decided_at": "2027-01-07T16:57:00+05:30",
+            "reasons": []
+          }
+        ]
+      },
+      "workflows": [
+        {
+          "workflow_id": "nw_renewal",
+          "tenant_id": "northwind_life",
+          "use_case": "life-insurance renewal premium reminder (persistency)",
+          "languages": [
+            "hi",
+            "en",
+            "ta"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 300,
+          "cadence": [
+            2,
+            3,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 1100,
+            "at_hour": 8,
+            "returning_share": 0.4
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "primary": "engagement_rate",
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": true,
+              "allowed_dims": [
+                "schedule",
+                "caller_id"
+              ],
+              "max_shift": 0.5
+            },
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              30,
+              240
+            ],
+            "proposal_ttl_hours": 24,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 3,
+            "base_reject_rate": 0.1,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 5
+        },
+        {
+          "workflow_id": "nw_kyc",
+          "tenant_id": "northwind_life",
+          "use_case": "KYC document reminder for new policies",
+          "languages": [
+            "en",
+            "hi"
+          ],
+          "dialling_window": [
+            10,
+            20
+          ],
+          "dials_per_hour": 200,
+          "cadence": [
+            2,
+            2,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 700,
+            "at_hour": 8,
+            "returning_share": 0.2
+          },
+          "mid_flight": "next_campaign_only",
+          "objective": {
+            "primary": "pickup_rate",
+            "guardrail": {
+              "engagement_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2"
+            ],
+            "voice": [
+              "V1",
+              "V2"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": false,
+              "allowed_dims": [],
+              "max_shift": 0
+            },
+            "approver_hours": [
+              10,
+              18
+            ],
+            "approver_latency_minutes": [
+              60,
+              480
+            ],
+            "proposal_ttl_hours": 24,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 2,
+            "base_reject_rate": 0.15,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "ks_cancel",
+          "tenant_id": "kestrel_finance",
+          "use_case": "consumer-loan cancellation reconfirmation",
+          "languages": [
+            "hi",
+            "en",
+            "kn"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 400,
+          "cadence": [
+            2,
+            2,
+            2
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "size": 1500,
+            "at_hour": 8,
+            "returning_share": 0.3
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "primary": "engagement_rate",
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            }
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P2",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P2": "Supervisor edit: adds payment-urgency language and benefit claims",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "auto_apply": {
+              "enabled": true,
+              "allowed_dims": [
+                "schedule",
+                "caller_id",
+                "welcome_message",
+                "voice"
+              ],
+              "max_shift": 0.2
+            },
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              20,
+              120
+            ],
+            "proposal_ttl_hours": 12,
+            "apply_window_hours": 2,
+            "max_requests_per_24h": 4,
+            "base_reject_rate": 0.05,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 12
+        }
+      ]
     },
-    "matches_clean": true
+    "matches_clean": true,
+    "verification_started_at": "2026-11-08T20:16:31.693897+00:00",
+    "verification_finished_at": "2026-11-08T21:16:37.716059+00:00"
   }
 ]

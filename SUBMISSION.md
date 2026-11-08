@@ -1,23 +1,16 @@
 # Outcome-First Agent Loop — Submission
 
-**Name:** Hitesh Jetwani · **Date:** 2026-11-08 · **Hours actually spent (be honest):** 12 hrs (basically 1 day in hackathon mode) · **Language / storage:** Python / PostgreSQL 17
+**Name:** Hitesh Jetwani · **Date:** 2026-11-09 · **Hours actually spent (be honest):** 12 hrs (basically 1 day in hackathon mode) · **Language / storage:** Python / PostgreSQL 17
 
 **Reviewer:** Harshavardhan KR · **Deadline:** end of day Nov 9th.
 
 ## 0. TL;DR
 
-I built one Python controller with PostgreSQL. It tests voices, repairs caller-ID and prompt
-incidents, and records why each change was allowed.
-
-Public_01 had ten changes: one beneficial and one harmful. Public_02 had two beneficial repairs, no
-harmful changes, and spent five credits without an LLM call. Prompt repair still took 27h30m. No
-voice trial qualified for promotion.
-
-All five crash cases matched a clean run. The latest full focused suite passed 137 tests on Linux
-and 136 on Windows, with one Linux-only skip. A fresh checkout also completed.
-
-I cut welcome interactions, automatic cohort discovery, person-level timing, caller exploration,
-cross-client transfer and the web/notification service.
+One Python controller and PostgreSQL handle voice trials, incident repairs, permissions and audit.
+Fresh public_01: one beneficial and one harmful change; public_02: two beneficial, no harmful, five credits, no LLM calls.
+Prompt repair took 345 simulated minutes (5h45m). No voice trial qualified for promotion.
+Linux: 159 tests passed; Windows: 158 plus one Linux-only skip. Two live API checks and all five crash recoveries passed; every grade/profile was regenerated.
+I cut welcome interactions, automatic cohorts, personal timing, caller exploration, cross-client transfer and web/notification services.
 
 ## 1. Assumptions
 
@@ -229,12 +222,21 @@ conflicts.
 
 ## 7. Incidents
 
-Require two consecutive positive completed hours. Caller alarms need 60 current/200 historical
-dials, a three-point drop against own history and two points against a supported peer, both at
-Fisher p≤0.01. QA needs 30 connected calls, three flags, 200 historical connected calls and two
-points of excess flags at p≤0.01. Fisher compares binomial counts while accounting for
-historical-rate uncertainty. Repeated people/windows mean this is not a whole-run 1% false-alarm
-guarantee. Prompt/cohort changes reset QA persistence; voice-only changes do not.
+Caller alarms still need two positive completed hours: 60 current/200 historical dials, a three-point
+drop against own history and two points against a supported peer, both at Fisher p≤0.01.
+
+After a prompt/cohort edit, QA uses cumulative exposure from its exact event time. Looks at 1, 2, 4
+and 8 hours spend 0.004, 0.002, 0.001 and 0.001, divided across configured cohorts plus default.
+Daily looks at 24*d hours spend `0.002/(d*(d+1))`. The nominal total is 0.01 per workflow/change
+epoch. QA still needs 30 connected calls, three flags, 200 historical connected calls and a
+two-point excess. Only matching-prompt calls from the new epoch count; voice-only edits keep the
+anchor. Exact-time counters handle partial hours and clock-match the historical reference.
+
+Each look saves its plan, counts, cutoff and result. Restart reuses it, including a positive result
+saved before incident creation. If the live config is newer than the ingested change events, QA
+waits for ingestion rather than reusing the old anchor. Prompts without an observed edit retain the
+hourly fallback. Repeated people and historical mix shifts limit the binomial assumptions; the
+budget is nominal, not a whole-run false-alarm guarantee. See [detection rules](./docs/INCIDENTS.md).
 
 Record the latest observed prompt edit and try the supported previous prompt first at n=500. Buy
 suggestions only after that fails or is denied, filtering unavailable, tried and originally unsafe
@@ -248,22 +250,39 @@ paid action/tick. That funds a five-credit previous-prompt validation, a three-c
 two more validations. Existing incidents keep n=300/12-credit rules. Unused tenant shares are not
 borrowed.
 
-Final public_02 had two beneficial repairs, zero harmful changes, five credits spent and zero LLM
-calls. The bad prompt arrived D3 11:30, was detected D4 13:00, validated at 13:15, submitted at
-13:30, applied at 15:00 and verified by 19:00. Onset-to-apply was 27h30m: 25h30m before qualifying
-persistence and two hours from detection to apply. Earlier positive windows were followed by
-negative ones. That is too slow for a rapid-response SLA. For example, an hour at p=0.00034 was followed by p=0.055; another hour at p=0.010089 missed the 0.01 cutoff.
+The new public_02 run had two beneficial repairs, zero harmful changes, five credits spent and no
+LLM calls. The bad prompt arrived D3 11:30. Detection was at 15:30, validation at 15:45, submission
+at 16:00, application at 17:15 and verification at 20:00. Onset-to-apply was 345
+simulated minutes (5h45m), with 105 minutes between detection and application.
+
+The saved looks show why detection occurred at four hours. The two-hour p-value narrowly missed
+its predeclared cutoff; that cutoff was not adjusted after inspecting the result.
+
+| Hours since edit | Current flags / connected | Historical flags / connected | Fisher p | Cutoff | Alert |
+|---|---|---|---|---|---|
+| 1 | 6 / 97 | 24 / 1,551 | 0.00667320 | 0.004 | No |
+| 2 | 10 / 186 | 52 / 3,127 | 0.00203390 | 0.002 | No |
+| 4 | 21 / 350 | 92 / 5,960 | 0.000000741 | 0.001 | Yes |
+
+Public_01 was rerun against a fresh baseline with no incident repairs or credit use. These are single-world measurements, not a response-time
+SLA. Sparse/off-hours exposure and approval waits can still delay repair.
 
 ## 8. Scale
 
-The profiled run processed 9,737,475 events at 7,537.7 live events/sec. Peak controller RSS was
-90.79 MiB. Total wall time was 1,943.207 seconds, or 388.641 seconds/day including bootstrap. Mean
-live tick time was 2,759.615 ms and the maximum advance-plus-decision bound was 25.434 seconds. Live
-days took 191.478–358.727 seconds. Cold start plus D0 took 13m40s, over the ten-minute target.
+The fresh profiled run processed 9,737,475 events at
+7,382.3 live events/sec. Peak controller RSS was
+98.44 MiB. Total wall time was 2,005.933 seconds,
+or 401.187 seconds/day including bootstrap. Mean
+live tick time was 2,863.369 ms and the maximum advance-plus-loop bound was
+24.858 seconds. Live days took
+195.308–377.150 seconds. Cold start plus D0 took
+13.85 minutes, over the ten-minute target.
 
-Tables/indexes/TOAST used about 8.69 GiB, excluding WAL/temp files. Exact-time person counters had
-3,240,000 rows; the cohort/hour cube had 8,791 keys. [LOAD.md](./reports/LOAD.md) has the profile analysis and
-[steps567_load.json](./reports/steps567_load.json) the summary. Earlier unprofiled runs used different code; these numbers do not establish a controlled speedup.
+Tables/indexes/TOAST used 8.70 GiB, excluding WAL/temp files.
+Exact-time person counters had 3,240,000 rows, QA counters
+7,120, and live workflow/version/cohort/hour totals 824 rows.
+[LOAD.md](./reports/LOAD.md) has the profile analysis and
+[steps567_load.json](./reports/steps567_load.json) the completion fingerprints and summary.
 
 Limits were controller 3 CPUs/6 GiB plus PostgreSQL 1 CPU/2 GiB. The timer includes history
 bootstrap and excludes simulator initialization and post-run comparisons. Profiling overhead is
@@ -281,28 +300,30 @@ costs. Ten-times capacity has not been tested.
 [crash_test.py](./tests/crash_test.py) starts a fresh world per case, forces exit 137 mid-ingest, after advance, after intent,
 after accepted POST or after apply, and restarts. All five cases matched their clean run's counters,
 decisions and remote approvals/history. Duplicate remote proposal IDs fail the check; extra recovery
-audit transitions are allowed. See the [matrix](./reports/steps567_crash_final.json), measured at `3d83779`. A fresh local checkout of that version also completed public_01 through the Bash launcher.
+audit transitions are allowed. See the [matrix](./reports/steps567_crash_final.json), rerun from a fresh checkout of `63d8c6e`. All three scenarios completed through the Linux Bash launcher with the same controller tree.
 
-The earlier 118-check Windows/Linux suite covers interruption between a decay conclusion and
-restore intent. Later startup, approval and allocation checks passed 137 on Linux and 136 on
-Windows, with one Linux-only skip. CLI-focused checks passed 46 on Linux and 45 on Windows.
-The [test sources](./tests/) contain those cases. The full profile predates the checkpoint-ordering
-fix; it improves stop durability without changing the normal hot path.
+The final focused suite passes 159 tests on Linux and 158 on Windows, with one Linux-only skip.
+[New QA tests](./tests/test_cumulative_qa.py) cover cumulative evidence, partial-hour cutoffs, stale
+versions, replay, backfill, transaction rollback, cohort budget splitting and recovery between a
+saved positive look and incident creation. A seeded 500-family simulation of the complete early-look
+rule produced one false alert (0.2%); this does not establish production error control.
+
+The [test sources](./tests/) also cover approvals, experiments and safety-stop recovery.
+Both real-HTTP checks were rerun: governance/lost-response recovery, and a complete event recount
+followed by restart with no new events. The latter test now reads the tick after the startup identity
+message. The new crash fingerprints include exact-time QA counters and saved cumulative looks.
+The public_03 profile includes that same QA code and schema.
 
 Reads retry transport/5xx failures within bounds. Failed event streams roll back their chunk. Writes
 check remote state before retrying. Stale/duplicate 409s, lapse 410s and credit 402s are recorded
 separately. Unknown paid results need review. Database failover and crashes at every instruction
 were not tested.
 
-Two earlier failures remain unexplained. PostgreSQL 17.11 lost a backend to signal 11 during a
-proposal-reach query after committing 5,537,379 history events. It recovered from WAL and Docker
-reported `OOMKilled=false`. The same query later worked with JIT off (6.767s) and on (6.625s).
-Disabling session JIT removes compilation cost; it is not a proven fix for that crash.
-
-An earlier recovery comparison stored event 183742 as `ball` in the reference and `call` after
-restart. Both had 297,040 events but different call/audit counters, so that comparison was invalid.
-Unknown incoming types now roll back ingestion. The final matrix used fresh worlds and matched,
-but does not explain the original mismatch.
+Two development failures remain unexplained: a PostgreSQL backend exited with signal 11 during
+a proposal-reach query, and a recovery comparison saw different event types in its two HTTP inputs.
+The database recovered from WAL; session JIT is disabled to remove compilation cost, not as a
+proven crash fix. Unknown event types now roll back ingestion. The fresh matrix matched throughout,
+but does not explain those earlier failures or establish database failover safety.
 
 ## 10. Audit & observability
 
@@ -315,25 +336,25 @@ are local; external delivery and a watchdog are still missing.
 The following command was checked against the saved incident run:
 
 ```bash
-export PGOPTIONS='-csearch_path=steps567_finalinc_clean_b96a70'
+export PGOPTIONS='-csearch_path=steps567_finalinc_clean_f9ef0b'
 python -m controller audit --run-id steps567_finalinc --workflow ks_cancel \
-  --end-time '2027-01-08T15:00:00+05:30' --version 10
+  --end-time '2027-01-07T17:15:00+05:30' --version 8
 ```
 
 The answer links supervisor version 6/P2, previous P1/version 5, validation val_00001 and approval
-apr_00007. `--version` selects the exact change when timestamps tie. Complete version-10 hours
-contain 1,600 dials, 286 connected, 154 engaged and five flags. These describe post-change exposure;
+apr_00006. `--version` selects the exact change when timestamps tie. Complete version-8 hours
+contain 800 dials, 154 connected, 67 engaged and three flags. These describe post-change exposure;
 the API gives no human approver name.
 
 
 Two other audit decisions can be inspected with the same CLI:
 
 ```bash
-export PGOPTIONS='-csearch_path=steps567_finalinc_clean_b96a70'
+export PGOPTIONS='-csearch_path=steps567_finalinc_clean_f9ef0b'
 python -m controller audit --run-id steps567_finalinc --workflow ks_cancel \
   --end-time '2027-01-06T14:00:00+05:30' --version 3
 
-export PGOPTIONS='-csearch_path=steps567_finaldev_clean_67f3af'
+export PGOPTIONS='-csearch_path=steps567_finaldev_clean_d96275'
 python -m controller audit --run-id steps567_finaldev --workflow nw_kyc \
   --end-time '2027-01-08T13:00:00+05:30' --version 3
 ```
@@ -368,10 +389,10 @@ Public_02:
 
 | workflow | conclusion rate | Δ | pickup | Δ | engagement | Δ | engagement gap captured | hallucinated calls (base) |
 |---|---|---|---|---|---|---|---|---|
-| ks_cancel | 0.280 | +13.0% | 0.201 | +9.6% | 0.485 | +1.7% | 25% | 122 (330) |
-| nw_kyc | 0.379 | +1.1% | 0.244 | +0.8% | 0.596 | +0.6% | 5% | 43 (31) |
-| nw_renewal | 0.429 | +0.6% | 0.261 | -0.5% | 0.553 | +1.0% | 6% | 61 (55) |
-| ALL | 0.351 | +4.9% | 0.230 | +3.6% | 0.534 | +0.8% | 13% | 226 (416) |
+| ks_cancel | 0.283 | +14.4% | 0.202 | +9.8% | 0.489 | +2.6% | 29% | 77 (330) |
+| nw_kyc | 0.386 | +3.1% | 0.240 | -0.6% | 0.615 | +3.8% | 5% | 28 (31) |
+| nw_renewal | 0.429 | +0.5% | 0.261 | -0.2% | 0.551 | +0.6% | 6% | 52 (55) |
+| ALL | 0.353 | +5.8% | 0.230 | +3.6% | 0.539 | +1.6% | 15% | 157 (416) |
 
 Public_03:
 
@@ -418,7 +439,7 @@ winner lift. Aggregate changes from one seed cannot isolate treatment effects.
 ## 13. Known weaknesses
 
 - The conservative rules found no public_01/02 winner. Inconclusive cleanup and imprecise holdout retirement can discard a small real benefit.
-- QA detection was slow. Cluster/delta intervals are approximations, and first/repeat or pre/post incident comparisons can have selection and timing bias.
+- Cumulative QA reduced the measured delay to 5h45m, but low traffic, daily follow-ups and approvals can still be slow. Binomial alarm tests and clustered intervals have assumptions; first/repeat and pre/post comparisons can have selection or timing bias.
 - Welcome interactions, new cohorts, caller exploration and call-time optimisation are cut. Rollback may wait for approval or new campaigns.
 - Uncertain paid calls require review. Fixed tenant shares can strand credits; tenant-wide attention preferences are incomplete.
 - Kestrel's 11:00/two-request preference, notification delivery, named approval identity and a watchdog are missing.

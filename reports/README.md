@@ -1,23 +1,35 @@
 # Review evidence
 
-These files support the deliverables in the assignment README. Design, scope,
-stakeholder replies and audit examples are in [SUBMISSION.md](../SUBMISSION.md).
+All results here were regenerated on 2026-11-09 from a fresh checkout of
+`63d8c6ef546e810b859593336451d32b160c6ca4`. The controller Git tree is `e1fa57c374547592749eaf78b08d0e301e34ecf5`;
+the SHA-256 over controller source/SQL, with LF line endings, is
+`0ec34f8e51b4c039079c05ede3ca325d9670105e5b764cf1a7e74a2741eb3285`. The final documentation and live-test assertion changes
+leave that controller tree unchanged. No previous run's grade or timing is retained here.
+
+Design, scope, stakeholder replies and audit examples are in [SUBMISSION.md](../SUBMISSION.md).
 
 | File | Purpose |
 |---|---|
-| [public_01.md](./public_01.md) | Final development-scenario grade |
-| [public_02.md](./public_02.md) | Final incident-scenario grade |
-| [public_03.md](./public_03.md) | Final load-scenario grade |
-| [LOAD.md](./LOAD.md) | Resource limits, stage timings, memory, database size, profile and 10× analysis |
-| [steps567_load.json](./steps567_load.json) | Measured load data and cProfile summary supporting those numbers |
-| [steps567_crash_final.json](./steps567_crash_final.json) | Five forced exits and completed restarts, each matching the clean run |
-| [steps567_workflow_policies.json](./steps567_workflow_policies.json) | HTTP policy snapshot used to check the stakeholder claims |
+| [public_01.md](./public_01.md) | Fresh development-scenario grade |
+| [public_02.md](./public_02.md) | Fresh incident-scenario grade |
+| [public_03.md](./public_03.md) | Fresh load-scenario grade |
+| [LOAD.md](./LOAD.md) | Resource limits, bootstrap/live timings, memory, database size and profile |
+| [steps567_load.json](./steps567_load.json) | Load measurements, profile summary and completion fingerprints |
+| [steps567_crash_final.json](./steps567_crash_final.json) | Clean run plus five forced exits, all matching after restart |
+| [steps567_workflow_policies.json](./steps567_workflow_policies.json) | HTTP workflow/policy snapshot from the fresh public_02 run |
 
-The crash matrix and public_01/public_02 runs used `3d83779`; the profiled public_03
-run used `f594647`. They predate the later checkpoint-ordering and CLI fixes.
-The submission records the separate regression checks; these reports have not
-been relabelled as runs of newer code.
+Fresh no-op baselines were generated for all three scenarios. All scenario runs used the Linux
+Bash launcher from the fresh checkout. The public_02 prompt repair took 345 simulated minutes
+(5h45m), with two beneficial changes, no harmful changes and five credits spent.
 
-[OPERATIONS.md](../docs/OPERATIONS.md) gives reproduction commands. Earlier runs
-and development reports are available in Git history. Unresolved failures and
-three audit examples are summarized in the submission.
+The focused PostgreSQL suite passed 159 tests on Linux and
+158 on Windows, with one Linux-only skip. Two additional real-HTTP
+tests passed: governance/lost-response recovery, and a complete event recount followed by restart.
+The latter now selects the tick record after the startup identity message. These API tests ran
+after the isolated load measurement. The crash matrix also compares cumulative QA counters and
+saved detection windows, as well as decisions and remote approvals/config history.
+
+The measured public_02 schema is `steps567_finalinc_clean_f9ef0b`; public_01 is `steps567_finaldev_clean_d96275`;
+public_03 is `steps567_load_clean_7b8269`. Local logs and profiles remain in ignored
+`runs/final_verify_b7441e2f`. [OPERATIONS.md](../docs/OPERATIONS.md) gives reproduction
+commands. The submission records the remaining limits and three checked audit examples.

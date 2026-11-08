@@ -1,52 +1,55 @@
 [
   {
     "case": "clean",
-    "schema": "steps567_load_clean_2f139e",
+    "schema": "steps567_load_clean_7b8269",
     "run_id": "steps567_load",
-    "directory": "runs\\steps567_load_clean_75d2d319",
-    "application_commit": "f594647818faa6d8900131a40469ded7a3c6269c",
+    "directory": "runs/final_verify_b7441e2f/checkout/runs/steps567_load_clean_c6f5f36d",
+    "application_commit": "63d8c6ef546e810b859593336451d32b160c6ca4",
+    "application_tree_sha256": "0ec34f8e51b4c039079c05ede3ca325d9670105e5b764cf1a7e74a2741eb3285",
+    "application_controller_tree": "e1fa57c374547592749eaf78b08d0e301e34ecf5",
+    "application_dirty": false,
     "profiled": true,
     "exit": 0,
     "timings": {
       "ticks": 481,
       "simulated_days": 5.0,
-      "wall_seconds": 1943.207,
-      "wall_seconds_per_day_including_bootstrap": 388.641,
+      "wall_seconds": 2005.933,
+      "wall_seconds_per_day_including_bootstrap": 401.187,
       "bootstrap": {
         "mode": "controller",
         "ts": "2027-01-04T00:00:00+05:30",
         "finished": false,
         "ingested_events": 5537379,
-        "ingest_seconds": 608.838,
-        "stream_fetch_seconds": 18.992,
-        "parse_seconds": 66.901,
-        "write_seconds": 522.945,
-        "decision_seconds": 7.258,
+        "ingest_seconds": 621.94,
+        "stream_fetch_seconds": 18.268,
+        "parse_seconds": 67.803,
+        "write_seconds": 535.87,
+        "decision_seconds": 6.872,
         "advance_seconds": 0.0,
-        "loop_seconds": 616.096,
+        "loop_seconds": 628.812,
         "credits_remaining": 400.0,
-        "peak_rss_mib": 51.47
+        "peak_rss_mib": 59.34
       },
       "totals": {
-        "ingest_seconds": 1166.052,
-        "stream_fetch_seconds": 35.299,
-        "parse_seconds": 116.24,
-        "write_seconds": 1014.496,
-        "decision_seconds": 709.585,
-        "advance_seconds": 65.063,
-        "loop_seconds": 1875.648
+        "ingest_seconds": 1190.884,
+        "stream_fetch_seconds": 34.607,
+        "parse_seconds": 119.237,
+        "write_seconds": 1037.034,
+        "decision_seconds": 746.524,
+        "advance_seconds": 65.801,
+        "loop_seconds": 1937.428
       },
       "live_events": 4200096,
-      "live_ingest_events_per_second": 7537.7,
-      "max_decision_lag_bound_seconds": 25.434,
+      "live_ingest_events_per_second": 7382.3,
+      "max_decision_lag_bound_seconds": 24.858,
       "live_wall_seconds_by_simulated_day": {
-        "0": 204.122,
-        "1": 277.357,
-        "2": 358.727,
-        "3": 292.931,
-        "4": 191.478
+        "0": 202.081,
+        "1": 285.859,
+        "2": 377.15,
+        "3": 314.019,
+        "4": 195.308
       },
-      "peak_controller_rss_mib": 90.79
+      "peak_controller_rss_mib": 98.44
     },
     "signature": {
       "ingested_chunks": {
@@ -77,6 +80,10 @@
         "rows": 180,
         "sha256": "e4135eca0b9d4662a1cc78a724f4ac43e9cbefefccd1504fbc10fc71d2f56279"
       },
+      "detection_windows": {
+        "rows": 1935,
+        "sha256": "a0cad77fe145a95d32f4cf5c229cfcd0ad6ee09325f0ce727be03b88ddc70dae"
+      },
       "campaigns": {
         "rows": 144,
         "fingerprint": "45901033414506951212"
@@ -88,6 +95,10 @@
       "person_metrics": {
         "rows": 3240000,
         "fingerprint": "7743480068468479887571"
+      },
+      "qa_metrics": {
+        "rows": 7120,
+        "fingerprint": "446908945009431738790"
       },
       "events": [
         9737475,
@@ -665,213 +676,1234 @@
           }
         ],
         "tide_cancel_2": []
-      }
+      },
+      "workflows": [
+        {
+          "workflow_id": "nort_renewal_0",
+          "tenant_id": "northwind_life",
+          "use_case": "life-insurance renewal premium reminder (persistency)",
+          "languages": [
+            "en",
+            "hi",
+            "ta"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 4500,
+          "cadence": [
+            2,
+            3,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "at_hour": 8,
+            "returning_share": 0.4,
+            "size": 16000
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            },
+            "primary": "engagement_rate"
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "apply_window_hours": 2,
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              30,
+              240
+            ],
+            "auto_apply": {
+              "allowed_dims": [
+                "schedule",
+                "caller_id"
+              ],
+              "enabled": true,
+              "max_shift": 0.5
+            },
+            "base_reject_rate": 0.1,
+            "max_requests_per_24h": 3,
+            "min_validation_pass_rate": 0.97,
+            "proposal_ttl_hours": 24
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "nort_kyc_1",
+          "tenant_id": "northwind_life",
+          "use_case": "KYC document reminder for new policies",
+          "languages": [
+            "en",
+            "hi"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 4500,
+          "cadence": [
+            2,
+            2,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "at_hour": 8,
+            "returning_share": 0.2,
+            "size": 16000
+          },
+          "mid_flight": "next_campaign_only",
+          "objective": {
+            "guardrail": {
+              "engagement_rate_max_drop": 0.02
+            },
+            "primary": "pickup_rate"
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2"
+            ],
+            "voice": [
+              "V1",
+              "V2"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling"
+          },
+          "governance": {
+            "apply_window_hours": 2,
+            "approver_hours": [
+              10,
+              18
+            ],
+            "approver_latency_minutes": [
+              60,
+              480
+            ],
+            "auto_apply": {
+              "allowed_dims": [],
+              "enabled": false,
+              "max_shift": 0
+            },
+            "base_reject_rate": 0.15,
+            "max_requests_per_24h": 2,
+            "proposal_ttl_hours": 24,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 2
+        },
+        {
+          "workflow_id": "nort_cancel_2",
+          "tenant_id": "northwind_life",
+          "use_case": "consumer-loan cancellation reconfirmation",
+          "languages": [
+            "en",
+            "hi",
+            "kn"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 4500,
+          "cadence": [
+            2,
+            2,
+            2
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "at_hour": 8,
+            "returning_share": 0.3,
+            "size": 16000
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            },
+            "primary": "engagement_rate"
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations"
+          },
+          "governance": {
+            "apply_window_hours": 2,
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              20,
+              120
+            ],
+            "auto_apply": {
+              "allowed_dims": [
+                "schedule",
+                "caller_id",
+                "welcome_message",
+                "voice"
+              ],
+              "enabled": true,
+              "max_shift": 0.2
+            },
+            "base_reject_rate": 0.05,
+            "max_requests_per_24h": 4,
+            "proposal_ttl_hours": 12,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "kest_renewal_0",
+          "tenant_id": "kestrel_finance",
+          "use_case": "life-insurance renewal premium reminder (persistency)",
+          "languages": [
+            "en",
+            "hi",
+            "ta"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 4500,
+          "cadence": [
+            2,
+            3,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "at_hour": 8,
+            "returning_share": 0.4,
+            "size": 16000
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            },
+            "primary": "engagement_rate"
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "apply_window_hours": 2,
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              30,
+              240
+            ],
+            "auto_apply": {
+              "allowed_dims": [
+                "schedule",
+                "caller_id"
+              ],
+              "enabled": true,
+              "max_shift": 0.5
+            },
+            "base_reject_rate": 0.1,
+            "max_requests_per_24h": 3,
+            "min_validation_pass_rate": 0.97,
+            "proposal_ttl_hours": 24
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "kest_kyc_1",
+          "tenant_id": "kestrel_finance",
+          "use_case": "KYC document reminder for new policies",
+          "languages": [
+            "en",
+            "hi"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 4500,
+          "cadence": [
+            2,
+            2,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "at_hour": 8,
+            "returning_share": 0.2,
+            "size": 16000
+          },
+          "mid_flight": "next_campaign_only",
+          "objective": {
+            "guardrail": {
+              "engagement_rate_max_drop": 0.02
+            },
+            "primary": "pickup_rate"
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2"
+            ],
+            "voice": [
+              "V1",
+              "V2"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling"
+          },
+          "governance": {
+            "apply_window_hours": 2,
+            "approver_hours": [
+              10,
+              18
+            ],
+            "approver_latency_minutes": [
+              60,
+              480
+            ],
+            "auto_apply": {
+              "allowed_dims": [],
+              "enabled": false,
+              "max_shift": 0
+            },
+            "base_reject_rate": 0.15,
+            "max_requests_per_24h": 2,
+            "proposal_ttl_hours": 24,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 2
+        },
+        {
+          "workflow_id": "kest_cancel_2",
+          "tenant_id": "kestrel_finance",
+          "use_case": "consumer-loan cancellation reconfirmation",
+          "languages": [
+            "en",
+            "hi",
+            "kn"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 4500,
+          "cadence": [
+            2,
+            2,
+            2
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "at_hour": 8,
+            "returning_share": 0.3,
+            "size": 16000
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            },
+            "primary": "engagement_rate"
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations"
+          },
+          "governance": {
+            "apply_window_hours": 2,
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              20,
+              120
+            ],
+            "auto_apply": {
+              "allowed_dims": [
+                "schedule",
+                "caller_id",
+                "welcome_message",
+                "voice"
+              ],
+              "enabled": true,
+              "max_shift": 0.2
+            },
+            "base_reject_rate": 0.05,
+            "max_requests_per_24h": 4,
+            "proposal_ttl_hours": 12,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "arav_renewal_0",
+          "tenant_id": "aravalli_general",
+          "use_case": "life-insurance renewal premium reminder (persistency)",
+          "languages": [
+            "en",
+            "hi",
+            "ta"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 4500,
+          "cadence": [
+            2,
+            3,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "at_hour": 8,
+            "returning_share": 0.4,
+            "size": 16000
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            },
+            "primary": "engagement_rate"
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "apply_window_hours": 2,
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              30,
+              240
+            ],
+            "auto_apply": {
+              "allowed_dims": [
+                "schedule",
+                "caller_id"
+              ],
+              "enabled": true,
+              "max_shift": 0.5
+            },
+            "base_reject_rate": 0.1,
+            "max_requests_per_24h": 3,
+            "min_validation_pass_rate": 0.97,
+            "proposal_ttl_hours": 24
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "arav_kyc_1",
+          "tenant_id": "aravalli_general",
+          "use_case": "KYC document reminder for new policies",
+          "languages": [
+            "en",
+            "hi"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 4500,
+          "cadence": [
+            2,
+            2,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "at_hour": 8,
+            "returning_share": 0.2,
+            "size": 16000
+          },
+          "mid_flight": "next_campaign_only",
+          "objective": {
+            "guardrail": {
+              "engagement_rate_max_drop": 0.02
+            },
+            "primary": "pickup_rate"
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2"
+            ],
+            "voice": [
+              "V1",
+              "V2"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling"
+          },
+          "governance": {
+            "apply_window_hours": 2,
+            "approver_hours": [
+              10,
+              18
+            ],
+            "approver_latency_minutes": [
+              60,
+              480
+            ],
+            "auto_apply": {
+              "allowed_dims": [],
+              "enabled": false,
+              "max_shift": 0
+            },
+            "base_reject_rate": 0.15,
+            "max_requests_per_24h": 2,
+            "proposal_ttl_hours": 24,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "arav_cancel_2",
+          "tenant_id": "aravalli_general",
+          "use_case": "consumer-loan cancellation reconfirmation",
+          "languages": [
+            "en",
+            "hi",
+            "kn"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 4500,
+          "cadence": [
+            2,
+            2,
+            2
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "at_hour": 8,
+            "returning_share": 0.3,
+            "size": 16000
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            },
+            "primary": "engagement_rate"
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations"
+          },
+          "governance": {
+            "apply_window_hours": 2,
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              20,
+              120
+            ],
+            "auto_apply": {
+              "allowed_dims": [
+                "schedule",
+                "caller_id",
+                "welcome_message",
+                "voice"
+              ],
+              "enabled": true,
+              "max_shift": 0.2
+            },
+            "base_reject_rate": 0.05,
+            "max_requests_per_24h": 4,
+            "proposal_ttl_hours": 12,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "tide_renewal_0",
+          "tenant_id": "tidewater_health",
+          "use_case": "life-insurance renewal premium reminder (persistency)",
+          "languages": [
+            "en",
+            "hi",
+            "ta"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 4500,
+          "cadence": [
+            2,
+            3,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "at_hour": 8,
+            "returning_share": 0.4,
+            "size": 16000
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            },
+            "primary": "engagement_rate"
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4",
+              "P5"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations",
+            "P5": "Strict: near-verbatim compliance script"
+          },
+          "governance": {
+            "apply_window_hours": 2,
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              30,
+              240
+            ],
+            "auto_apply": {
+              "allowed_dims": [
+                "schedule",
+                "caller_id"
+              ],
+              "enabled": true,
+              "max_shift": 0.5
+            },
+            "base_reject_rate": 0.1,
+            "max_requests_per_24h": 3,
+            "min_validation_pass_rate": 0.97,
+            "proposal_ttl_hours": 24
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "tide_kyc_1",
+          "tenant_id": "tidewater_health",
+          "use_case": "KYC document reminder for new policies",
+          "languages": [
+            "en",
+            "hi"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 4500,
+          "cadence": [
+            2,
+            2,
+            3
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "at_hour": 8,
+            "returning_share": 0.2,
+            "size": 16000
+          },
+          "mid_flight": "next_campaign_only",
+          "objective": {
+            "guardrail": {
+              "engagement_rate_max_drop": 0.02
+            },
+            "primary": "pickup_rate"
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2"
+            ],
+            "voice": [
+              "V1",
+              "V2"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling"
+          },
+          "governance": {
+            "apply_window_hours": 2,
+            "approver_hours": [
+              10,
+              18
+            ],
+            "approver_latency_minutes": [
+              60,
+              480
+            ],
+            "auto_apply": {
+              "allowed_dims": [],
+              "enabled": false,
+              "max_shift": 0
+            },
+            "base_reject_rate": 0.15,
+            "max_requests_per_24h": 2,
+            "proposal_ttl_hours": 24,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 3
+        },
+        {
+          "workflow_id": "tide_cancel_2",
+          "tenant_id": "tidewater_health",
+          "use_case": "consumer-loan cancellation reconfirmation",
+          "languages": [
+            "en",
+            "hi",
+            "kn"
+          ],
+          "dialling_window": [
+            9,
+            21
+          ],
+          "dials_per_hour": 4500,
+          "cadence": [
+            2,
+            2,
+            2
+          ],
+          "min_gap_minutes": 120,
+          "daily_batch": {
+            "at_hour": 8,
+            "returning_share": 0.3,
+            "size": 16000
+          },
+          "mid_flight": "allowed",
+          "objective": {
+            "guardrail": {
+              "pickup_rate_max_drop": 0.02
+            },
+            "primary": "engagement_rate"
+          },
+          "options": {
+            "welcome_message": [
+              "W1",
+              "W2",
+              "W3"
+            ],
+            "voice": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "caller_id": [
+              "D1",
+              "D2",
+              "D3"
+            ],
+            "prompt_version": [
+              "P1",
+              "P3",
+              "P4"
+            ]
+          },
+          "prompt_catalog": {
+            "P1": "Current production prompt",
+            "P3": "Grounded: benefit claims restricted to policy-schedule fields; tighter objection handling",
+            "P4": "Persuasive: freer objection handling and richer benefit explanations"
+          },
+          "governance": {
+            "apply_window_hours": 2,
+            "approver_hours": [
+              10,
+              19
+            ],
+            "approver_latency_minutes": [
+              20,
+              120
+            ],
+            "auto_apply": {
+              "allowed_dims": [
+                "schedule",
+                "caller_id",
+                "welcome_message",
+                "voice"
+              ],
+              "enabled": true,
+              "max_shift": 0.2
+            },
+            "base_reject_rate": 0.05,
+            "max_requests_per_24h": 4,
+            "proposal_ttl_hours": 12,
+            "min_validation_pass_rate": 0.97
+          },
+          "current_version": 3
+        }
+      ]
     },
     "profile": {
-      "total_calls": 896866062,
-      "elapsed_accounted_seconds": 1942.5132772970037,
+      "total_calls": 897627253,
+      "elapsed_accounted_seconds": 2005.1839402809962,
       "functions": [
         {
           "file": "~",
           "line": 0,
           "function": "<built-in method builtins.exec>",
-          "calls": 355,
-          "internal_seconds": 0.005108665,
-          "cumulative_seconds": 1942.6416026810002
+          "calls": 347,
+          "internal_seconds": 0.005349561,
+          "cumulative_seconds": 2005.3121517670002
         },
         {
           "file": "<string>",
           "line": 1,
           "function": "<module>",
           "calls": 1,
-          "internal_seconds": 3.3010000000000002e-06,
-          "cumulative_seconds": 1942.641555979
+          "internal_seconds": 4.501000000000001e-06,
+          "cumulative_seconds": 2005.312018862
         },
         {
           "file": "<frozen runpy>",
           "line": 201,
           "function": "run_module",
           "calls": 1,
-          "internal_seconds": 7.001e-06,
-          "cumulative_seconds": 1942.6415526780002
+          "internal_seconds": 8.6e-06,
+          "cumulative_seconds": 2005.3120143610001
         },
         {
           "file": "<frozen runpy>",
           "line": 65,
           "function": "_run_code",
           "calls": 1,
-          "internal_seconds": 9.3e-06,
-          "cumulative_seconds": 1942.608710185
+          "internal_seconds": 7.6e-06,
+          "cumulative_seconds": 2005.2822253030001
         },
         {
           "file": "/app/controller/__main__.py",
           "line": 1,
           "function": "<module>",
           "calls": 1,
-          "internal_seconds": 0.000138007,
-          "cumulative_seconds": 1942.608649882
+          "internal_seconds": 9.6304e-05,
+          "cumulative_seconds": 2005.2821915010002
         },
         {
           "file": "/app/controller/__main__.py",
-          "line": 94,
+          "line": 93,
           "function": "main",
           "calls": 1,
-          "internal_seconds": 0.000172609,
-          "cumulative_seconds": 1942.1650745200002
+          "internal_seconds": 0.00017210600000000002,
+          "cumulative_seconds": 2004.8403315470002
         },
         {
           "file": "/app/controller/__main__.py",
           "line": 32,
           "function": "run",
           "calls": 1,
-          "internal_seconds": 0.12805975,
-          "cumulative_seconds": 1942.0605026320002
+          "internal_seconds": 0.133946943,
+          "cumulative_seconds": 2004.6793471980002
         },
         {
           "file": "/app/controller/__main__.py",
           "line": 21,
           "function": "drain",
           "calls": 481,
-          "internal_seconds": 0.011806181,
-          "cumulative_seconds": 1166.048099908
+          "internal_seconds": 0.011685818,
+          "cumulative_seconds": 1190.889759998
         },
         {
           "file": "/app/controller/store.py",
-          "line": 128,
+          "line": 190,
           "function": "ingest",
           "calls": 269,
-          "internal_seconds": 23.734934142,
-          "cumulative_seconds": 1162.356570508
+          "internal_seconds": 23.875424318,
+          "cumulative_seconds": 1187.1906790580001
         },
         {
           "file": "/usr/local/lib/python3.12/site-packages/psycopg/connection.py",
           "line": 479,
           "function": "wait",
-          "calls": 248395,
-          "internal_seconds": 1057.395247738,
-          "cumulative_seconds": 1107.164610359
+          "calls": 254431,
+          "internal_seconds": 1116.655583293,
+          "cumulative_seconds": 1166.264273061
         },
         {
           "file": "/usr/local/lib/python3.12/site-packages/psycopg/cursor.py",
           "line": 100,
           "function": "execute",
-          "calls": 63497,
-          "internal_seconds": 0.20427366500000002,
-          "cumulative_seconds": 1060.4541283580002
+          "calls": 69531,
+          "internal_seconds": 0.228801895,
+          "cumulative_seconds": 1121.6175377470001
         },
         {
           "file": "/usr/local/lib/python3.12/site-packages/psycopg/connection.py",
           "line": 281,
           "function": "execute",
-          "calls": 33251,
-          "internal_seconds": 0.08289929,
-          "cumulative_seconds": 695.850147822
+          "calls": 33525,
+          "internal_seconds": 0.08556414100000001,
+          "cumulative_seconds": 719.445014655
         },
         {
           "file": "/app/controller/experiments.py",
           "line": 72,
           "function": "tick",
           "calls": 481,
-          "internal_seconds": 0.10616423500000001,
-          "cumulative_seconds": 584.720708528
+          "internal_seconds": 0.10908298400000001,
+          "cumulative_seconds": 615.226583309
         },
         {
           "file": "/app/controller/experiments.py",
           "line": 177,
           "function": "_advance",
           "calls": 4553,
-          "internal_seconds": 2.9363474170000003,
-          "cumulative_seconds": 573.906546952
+          "internal_seconds": 2.989335559,
+          "cumulative_seconds": 604.783982677
         },
         {
           "file": "/app/controller/experiments.py",
           "line": 234,
           "function": "_running",
           "calls": 3391,
-          "internal_seconds": 0.21551175900000002,
-          "cumulative_seconds": 554.143500785
+          "internal_seconds": 0.21447407100000002,
+          "cumulative_seconds": 584.883900993
         },
         {
           "file": "/app/controller/store.py",
-          "line": 515,
+          "line": 613,
           "function": "collect_exposure",
           "calls": 844,
-          "internal_seconds": 0.048493224,
-          "cumulative_seconds": 424.84050320700004
+          "internal_seconds": 0.048574556000000005,
+          "cumulative_seconds": 455.011259562
         },
         {
           "file": "/usr/local/lib/python3.12/site-packages/psycopg/_copy.py",
           "line": 126,
           "function": "write_row",
           "calls": 9737475,
-          "internal_seconds": 4.508945293,
-          "cumulative_seconds": 206.768471164
+          "internal_seconds": 4.660917156,
+          "cumulative_seconds": 208.28490757100002
         },
         {
           "file": "/usr/local/lib/python3.12/site-packages/psycopg/_copy_base.py",
           "line": 225,
           "function": "write_row",
           "calls": 9737475,
-          "internal_seconds": 64.803325032,
-          "cumulative_seconds": 186.474229529
+          "internal_seconds": 64.824661801,
+          "cumulative_seconds": 188.97281207700001
         },
         {
           "file": "/app/controller/api.py",
-          "line": 29,
+          "line": 47,
           "function": "events",
           "calls": 9737744,
-          "internal_seconds": 25.946524048,
-          "cumulative_seconds": 173.34302672700002
+          "internal_seconds": 25.597530216000003,
+          "cumulative_seconds": 175.37602021700002
         },
         {
           "file": "/app/controller/store.py",
-          "line": 15,
+          "line": 16,
           "function": "event_row",
           "calls": 9737475,
-          "internal_seconds": 75.01946671200001,
-          "cumulative_seconds": 150.401428387
+          "internal_seconds": 74.244302575,
+          "cumulative_seconds": 148.22906600500002
         },
         {
           "file": "/usr/local/lib/python3.12/site-packages/psycopg/types/json.py",
           "line": 212,
           "function": "dump",
-          "calls": 9754061,
-          "internal_seconds": 13.975069735000002,
-          "cumulative_seconds": 118.611106871
+          "calls": 9754062,
+          "internal_seconds": 14.076481354,
+          "cumulative_seconds": 121.11126293000001
         },
         {
           "file": "/app/controller/statistics.py",
           "line": 56,
           "function": "evaluate",
           "calls": 844,
-          "internal_seconds": 2.747700075,
-          "cumulative_seconds": 114.227496098
+          "internal_seconds": 2.84881903,
+          "cumulative_seconds": 114.31332452800001
         },
         {
           "file": "/app/controller/experiments.py",
           "line": 220,
           "function": "_harm",
           "calls": 834,
-          "internal_seconds": 0.01141757,
-          "cumulative_seconds": 111.966057492
+          "internal_seconds": 0.011448233,
+          "cumulative_seconds": 112.04539534700001
         },
         {
           "file": "/app/controller/statistics.py",
           "line": 11,
           "function": "comparison",
           "calls": 1688,
-          "internal_seconds": 87.587795463,
-          "cumulative_seconds": 111.46718689900001
+          "internal_seconds": 87.56476987500001,
+          "cumulative_seconds": 111.45220630700001
         },
         {
-          "file": "/usr/local/lib/python3.12/site-packages/httpx/_client.py",
-          "line": 771,
-          "function": "request",
-          "calls": 17056,
-          "internal_seconds": 0.056259683000000005,
-          "cumulative_seconds": 107.887432062
+          "file": "/usr/local/lib/python3.12/json/__init__.py",
+          "line": 299,
+          "function": "loads",
+          "calls": 9780822,
+          "internal_seconds": 10.43582011,
+          "cumulative_seconds": 110.25553971400001
         }
       ]
-    }
+    },
+    "experiment_statuses": {
+      "inconclusive": 10,
+      "unfinished": 2
+    },
+    "qualified_winners": 0,
+    "incident_statuses": [],
+    "event_counts": {
+      "history": 5537379,
+      "events": 4200096
+    },
+    "live_dials": 3240000,
+    "metric_keys": 824,
+    "database_bytes": 9337126912,
+    "verification_started_at": "2026-11-08T20:16:31.693897+00:00",
+    "verification_finished_at": "2026-11-08T21:16:37.716059+00:00"
   }
 ]

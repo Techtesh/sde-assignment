@@ -85,7 +85,7 @@
       "base_reject_rate": 0.1,
       "min_validation_pass_rate": 0.97
     },
-    "current_version": 2
+    "current_version": 5
   },
   {
     "workflow_id": "nw_kyc",
@@ -161,7 +161,7 @@
       "base_reject_rate": 0.15,
       "min_validation_pass_rate": 0.97
     },
-    "current_version": 2
+    "current_version": 3
   },
   {
     "workflow_id": "ks_cancel",
@@ -252,6 +252,6 @@
       "base_reject_rate": 0.05,
       "min_validation_pass_rate": 0.97
     },
-    "current_version": 2
+    "current_version": 12
   }
 ]
