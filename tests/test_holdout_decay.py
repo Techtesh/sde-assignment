@@ -1,6 +1,8 @@
 import random
 from datetime import timedelta
 
+import pytest
+
 from test_experiments import setup, start, expose, tick, record
 
 
@@ -83,3 +85,22 @@ def test_old_predeclared_promotion_share_is_preserved_on_restart(database):
         store.update_experiment(eid,"running",world.now,{**experiment["data"],"plan":plan})
         tick(world, api, engine, first+timedelta(hours=72))
         assert store.proposal(record(store,eid)["proposal_id"])["body"]["proposed_config"]["allocations"]["default"]["voice"]["V2"] == .8
+
+
+def test_exit_before_restore_cannot_consume_the_decay_checkpoint(database,monkeypatch):
+    with setup(database) as (world, store, api, governance, engine):
+        eid,begin=promoted(world,store,api,governance,engine)
+        rows=population(.12)
+        monkeypatch.setattr(store,"collect_exposure",lambda *args,**kwargs:rows)
+        tick(world,api,engine,begin+timedelta(hours=24))
+        original=engine._restore
+        def crash(*args,**kwargs):
+            raise RuntimeError("exit between decision and intent")
+        monkeypatch.setattr(engine,"_restore",crash)
+        with pytest.raises(RuntimeError,match="between decision"):
+            tick(world,api,engine,begin+timedelta(hours=48))
+        assert record(store,eid)["data"]["decay_look"]==1
+        monkeypatch.setattr(engine,"_restore",original)
+        tick(world,api,engine,begin+timedelta(hours=48))
+        assert record(store,eid)["status"]=="restoring"
+        assert store.proposal(record(store,eid)["proposal_id"])["urgent"]

@@ -251,9 +251,11 @@ class ExperimentEngine:
         end = start + timedelta(hours=look)
         rows = self.store.collect_exposure(experiment, "trial", data["owned_version"], start.isoformat(), end.isoformat())
         evidence = self._harm(rows, plan, look)
-        self._mark(experiment, "running", now, safety_look=look, safety_checked_until=end.isoformat())
         if evidence:
-            self._restore({**experiment, "data": {**data, "safety_evidence": evidence}}, now, "Population safety stop", "lost")
+            self._restore({**experiment, "data": {**data, "safety_look": look, "safety_checked_until": end.isoformat(),
+                                                  "safety_evidence": evidence}}, now, "Population safety stop", "lost")
+        else:
+            self._mark(experiment, "running", now, safety_look=look, safety_checked_until=end.isoformat())
 
     def _promote(self, experiment: dict, now: str) -> None:
         data, eid, wid = experiment["data"], experiment["experiment_id"], experiment["workflow_id"]
@@ -285,9 +287,10 @@ class ExperimentEngine:
         end = start + timedelta(hours=look)
         rows = self.store.collect_exposure(experiment, "promotion_wait", data["owned_version"], start.isoformat(), end.isoformat())
         evidence = self._harm(rows, data["plan"], look + data["plan"]["duration_hours"])
-        self._mark(experiment, "promoting", now, pending_look=look)
         if evidence:
-            self._restore({**experiment, "data": {**data, "safety_evidence": evidence}}, now, "Voice degraded while awaiting promotion", "lost")
+            self._restore({**experiment, "data": {**data, "pending_look": look, "safety_evidence": evidence}}, now, "Voice degraded while awaiting promotion", "lost")
+        else:
+            self._mark(experiment, "promoting", now, pending_look=look)
 
     def _monitor(self, experiment: dict, now: str) -> None:
         if experiment["data"]["plan"]["rule_version"] == "clustered-fixed-v1":
@@ -320,11 +323,12 @@ class ExperimentEngine:
                         reasons.append(f"{segment}: insufficient evidence of continued benefit at the fixed 48h checkpoint")
             data = {**data, "decay_look": look, "decay_streaks": streaks,
                     "last_decay_window": {"start": begin.isoformat(), "end": end.isoformat(), "segments": evidence}}
-            self.store.update_experiment(experiment["experiment_id"], "monitoring", now, data)
             experiment = {**experiment, "data": data}
             if reasons:
+                # Restore persists the stop and its checkpoint together before any network read.
                 self._restore({**experiment, "data": {**data, "decay_evidence": evidence}}, now, "; ".join(reasons), "rolled_back")
                 return
+            self.store.update_experiment(experiment["experiment_id"], "monitoring", now, data)
 
     def _legacy_monitor(self, experiment: dict, now: str) -> None:
         data = experiment["data"]
@@ -335,10 +339,12 @@ class ExperimentEngine:
         begin, end = start + timedelta(hours=24 * (look - 1)), start + timedelta(hours=24 * look)
         rows = self.store.collect_exposure(experiment, f"decay:{look}", data["owned_version"], begin.isoformat(), end.isoformat())
         evidence = self._harm(rows, data["plan"], look, decay=True)
-        self._mark(experiment, "monitoring", now, decay_look=look,
-                   last_decay_window={"start": begin.isoformat(), "end": end.isoformat(), "harm": evidence})
+        data = {**data, "decay_look": look,
+                "last_decay_window": {"start": begin.isoformat(), "end": end.isoformat(), "harm": evidence}}
         if evidence:
             self._restore({**experiment, "data": {**data, "decay_evidence": evidence}}, now, "Winner decay or guardrail degradation", "rolled_back")
+        else:
+            self.store.update_experiment(experiment["experiment_id"], "monitoring", now, data)
 
     def _restore(self, experiment: dict, now: str, reason: str, terminal: str) -> None:
         data, eid, wid = experiment["data"], experiment["experiment_id"], experiment["workflow_id"]
