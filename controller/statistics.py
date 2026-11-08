@@ -78,6 +78,11 @@ def evaluate(rows: list[dict], plan: dict, *, alpha: float | None = None,
 
 
 def planned_samples(rate: float, alpha: float, share: float = 0.2, lift: float = 0.08) -> int:
-    """Working 80%-power target; final clustered uncertainty decides whether data suffice."""
+    """Challenger target for primary positivity; independent-binomial approximation.
+
+    Total N = z²*p*(1-p)/(lift²*share*(1-share)); multiplying by share
+    gives this target, not total N. This is not power for the joint winner rule;
+    final clustered inference, effect-size/guardrail gates and the fixed horizon govern.
+    """
     z = NormalDist().inv_cdf(1 - alpha) + NormalDist().inv_cdf(0.8)
     return max(200, math.ceil(z * z * rate * (1 - rate) / (lift * lift * (1 - share))))

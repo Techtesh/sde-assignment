@@ -41,9 +41,9 @@ def proposal_facts(store: Store, workflow: dict, old: dict, new: dict, now: str)
             estimates.append({"path": path, "projected_rates": None, "unsupported_options": sorted(missing)})
             continue
         pickup = sum(weight * observed[key]["connected"] / observed[key]["dials"] for key, weight in weights.items())
-        concluded = sum(weight * observed[key]["engaged"] / observed[key]["dials"] for key, weight in weights.items())
+        engaged_per_dial = sum(weight * observed[key]["engaged"] / observed[key]["dials"] for key, weight in weights.items())
         estimates.append({"path": path, "projected_rates": {
-            "pickup_rate": pickup, "engagement_rate": concluded / pickup if pickup else None,
+            "pickup_rate": pickup, "engagement_rate": engaged_per_dial / pickup if pickup else None,
         }})
     return {
         "affected_leads": affected,
@@ -190,11 +190,12 @@ class Governance:
         else:
             workflow = self.api.get(f"/workflows/{wid}")
             policy = workflow["governance"]
-            hour = datetime.fromisoformat(now).astimezone(ZoneInfo("Asia/Kolkata")).hour
+            instant = datetime.fromisoformat(now).astimezone(ZoneInfo("Asia/Kolkata"))
+            hour = instant.hour
             start, end = policy["approver_hours"]
             if not proposal["urgent"] and not start <= hour < end:
                 return
-            instant = datetime.fromisoformat(now).astimezone(ZoneInfo("Asia/Kolkata"))
+            # Submission hours and future decision/TTL feasibility are different gates.
             latency = timedelta(minutes=max(policy.get("approver_latency_minutes", [0])))
             ready = instant + latency
             midnight = ready.replace(hour=0, minute=0, second=0, microsecond=0)

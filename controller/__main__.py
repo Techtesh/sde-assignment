@@ -99,7 +99,8 @@ def main() -> None:
     parser.add_argument("--at", help="audit the latest change at or before this ISO timestamp")
     parser.add_argument("--json", action="store_true", help="print the detailed status as JSON")
     parser.add_argument("--version", type=int, help="select an exact config version for audit when changes share a timestamp")
-    parser.add_argument("--run-id", default=os.environ.get("SIM_RUN_ID", "default"))
+    parser.add_argument("--run-id", default=os.environ.get("SIM_RUN_ID") or None,
+                        help="explicit world identity; otherwise persist/reuse one per simulator URL")
     parser.add_argument("--sequential-testing", action="store_true", default=False)
     parser.add_argument("--observe-only", action="store_true", help="ingest and reconcile without config writes or paid calls")
     parser.add_argument("--max-ticks", type=int, help="stop after N advances; omit to run to completion")
@@ -113,6 +114,8 @@ def main() -> None:
         parser.error("Set DATABASE_URL to a PostgreSQL connection string (see docs/CONTROLLER.md)")
     with psycopg.connect(dsn, autocommit=True, connect_timeout=10) as connection:
         if args.command != "run":
+            if not args.run_id:
+                parser.error("status/audit require --run-id (printed when the controller starts)")
             if args.command == "audit" and not (args.workflow and args.at):
                 parser.error("audit requires --workflow and --at")
             with connection.transaction():
@@ -122,9 +125,13 @@ def main() -> None:
             return
         if not args.url:
             parser.error("run requires --url")
-        store = Store(connection, args.run_id, args.url.rstrip("/"))
         with httpx.Client(base_url=args.url.rstrip("/"), timeout=120) as client:
-            run(SimulatorAPI(client), store, max_ticks=args.max_ticks, observe_only=args.observe_only)
+            api = SimulatorAPI(client)
+            api.get("/health")
+            state = api.get("/sim/state")
+            store = Store(connection, args.run_id, args.url.rstrip("/"), state=state)
+            print(json.dumps({"run_id": store.run_id, "simulator_url": args.url.rstrip("/")}), flush=True)
+            run(api, store, max_ticks=args.max_ticks, observe_only=args.observe_only)
 
 
 if __name__ == "__main__":

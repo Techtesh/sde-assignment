@@ -5,6 +5,7 @@ import random
 import pytest
 
 from controller.statistics import comparison, evaluate, planned_samples
+from statistics import NormalDist
 
 
 def plan():
@@ -75,6 +76,15 @@ def test_power_target_and_testing_budget_are_declared():
     assert planned_samples(0.5, 0.025) >= 200
     assert planned_samples(0.5, 0.005) > planned_samples(0.5, 0.025)
     assert sum(0.05 / (i * (i + 1)) for i in range(1, 10000)) < 0.05
+
+
+@pytest.mark.parametrize("share", [0.1, 0.2, 0.5])
+def test_planned_samples_is_an_arm_target_with_approximately_eighty_percent_power(share):
+    challenger = planned_samples(0.5, 0.025, share=share)
+    control = challenger * (1 - share) / share
+    error = math.sqrt(0.25 * (1 / challenger + 1 / control))
+    power = NormalDist().cdf(0.08 / error - NormalDist().inv_cdf(0.975))
+    assert 0.8 <= power < 0.805
 
 
 def test_seeded_correlated_null_calibration():

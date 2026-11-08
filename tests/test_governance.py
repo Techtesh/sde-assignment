@@ -407,3 +407,38 @@ def test_full_workday_latency_does_not_deadlock_approval_submission(database):
         pid = plan(governance, world)
         governance.tick(world.now)
         assert store.proposal(pid)["status"] == "pending"
+
+
+@pytest.mark.parametrize("now,urgent,ttl,submitted", [
+    ("2027-01-04T18:59:00+05:30", False, 15, False),
+    ("2027-01-04T18:59:00+05:30", False, 16, True),
+    ("2027-01-04T19:00:00+05:30", False, 24, False),
+    ("2027-01-04T19:00:00+05:30", True, 15, False),
+    ("2027-01-04T19:00:00+05:30", True, 16, True),
+    ("2027-01-04T13:29:00+00:00", False, 16, True),
+    ("2027-01-04T13:30:00+00:00", False, 24, False),
+])
+def test_closing_boundary_keeps_submission_hours_separate_from_ttl_feasibility(database, now, urgent, ttl, submitted):
+    with setup(database) as (world, store, api, governance):
+        world.now = now
+        world.workflow["governance"].update(approver_latency_minutes=[2, 2], proposal_ttl_hours=ttl)
+        pid = plan(governance, world, urgent=urgent)
+        governance.tick(world.now)
+        assert bool(world.writes) == submitted
+        assert store.proposal(pid)["status"] == ("pending" if submitted else "planned")
+
+
+def test_request_window_deduplicates_local_remote_ids_across_timezones(database):
+    with setup(database) as (world, store, api, governance):
+        world.now = "2027-01-05T11:00:00+05:30"
+        old = plan(governance, world, decision="old")
+        governance.tick(world.now)
+        world.approvals[0]["created_at"] = "2027-01-04T05:31:00+00:00"  # 23h59 ago.
+        world.approvals[0]["status"] = "rejected"
+        governance.tick(world.now)
+        store.db.execute("UPDATE proposals SET submitted_at=%s WHERE proposal_id=%s",
+                         ("2027-01-04T11:01:00+05:30", old))
+        assert store.recent_approval_ids("wf", world.now) == {old}
+        new = plan(governance, world, decision="new")
+        governance.tick(world.now)
+        assert store.proposal(new)["status"] == "pending"  # One slot used, not two.

@@ -5,6 +5,12 @@ CREATE TABLE IF NOT EXISTS controller_runs (
     state jsonb NOT NULL DEFAULT '{}'
 );
 
+CREATE TABLE IF NOT EXISTS controller_endpoints (
+    simulator_url text PRIMARY KEY,
+    run_id text NOT NULL REFERENCES controller_runs,
+    generation integer NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS workflow_snapshots (
     run_id text NOT NULL REFERENCES controller_runs,
     workflow_id text NOT NULL,

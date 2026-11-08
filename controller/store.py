@@ -2,6 +2,7 @@
 
 from collections.abc import Iterable
 from datetime import datetime
+import hashlib
 from pathlib import Path
 
 import psycopg
@@ -58,12 +59,17 @@ def event_row(run_id: str, chunk: int, history: bool, event: dict) -> tuple:
 
 
 class Store:
-    def __init__(self, connection: psycopg.Connection, run_id: str, simulator_url: str):
+    def __init__(self, connection: psycopg.Connection, run_id: str | None, simulator_url: str,
+                 *, state: dict | None = None):
         self.db = connection
-        self.run_id = run_id
         # Repeated loop queries should not pay LLVM compilation costs as evidence grows.
         self.db.execute("SET jit=off")
         self.db.execute(Path(__file__).with_name("schema.sql").read_text(encoding="utf-8"))
+        if run_id is None:
+            if state is None:
+                raise ValueError("Automatic run identity requires simulator state")
+            run_id = self._automatic_run(simulator_url, state)
+        self.run_id = run_id
         locked = self.db.execute(
             "SELECT pg_try_advisory_lock(hashtextextended(%s, 0))", (run_id,)
         ).fetchone()[0]
@@ -85,6 +91,42 @@ class Store:
                 source = sql.SQL("(SELECT * FROM events WHERE run_id={}) AS source").format(sql.Literal(run_id))
                 self.db.execute(self.evidence_sql.format(source=source))
                 self.db.execute("INSERT INTO evidence_ready VALUES (%s)", (run_id,))
+        if state is not None:
+            self.observe_state(state)
+
+    def _automatic_run(self, simulator_url: str, state: dict) -> str:
+        locked = self.db.execute("SELECT pg_try_advisory_lock(hashtextextended(%s, 0))",
+                                 ("endpoint:" + simulator_url,)).fetchone()[0]
+        if not locked:
+            raise RuntimeError("Another controller is already processing this simulator URL")
+        previous = self.db.execute(
+            "SELECT e.run_id,e.generation,r.state FROM controller_endpoints e "
+            "JOIN controller_runs r USING(run_id) WHERE e.simulator_url=%s", (simulator_url,),
+        ).fetchone()
+        if previous is None:
+            # Preserve recovery for installations that previously used the implicit default.
+            previous = self.db.execute("SELECT run_id,0,state FROM controller_runs "
+                                       "WHERE run_id='default' AND simulator_url=%s", (simulator_url,)).fetchone()
+        generation = previous[1] if previous else 0
+        old = previous[2] if previous else {}
+        compatible = not old or (
+            old.get("scenario") == state.get("scenario")
+            and datetime.fromisoformat(old["ts"]) <= datetime.fromisoformat(state["ts"])
+            and old["last_event_id"] <= state["last_event_id"]
+            and not (old.get("finished") and not state.get("finished"))
+        )
+        if previous and compatible:
+            run_id = previous[0]
+        else:
+            generation += 1
+            run_id = f"auto-{hashlib.sha256(simulator_url.encode()).hexdigest()[:24]}-{generation}"
+        with self.db.transaction():
+            self.db.execute("INSERT INTO controller_runs(run_id,simulator_url) VALUES (%s,%s) "
+                            "ON CONFLICT DO NOTHING", (run_id, simulator_url))
+            self.db.execute("INSERT INTO controller_endpoints VALUES (%s,%s,%s) "
+                            "ON CONFLICT (simulator_url) DO UPDATE SET run_id=EXCLUDED.run_id,generation=EXCLUDED.generation",
+                            (simulator_url, run_id, generation))
+        return run_id
 
     def last_chunk(self, kind: str) -> int:
         return self.db.execute(
