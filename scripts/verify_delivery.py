@@ -123,8 +123,7 @@ def run_case(args, case, schema, dsn):
         # Aggregate controller + database budget: 3 CPUs/6 GiB + 1 CPU/2 GiB.
         command = ["docker", "run", "--rm", *network, "--cpus", "3", "--memory", "6g", "--memory-swap", "6g",
                    "-e", "DATABASE_URL=" + make_conninfo(**settings), "-e", "SIM_RUN_ID=" + args.label,
-                   "-v", f"{Path.cwd()}:/app:ro", "formi-controller:milestone5",
-                   "bash", "./run.sh", sim_url]
+                   "-v", f"{Path.cwd()}:/app:ro", "formi-controller:milestone5", sim_url]
         if args.profile:
             command[3:3] = ["-v", f"{directory.resolve()}:/evidence", "-e", "CONTROLLER_PROFILE=/evidence/controller.prof"]
     with (directory/"simulator.log").open("w", encoding="utf-8") as simulator_log:
