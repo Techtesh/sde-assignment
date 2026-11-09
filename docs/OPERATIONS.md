@@ -11,6 +11,31 @@ a new world. Setup and reset limits are in [CONTROLLER.md](./CONTROLLER.md).
 Simulator health is retried for up to 60 seconds. Readiness messages go to stderr, so stdout can
 still be read as JSON.
 
+## Regression tests
+
+Install [requirements-dev.txt](../requirements-dev.txt) and start the development PostgreSQL
+service. On Windows:
+
+```powershell
+docker compose up -d --wait postgres
+$env:TEST_DATABASE_URL = 'postgresql://controller:controller@127.0.0.1:55432/controller'
+python -m pytest -q tests
+```
+
+On Linux, install the same test dependencies and run `python -m pytest -q tests` with
+`TEST_DATABASE_URL` pointing to PostgreSQL reachable from that environment. Without this
+variable, database tests skip. The two real-HTTP tests additionally need `LIVE_SIM_URL` /
+`LIVE_RUN_ID` or `GOV_SIM_URL`; the governance check needs a dedicated fresh simulator and
+changes its state. Windows skips the Linux Bash-launcher check.
+
+Run Windows and Linux suites sequentially when they share a database. Per-test schemas
+isolate tables, but run-ID and simulator-URL advisory locks span those schemas. Concurrent
+suites can fail with an already-processing error even though their tables are separate.
+
+The latest rerun passed 167 tests on Windows (three skipped) and 168 on Linux (two skipped).
+[INGESTION.md](../reports/INGESTION.md) records the exact skips, saved evidence and remaining
+full-scenario verification. Keep regression tests off the database during performance measurements.
+
 ## One supervisor view
 
 ```bash

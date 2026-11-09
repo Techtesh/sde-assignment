@@ -229,13 +229,18 @@ class Store:
                 ).fetchone()
             if conflict:
                 raise ValueError("Conflicting event_id; use a fresh run_id for a new world")
-            self.db.execute("CREATE TEMP TABLE fresh_events (LIKE events) ON COMMIT DROP")
-            source = ("SELECT DISTINCT ON (event_id) * FROM incoming ORDER BY event_id"
-                      if duplicates else "SELECT * FROM incoming")
-            self.db.execute(
-                "WITH added AS (INSERT INTO events " + source + " ON CONFLICT DO NOTHING RETURNING *) "
-                "INSERT INTO fresh_events SELECT * FROM added"
-            )
+            if not duplicates and (minimum_id is None or minimum_id > prior_max):
+                # The run lock and new unique IDs let us reuse staged JSON instead of copying it again.
+                self.db.execute("ALTER TABLE incoming RENAME TO fresh_events")
+                self.db.execute("INSERT INTO events SELECT * FROM fresh_events")
+            else:
+                self.db.execute("CREATE TEMP TABLE fresh_events (LIKE events) ON COMMIT DROP")
+                source = ("SELECT DISTINCT ON (event_id) * FROM incoming ORDER BY event_id"
+                          if duplicates else "SELECT * FROM incoming")
+                self.db.execute(
+                    "WITH added AS (INSERT INTO events " + source + " ON CONFLICT DO NOTHING RETURNING *) "
+                    "INSERT INTO fresh_events SELECT * FROM added"
+                )
             self.db.execute(
                 "INSERT INTO leads SELECT DISTINCT ON (workflow_id, payload->>'lead_id') "
                 "run_id, workflow_id, payload->>'lead_id', payload->>'person_id', "

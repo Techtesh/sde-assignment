@@ -7,9 +7,9 @@
 ## 0. TL;DR
 
 One Python controller and PostgreSQL handle voice trials, incident repairs, permissions and audit.
-Fresh public_01: one beneficial and one harmful change; public_02: two beneficial, no harmful, five credits, no LLM calls.
+Last full scenario verification (`63d8c6e`): public_01 had one beneficial and one harmful change; public_02 had two beneficial, no harmful, five credits, no LLM calls.
 Prompt repair took 345 simulated minutes (5h45m). No voice trial qualified for promotion.
-Linux: 159 tests passed; Windows: 158 plus one Linux-only skip. Two live API checks and all five crash recoveries passed; every grade/profile was regenerated.
+Latest regression rerun: Linux 168 passed/2 skipped; Windows 167 passed/3 skipped. History replay fell from 507.9 to 470.8 seconds with matching evidence fingerprints. Full grades, startup/D0 timing, live API checks and the five-case crash matrix have not been rerun after the ingestion optimization.
 I cut welcome interactions, automatic cohorts, personal timing, caller exploration, cross-client transfer and web/notification services.
 
 ## 1. Assumptions
@@ -155,7 +155,10 @@ evaluate populations. [incidents.py](./controller/incidents.py) and [experiments
 and applies configuration changes.
 
 One transaction saves each chunk's new events, lead joins, hourly/person counters,
-campaign/conclusion state, audit and checkpoint. Older runs build missing derived tables once.
+campaign/conclusion state, audit and checkpoint. New, unique IDs reuse the COPY staging
+table as `fresh_events`, avoiding a second temporary copy of the full JSON payloads.
+Chunks with duplicate or overlapping IDs retain the checked insert/return path so only
+new events affect counters. Older runs build missing derived tables once.
 Startup reads simulator state, imports outstanding chunks and reconciles approvals/history before
 resuming. A session lock allows one writer per run. Views are read-only, and experiment counts
 commit with their time cursors.
@@ -269,7 +272,7 @@ SLA. Sparse/off-hours exposure and approval waits can still delay repair.
 
 ## 8. Scale
 
-The fresh profiled run processed 9,737,475 events at
+The last full profiled run, before staging-table reuse, processed 9,737,475 events at
 7,382.3 live events/sec. Peak controller RSS was
 98.44 MiB. Total wall time was 2,005.933 seconds,
 or 401.187 seconds/day including bootstrap. Mean
@@ -283,6 +286,14 @@ Exact-time person counters had 3,240,000 rows, QA counters
 7,120, and live workflow/version/cohort/hour totals 824 rows.
 [LOAD.md](./reports/LOAD.md) has the profile analysis and
 [steps567_load.json](./reports/steps567_load.json) the completion fingerprints and summary.
+
+The later ingestion replay processed the same 5,537,379 historical events in 470.8 seconds
+versus 507.9 before the change (7.3% less elapsed time). All nine table fingerprints matched.
+The short live prefix was slower: 19.7 versus 18.1 seconds. These are single-run file replays,
+with a machine restart between the full-history measurements; cache variation was not controlled.
+They do not update the full-profile numbers above or prove the ten-minute startup/D0 target.
+[INGESTION.md](./reports/INGESTION.md) records the method, results and limits. Statistical rules
+were unchanged; experiment sample planning was not an ingestion bottleneck.
 
 Limits were controller 3 CPUs/6 GiB plus PostgreSQL 1 CPU/2 GiB. The timer includes history
 bootstrap and excludes simulator initialization and post-run comparisons. Profiling overhead is
@@ -302,17 +313,22 @@ after accepted POST or after apply, and restarts. All five cases matched their c
 decisions and remote approvals/history. Duplicate remote proposal IDs fail the check; extra recovery
 audit transitions are allowed. See the [matrix](./reports/steps567_crash_final.json), rerun from a fresh checkout of `63d8c6e`. All three scenarios completed through the Linux Bash launcher with the same controller tree.
 
-The final focused suite passes 159 tests on Linux and 158 on Windows, with one Linux-only skip.
+The latest full regression rerun passed 168 tests on Linux (two opt-in live checks skipped)
+and 167 on Windows (those two plus one Linux-only check skipped). The suites ran sequentially
+against PostgreSQL; running them together causes collisions on shared run-ID locks.
+New ingestion checks cover partial overlaps, duplicate new calls and rollback of all derived
+counters for both history and live chunks. [INGESTION.md](./reports/INGESTION.md) records the rerun.
 [New QA tests](./tests/test_cumulative_qa.py) cover cumulative evidence, partial-hour cutoffs, stale
 versions, replay, backfill, transaction rollback, cohort budget splitting and recovery between a
 saved positive look and incident creation. A seeded 500-family simulation of the complete early-look
 rule produced one false alert (0.2%); this does not establish production error control.
 
 The [test sources](./tests/) also cover approvals, experiments and safety-stop recovery.
-Both real-HTTP checks were rerun: governance/lost-response recovery, and a complete event recount
+During the earlier `63d8c6e` scenario verification, both real-HTTP checks passed: governance/lost-response recovery, and a complete event recount
 followed by restart with no new events. The latter test now reads the tick after the startup identity
 message. The new crash fingerprints include exact-time QA counters and saved cumulative looks.
-The public_03 profile includes that same QA code and schema.
+The public_03 profile includes that same QA code and schema. Those live checks, full grades/profile
+and the five-case crash matrix predate staging-table reuse; their rerun remains P2.
 
 Reads retry transport/5xx failures within bounds. Failed event streams roll back their chunk. Writes
 check remote state before retrying. Stale/duplicate 409s, lapse 410s and credit 402s are recorded

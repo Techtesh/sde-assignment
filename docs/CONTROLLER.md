@@ -62,8 +62,17 @@ history and live cursors handle their globally numbered chunks.
 
 Duplicate checks compare IDs first. A chunk whose actual minimum ID is newer than the committed
 maximum skips the old-event lookup. Overlapping IDs still get a full payload comparison, and
-conflicting content rolls back the chunk. Unique chunks skip the extra DISTINCT sort. Controller
-sessions disable JIT compilation. [LOAD.md](../reports/LOAD.md) records the measurements; [submission reliability](../SUBMISSION.md#9-reliability) describes the unresolved server crash.
+conflicting content rolls back the chunk. Unique chunks skip the extra DISTINCT sort.
+When every ID is new and unique, ingestion renames the COPY staging table to `fresh_events`
+and inserts those rows directly into raw storage. This avoids copying full JSON payloads into
+another temporary table. The run lock protects this check-and-insert sequence. Overlapping or
+duplicate IDs retain the insert/return path, so counters see only newly inserted events.
+Both paths keep raw evidence, derived counters and the checkpoint in the same transaction.
+Controller sessions disable JIT compilation. [LOAD.md](../reports/LOAD.md) records the measurements;
+[submission reliability](../SUBMISSION.md#9-reliability) describes the unresolved server crash.
+
+[INGESTION.md](../reports/INGESTION.md) records the later replay benchmark and latest regression
+results. The full load profile and crash matrix have not been rerun after staging-table reuse.
 
 The same transaction updates campaigns, concluded leads and person/voice counters at the exact event
 time. Learning and reach queries use these tables. Raw events are kept for audit.

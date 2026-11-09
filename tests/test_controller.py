@@ -61,7 +61,8 @@ def test_chunk_replay_and_duplicate_event_ids_do_not_double_count(database):
         }]
 
 
-def test_error_after_counter_updates_rolls_back_everything(database):
+@pytest.mark.parametrize("kind", ["history", "events"])
+def test_error_after_counter_updates_rolls_back_everything(database, kind):
     with open_store(database) as store:
         store.db.execute("""
             CREATE FUNCTION reject_chunk() RETURNS trigger LANGUAGE plpgsql AS $$
@@ -70,11 +71,12 @@ def test_error_after_counter_updates_rolls_back_everything(database):
             FOR EACH ROW EXECUTE FUNCTION reject_chunk();
         """)
         with pytest.raises(psycopg.Error, match="simulated failure"):
-            store.ingest(chunk(), sample_events())
-        for name in ("events", "leads", "hourly_metrics", "audit_log", "ingested_chunks"):
+            store.ingest(chunk(kind=kind), sample_events())
+        for name in ("events", "leads", "hourly_metrics", "audit_log", "ingested_chunks",
+                     "campaigns", "concluded_leads", "person_metrics", "qa_metrics"):
             assert table_count(store, name) == 0
         store.db.execute("DROP TRIGGER fail_checkpoint ON ingested_chunks")
-        assert store.ingest(chunk(), sample_events()) == 3
+        assert store.ingest(chunk(kind=kind), sample_events()) == 3
 
 
 @pytest.mark.parametrize("conflicting", [False, True])
@@ -92,6 +94,21 @@ def test_duplicate_ids_inside_new_chunk_are_checked_before_insert(database, conf
         else:
             assert store.ingest(chunk(count=4), events) == 3
             assert store.summary()[0]["dials"] == 1
+
+
+@pytest.mark.parametrize("duplicate_new_call", [False, True])
+def test_overlapping_chunks_only_add_new_calls_to_all_counters(database, duplicate_new_call):
+    events = sample_events()
+    new_call = {**events[1], "event_id": 4, "engaged": True}
+    overlap = [events[1], new_call] + ([new_call] if duplicate_new_call else [])
+    with open_store(database) as store:
+        store.ingest(chunk(kind="events"), events)
+        assert store.ingest(chunk(number=1, kind="events", count=len(overlap)), overlap) == 1
+        assert store.ingest(chunk(number=1, kind="events", count=len(overlap)), iter(())) == 0
+        assert table_count(store, "events") == 4
+        assert store.summary()[0]["dials"] == 2
+        for table in ("qa_metrics", "person_metrics"):
+            assert store.db.execute(f"SELECT sum(dials),sum(connected),sum(engaged) FROM {table}").fetchone() == (2, 2, 1)
 
 
 def test_process_crash_mid_stream_can_restart(database):

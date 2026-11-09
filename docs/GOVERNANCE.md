@@ -64,6 +64,12 @@ Routine requests wait for approver hours in Asia/Kolkata. Urgent requests can go
 only if their TTL survives the next window and maximum configured latency. Otherwise they stay
 planned without using a request slot.
 
+Approver-hour checks convert timestamps to Asia/Kolkata (UTC+05:30). The client assumes
+API timestamp strings, including approval `created_at`, carry an explicit offset such as
+`+05:30` or `Z`. Offset-aware UTC and local timestamps compare correctly. Validating or
+rejecting timestamps without an offset remains a TODO in [governance.py](../controller/governance.py);
+the comment records the assumption without changing runtime behavior.
+
 The rolling 24-hour count combines remote requests and uncertain local submissions, deduplicated by
 proposal ID. When the limit exceeds one, routine work leaves a slot for incidents. Approved changes
 must apply before `apply_by`; a missed window becomes lapsed.

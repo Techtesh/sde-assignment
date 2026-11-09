@@ -5,6 +5,10 @@ Run `steps567_load`, schema `steps567_load_clean_7b8269`. See the [JSON summary]
 and [grade](./public_03.md). This fresh run includes the cumulative QA detector and its exact-time
 counters. cProfile covered the entire controller execution; its overhead is included.
 
+This full profile predates the staging-table reuse optimization. The later replay measurements
+and regression rerun are in [INGESTION.md](./INGESTION.md). The figures below have not been
+recomputed for that change; the ten-minute startup/D0 target remains unverified on the new code.
+
 ## Measured result
 
 | Measurement | Result |

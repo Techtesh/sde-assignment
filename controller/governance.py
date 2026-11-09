@@ -210,6 +210,7 @@ class Governance:
             if latest_decision >= instant + timedelta(hours=body["expires_in_hours"]):
                 return  # Keep intent queued until its TTL can survive approver availability.
             cutoff = datetime.fromisoformat(now) - timedelta(hours=24)
+            # TODO: Validate API timestamps carry offsets; assume created_at is aware (+05:30 or UTC).
             remote_ids = {entry["proposal_id"] for entry in approvals
                           if datetime.fromisoformat(entry["created_at"]) > cutoff}
             used = len(self.store.recent_approval_ids(wid, now) | remote_ids)
