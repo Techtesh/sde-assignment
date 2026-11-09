@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Requires Docker Compose unless DATABASE_URL points to an existing PostgreSQL database.
+# Contract: ./run.sh <SIM_URL> starts the controller and runs until the scenario finishes.
+# Requires Python 3.12+; Docker Compose is needed unless DATABASE_URL points to PostgreSQL.
 set -euo pipefail
 SIM_URL="${1:?usage: ./run.sh <SIM_URL>}"
 cd "$(dirname "$0")"

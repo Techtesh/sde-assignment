@@ -67,6 +67,31 @@ def test_second_automatic_writer_is_rejected(database):
 
 
 @pytest.mark.skipif(sys.platform != "linux", reason="Exercises the real Bash launcher on Linux")
+def test_launcher_bootstraps_database_from_another_directory(tmp_path):
+    root = Path(__file__).resolve().parents[1]
+    trace = tmp_path / "startup.log"
+    binaries = tmp_path / "bin"
+    binaries.mkdir()
+    docker = binaries / "docker"
+    docker.write_text('#!/usr/bin/env bash\nprintf "%s\\n" "$*" >> "$STARTUP_TRACE"\n')
+    python = binaries / "python"
+    python.write_text('#!/usr/bin/env bash\nprintf "%s|%s|%s\\n" "$PWD" "$DATABASE_URL" "$*" >> "$STARTUP_TRACE"\n')
+    docker.chmod(0o755)
+    python.chmod(0o755)
+    env = {**os.environ, "PATH": str(binaries) + os.pathsep + os.environ["PATH"],
+           "PYTHON": str(python), "STARTUP_TRACE": str(trace)}
+    env.pop("DATABASE_URL", None)
+    env.pop("CONTROLLER_PROFILE", None)
+    result = subprocess.run(["bash", str(root / "run.sh"), "http://simulator"], cwd=tmp_path,
+                            env=env, capture_output=True, text=True, timeout=10)
+    assert result.returncode == 0, result.stderr
+    lines = trace.read_text().splitlines()
+    assert lines[0] == "compose up -d --wait postgres"
+    assert lines[1].split("|") == [str(root), "postgresql://controller:controller@127.0.0.1:55432/controller",
+                                   "-m controller --url http://simulator"]
+
+
+@pytest.mark.skipif(sys.platform != "linux", reason="Exercises the real Bash launcher on Linux")
 def test_launcher_without_run_flags_recovers_then_handles_two_new_worlds(database):
     initial = {**STATE, "last_event_id": 0, "credits_remaining": 200}
     state = dict(initial)

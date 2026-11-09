@@ -179,12 +179,18 @@ thing you cut.
 
 ## 11. Running this controller
 
-Install [requirements-lock.txt](./requirements-lock.txt); tests also need [requirements-dev.txt](./requirements-dev.txt). With no `DATABASE_URL`, the launcher starts the local
+The service entry point remains `./run.sh <SIM_URL>`, as in the assignment's setup command.
+Use Python 3.12 or newer for the pinned dependencies. The Docker image also enters through
+`run.sh`; pass the simulator URL as its argument. The verification harness uses that same entry point.
+Container launches must supply `DATABASE_URL` for reachable PostgreSQL; the host launcher handles
+the local Docker Compose service when that variable is unset.
+
+Install [requirements.txt](./requirements.txt); tests also need [requirements-dev.txt](./requirements-dev.txt). With no `DATABASE_URL`, the launcher starts the local
 PostgreSQL 17 service through Docker Compose. Set it to use an existing database instead. The
 supplied password is for localhost development.
 
 ```bash
-pip install -r requirements-lock.txt
+pip install -r requirements.txt
 python -m sim serve --scenario scenarios/public_01_dev.yaml --run-dir runs/example01
 # In another terminal, after the simulator is healthy:
 ./run.sh http://127.0.0.1:8700
