@@ -176,3 +176,27 @@ thing you cut.
 - If something is ambiguous, **state your assumption in `SUBMISSION.md` and proceed**. Don't wait for an
   answer. Questions are welcome but won't block you.
 - Don't share the assignment or your solution publicly.
+
+## 11. Running this controller
+
+Install [requirements-lock.txt](./requirements-lock.txt); tests also need [requirements-dev.txt](./requirements-dev.txt). With no `DATABASE_URL`, the launcher starts the local
+PostgreSQL 17 service through Docker Compose. Set it to use an existing database instead. The
+supplied password is for localhost development.
+
+```bash
+pip install -r requirements-lock.txt
+python -m sim serve --scenario scenarios/public_01_dev.yaml --run-dir runs/example01
+# In another terminal, after the simulator is healthy:
+./run.sh http://127.0.0.1:8700
+```
+
+Startup prints a run ID and saves it for that simulator URL. Restart reuses it; detected world
+resets or scenario changes get a new one. `SIM_RUN_ID` overrides this choice. Keep an explicit ID on
+restart and change it for a new world.
+
+`python -m controller status --run-id <PRINTED_ID>` shows the short view; `--json` adds the full record. Direct commands use local
+PostgreSQL unless `DATABASE_URL` overrides it. Startup waits up to 60 seconds for simulator health.
+[OPERATIONS.md](./docs/OPERATIONS.md) has Windows setup, audit queries, crash/profile commands and alert details.
+
+[SUBMISSION.md](./SUBMISSION.md) explains scope and results. [reports/](./reports/) contains the final grades, load measurements and crash evidence. Simulator runs and local profiles stay in ignored `runs/`; controller state is
+in PostgreSQL.

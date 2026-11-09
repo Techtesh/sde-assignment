@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
-# Replace this with your controller. Contract: ./run.sh <SIM_URL> runs until the scenario finishes.
+# Requires Docker Compose unless DATABASE_URL points to an existing PostgreSQL database.
 set -euo pipefail
 SIM_URL="${1:?usage: ./run.sh <SIM_URL>}"
-echo "No controller yet — running the naive example against $SIM_URL" >&2
-exec python examples/naive_controller.py --url "$SIM_URL"
+cd "$(dirname "$0")"
+if [[ -z "${DATABASE_URL:-}" ]]; then
+  docker compose up -d --wait postgres
+  export DATABASE_URL="postgresql://controller:controller@127.0.0.1:55432/controller"
+fi
+if [[ -n "${CONTROLLER_PROFILE:-}" ]]; then
+  exec "${PYTHON:-python}" -m cProfile -o "$CONTROLLER_PROFILE" -m controller --url "$SIM_URL"
+fi
+exec "${PYTHON:-python}" -m controller --url "$SIM_URL"
